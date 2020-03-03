@@ -1,14 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
 import "./styles/styles.css";
-import ChatBox from "./ChatBox";
+import ChatBox from "./components/ChatBox";
 //import './App.css';
 
 export default function App() {
   return (
     <div className="App" id="darkmode">
-      <h1>Coop Text Adventure</h1>
-      <h2>Play with yourself or with Friends!... Enemies too.</h2>
+      <h1> Type to start! </h1>
       <ChatBox />
     </div>
   );
