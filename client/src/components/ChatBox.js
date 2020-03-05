@@ -9,59 +9,95 @@ const MyContainer = styled(Container)({
   backgroundColor: "green"
 });
 
+/*
+-- was a function to update state in the mapping 
+function addText(state, props) {
+  if (state == false) {
+    return null;
+  }
+
+  return {
+    odd: !state.odd,
+  }
+}
+*/
+
 class ChatBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
       message: "",
-      messages: [{
-        text: "hello" 
-      },
-      {
-        text: "bye"
-      }      
-     ],
-     odd: false
+      messages: [],
+      tracker: 0
      };
   }
 
-  textCallback = data => {
-    this.setState({ message: data });
-    console.log("data passed to the parent: " + data);
-  };
+  insertText = (data) => {
+    console.log("inserting...")
+    console.log(data)
 
-  insertText = () => {
-    
+    let tracker = this.state.tracker;
+    let name = "";
+    if(tracker % 2 === 0){
+      console.log(data)
+      name = "chat-message-even";
+    }
+    else{
+      name = "chat-message-odd";
+    }
+    tracker++;
+    return (
+      <p className={name}>                
+        <div>
+          {data}
+        </div>
+      </p>
+    )
   }
 
+  textCallback = (data) => {
+    //this.setState(previousState => ({ messages: [...previousState.messages, data]}));
+    this.setState({ messages: [...this.state.messages, data]});
+
+  };
+
+  insertOldText = (state) => {
+    let tracker = state.tracker;
+    let name = "";
+    return this.state.messages.map(message => {
+      if(tracker % 2 === 0){
+        console.log(message)
+        name = "chat-message-even";
+        return (
+          <p className={name} key={message.id}>                
+            <div>
+              {message.text}
+            </div>
+          </p>
+        )
+      }
+      else{
+        name = "chat-message-odd";
+        return (
+          <p className={name} key={message.id}>                
+            <div>
+              {message.text}
+            </div>
+          </p>
+          )
+      }
+      tracker++;  
+    })   
+  }
+ 
+  // okay somewhere in here setState is being called way too much. It was n the mapping function. Too many asysc calls with setState
   render() {
     return (
       <Box component="div" className="chatBox">
         <MyContainer className="chatContainer" >
           <h2> Chat Feed </h2>
           <div className="chatMessages">
-            {this.state.messages.map(message => {
-                            this.setState({odd: false})     
-
-              if(!this.state.odd){
-                return (
-                  <p className="chat-message-even" key={message.id}>                
-                    <div>
-                      {message.text}
-                    </div>
-                  </p>
-                )
-              }
-              else{
-                return (
-                  <p className="chat-message-odd" key={message.id}>                
-                    <div>
-                      {message.text}
-                    </div>
-                  </p>
-                  )
-              }       
-            })}            
+            {this.insertText(this.state.messages)}
           </div>
         </MyContainer>
         <ChatInput
