@@ -1,14 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
 import "./styles/styles.css";
-import ChatBox from "./components/ChatBox";
+import ChatList from "./components/ChatList";
 //import './App.css';
 
 export default function App() {
   return (
     <div className="App" id="darkmode">
       <h1> Type to start! </h1>
-      <ChatBox />
+      <ChatList />
     </div>
   );
 }

@@ -22,7 +22,7 @@ function addText(state, props) {
 }
 */
 
-class ChatBox extends React.Component {
+class ChatList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -31,9 +31,29 @@ class ChatBox extends React.Component {
       tracker: 0
      };
   }
+  render() {
+    return (
+      <ul className="message-list">                 
+        {this.props.messages.map(message => {
+          return (
+            <li key={message.id}>
+              <div>
+                {message.senderId}
+              </div>
+              <div>
+                {message.text}
+              </div>
+            </li>
+          )
+        })}
+      </ul>
+    )
+  }
+  
 
-  insertText = (data) => {
-    console.log("inserting...")
+  /*
+  defineText = (data) => {
+    console.log("deffining...")
     console.log(data)
 
     let tracker = this.state.tracker;
@@ -45,16 +65,21 @@ class ChatBox extends React.Component {
     else{
       name = "chat-message-odd";
     }
-    tracker++;
-    return (
+    const newText = 
       <p className={name}>                
         <div>
           {data}
         </div>
       </p>
-    )
+    
+    insertText
+
   }
 
+  insertText = (tracker, html) => {
+    console.log("inserting...")
+
+  }
   textCallback = (data) => {
     //this.setState(previousState => ({ messages: [...previousState.messages, data]}));
     this.setState({ messages: [...this.state.messages, data]});
@@ -87,7 +112,7 @@ class ChatBox extends React.Component {
           )
       }
       tracker++;  
-    })   
+    }) 
   }
  
   // okay somewhere in here setState is being called way too much. It was n the mapping function. Too many asysc calls with setState
@@ -108,7 +133,7 @@ class ChatBox extends React.Component {
     );
   }
 }
-
+*/
 
 /*
 <div className="chatBox">
@@ -126,5 +151,5 @@ class ChatBox extends React.Component {
         />
       </div>
 */
-
-export default ChatBox;
+}
+export default ChatList;
