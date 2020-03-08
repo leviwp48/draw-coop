@@ -11,26 +11,22 @@ const MyInput = styled(Input)({
   color: "#FFFFFF"
 });
 
-const SendInput = () => {};
-
 class ChatInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { textValue: "" };
+    this.state = { message: "" };
   }
 
   handleChange = e => {
-    this.setState({ textValue: e.target.value });
+    this.setState({ message: e.target.value });
   };
 
   handleKeyPress = e => {
     // put send input in here maybes
     // there will eventually be a request call that happens here
     if (e.key === "Enter") {
-      console.log("Your input: " + this.state.textValue);
-      this.props.callbackFromParent(e.target.value);
-      this.setState({ textValue: "" });
-      e.preventDefault();
+      this.props.sendMessage(this.state.message)
+      this.setState({message: ""})
     }
   };
 
@@ -40,7 +36,7 @@ class ChatInput extends React.Component {
         <MyInput
           type="text"
           fullWidth={true}
-          value={this.state.textValue}
+          value={this.state.message}
           onChange={this.handleChange}
           onKeyPress={this.handleKeyPress}
         />

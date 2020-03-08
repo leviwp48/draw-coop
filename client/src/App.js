@@ -2,16 +2,34 @@ import React from 'react';
 import logo from './logo.svg';
 import "./styles/styles.css";
 import ChatList from "./components/ChatList";
+import Title from "./components/Title";
+import ChatInput from "./components/ChatInput";
 //import './App.css';
 
-export default function App() {
-  return (
-    <div className="App" id="darkmode">
-      <h1> Type to start! </h1>
-      <ChatList />
-    </div>
-  );
+export default class App extends React.Component{
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+       messages: []
+    };
+  }
+
+  sendMessage = (data) => {
+    this.setState({messages: [...this.state.messages, data]});
+  };
+  
+  render(){
+    return (
+      <div className="App" id="darkmode">
+        <Title />
+        <ChatList messages={this.state.messages} />
+        <ChatInput sendMessage={this.sendMessage} />
+      </div>
+    );
+  }
 }
+ 
 
 /*
 function App() {

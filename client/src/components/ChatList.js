@@ -26,27 +26,35 @@ class ChatList extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      message: "",
       messages: [],
-      tracker: 0
+      tracker: true
      };
   }
+
+  isEven = () => {
+    if(this.state.tracker === true){
+      return ".chat-message-even";
+    }
+    else{
+      return "";
+    }
+  }
+  
   render() {
     return (
-      <ul className="message-list">                 
-        {this.props.messages.map(message => {
-          return (
-            <li key={message.id}>
+      <Box component="div" className="chatBox">
+      <MyContainer className="chatContainer" >
+        <ul className="message-list">                 
+          {this.props.messages.map(message => {
+            return (
               <div>
-                {message.senderId}
+                {message}
               </div>
-              <div>
-                {message.text}
-              </div>
-            </li>
-          )
-        })}
-      </ul>
+            )
+          })}
+        </ul>
+      </MyContainer>
+      </Box>  
     )
   }
   
