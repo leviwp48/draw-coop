@@ -1,0 +1,33 @@
+{
+  "name": "coop-game",
+  "version": "1.0.0",
+  "description": "socket.io coop game",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-pino-logger": "^4.0.0",
+    "node-env-run": "^3.0.2",
+    "node": "^13.10.1",
+    "nodemon": "^2.0.2",
+    "npm-run-all": "^4.1.5",
+    "pino-colada": "^1.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "server": "node-env-run server --exec nodemon | pino-colada",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm start --prefix client",
+    "dev": "run-p server client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leviwp48/React-and-Sockets.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leviwp48/React-and-Sockets/issues"
+  },
+  "homepage": "https://github.com/leviwp48/React-and-Sockets#readme"
+}
