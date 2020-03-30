@@ -50,7 +50,7 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
-    $(function() {
+    $(startSocket = () => {
       var socket = io();
       $("form").submit(function(e) {
         e.preventDefault(); // prevents page reloading
@@ -58,8 +58,8 @@
         $("#m").val("");
         return false;
       });
-      socket.on("chat message", function(user, msg) {
-        $("#messages").append($("<li>").text(socket.id + " - " + user +  ": " + msg));
+      socket.on("chat message", function(msg) {
+        $("#messages").append($("<li>").text(msg.time + " - " + msg.username +  " : " + msg.text));
       });
       socket.on("connected", (msg) => {
           //socket.emit("my id");
