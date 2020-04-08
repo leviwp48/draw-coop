@@ -24,42 +24,41 @@ const io = require("socket.io")(http);
 const formatMessage = require("./utils/message");
 
 app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/index.html");
+  console.log("connected");
 });
 
 var botName = "Admin";
 var userOne = "";
 var userTwo = "";
-console.log("just starting");
-console.log("userONe: " + userOne);
 
 io.on("connection", function(socket) {
 
-  io.emit("connected", "Connection success!");
+  console.log("connected");
+  io.emit("connected", formatMessage(botName, "Connection success!"));
   socket.emit("chat message", formatMessage(botName, "Welcome!"));
 
   // INTERESTING NOTE: using the socket.emit to the "my id" event made it so that the same socket id was used. Not sure why that is yet. 
   // It must have something to do with the a single socket version.
 
   // Not sure what broadcast does exactly
-  socket.broadcast.emit("chat message", formatMessage(botName, "A user has joined!"));
+  socket.broadcast.emit("user join", formatMessage(botName, "A user has joined!"));
   
   // conditional to see which player joins. I should have a sign in page where you can 
   // login as your user
   if(userOne == ""){
     socket.join("game room");
     userOne = socket.id;
-    socket.emit("chat message", formatMessage(botName, "User One has joined!"));
+    socket.emit("user join", formatMessage(botName, "User One has joined!"));
   }
   else if(userTwo == ""){
     socket.join("game room");
     userTwo = socket.id;
-    socket.emit("chat message", formatMessage(botName, "User Two has joined!"));
+    socket.emit("user join", formatMessage(botName, "User Two has joined!"));
   }
 
 
   socket.on("chat message", function(msg) {
-
+    console.log("got the message");
     if(userOne == socket.id){
       io.to("game room").emit("chat message", formatMessage("User One", msg));
     }

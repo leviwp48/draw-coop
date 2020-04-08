@@ -1,8 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
 import "./styles/styles.css";
-import Chat from "./components/Chat";
-import Title from "./components/Title";
+import Chat from "./components/chat/Chat.js";
+import Title from "./components/title/Title.js";
 
 export default class App extends React.Component{
   

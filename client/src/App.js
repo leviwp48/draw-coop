@@ -21,7 +21,7 @@ export default class App extends React.Component{
   
   render(){
     return (
-      <div className="App" id="darkmode">
+      <div className="App">
         <Title />
         <ChatList messages={this.state.messages} />
         <ChatInput sendMessage={this.sendMessage} />

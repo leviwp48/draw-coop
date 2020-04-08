@@ -1,0 +1,7 @@
+.scroll-box--wrapped{
+    display: inline-block;
+    border: 1px solid blue;
+    width: 20%;
+    height: 60vh;
+    padding: 5px 0px 5px 10px;
+}
