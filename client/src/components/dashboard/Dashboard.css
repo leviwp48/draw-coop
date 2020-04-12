@@ -1,0 +1,24 @@
+.button-login {
+    margin-top: 20px;
+    margin-right: 5%;
+    min-width: 100px;
+    width: 10%;
+    height: 40px;
+    font-size: 20px;
+    color: #eeeeee;
+    border-radius: 5px;
+    border: solid #007ea7;
+    background: #007ea7;
+  }
+  
+  .button-register {
+    margin-top: 20px;
+    min-width: 100px;
+    width: 10%;
+    height: 40px;
+    font-size: 20px;
+    color: #eeeeee;
+    border-radius: 5px;
+    border: solid #8d6a9f;
+    background: #8d6a9f;
+  }

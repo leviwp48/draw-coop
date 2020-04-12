@@ -1,9 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import "./styles/styles.css";
-import ChatList from "./components/ChatList";
+import ChatList from "../components/ChatList";
 import Title from "./components/Title";
-import ChatInput from "./components/ChatInput";
+import ChatInput from "../components/ChatInput";
 //import './App.css';
 
 export default class App extends React.Component{
