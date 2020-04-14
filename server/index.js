@@ -1,30 +1,28 @@
-/*
-const express = require('express');
-const bodyParser = require('body-parser');
-const pino = require('express-pino-logger')();
-
-const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(pino);
-
-app.get('/api/greeting', (req, res) => {
-  const name = req.query.name || 'World';
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
-});
-
-app.listen(3001, () =>
-  console.log('Express server is running on localhost:3001')
-);
-*/
-
 const app = require("express")();
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const formatMessage = require("./utils/message");
+const mongoose = require('mongoose');
+
+// DB Config
+const db = require('./config/keys').mongoURI;
+
+// connecting to mongo with mongoose
+mongoose
+  .connect("mongodb://admin:Ilikepie48@dbh22.mlab.com:27227/socket-io-app", {useNewUrlParser: true})
+  .then(() => console.log('MDB connected...'))
+  .catch(err => console.log(err));
 
 app.get("/", function(req, res) {
-  console.log("connected");
+  res.send("connected");
+});
+
+app.get("/login", function(req, res) {
+  
+});
+
+app.get("/game-room", function(req, res) {
+  console.log("in the game room");
 });
 
 var botName = "Admin";
