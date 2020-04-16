@@ -1,6 +1,7 @@
 const app = require("express")();
-const http = require("http").createServer(app);
-const io = require("socket.io")(http);
+const http = require("http")
+const server = http.createServer(app);
+const io = require("socket.io")(server);
 const formatMessage = require("./utils/message");
 const mongoose = require('mongoose');
 
@@ -9,21 +10,73 @@ const db = require('./config/keys').mongoURI;
 
 // connecting to mongo with mongoose
 mongoose
-  .connect("mongodb://admin:Ilikepie48@dbh22.mlab.com:27227/socket-io-app", {useNewUrlParser: true})
+  .connect(db, {useNewUrlParser: true})
   .then(() => console.log('MDB connected...'))
   .catch(err => console.log(err));
 
+  // Projects model from the model folder
+const Users = require('./models/User');
+
+/*
+////
+
+Routing Begins
+
+////
+*/
+
+// @route   GET /
+// @desc    Dashboard
+// @access  Public
+// Opens the dashboard
 app.get("/", function(req, res) {
   res.send("connected");
 });
 
-app.get("/login", function(req, res) {
-  
+// @route   GET api/projects
+// @desc    Get All Items
+// @access  Public
+// Will grab user on login
+app.get('/login', (req, res) =>{
+    Users.find({
+          username: req.body.username
+        })
+        .then(user => res.json(username))
 });
 
+// @route   POST /register
+// @desc    Create A User
+// @access  Public
+// Will create new users using the requests body name 
+app.post('/register', (req, res) =>{
+    const newUser = new Users({
+        username: req.body.username,
+        password: req.body.password
+    });
+    newUser.save().then(user => res.json(user));
+});
+
+// @route   GET /game-room
+// @desc    Get the game room page
+// @access  Public
+// Get the game room after the user logs in
 app.get("/game-room", function(req, res) {
   console.log("in the game room");
 });
+
+
+
+/*
+////
+
+Routing Ends
+
+=>
+
+Socket.io begins
+
+////
+*/
 
 var botName = "Admin";
 var userOne = "";
@@ -74,6 +127,6 @@ io.on("connection", function(socket) {
   });
 });
 
-http.listen(3000, function() {
-  console.log("listening on *:3000");
+server.listen(3000, function() {
+  console.log("listening on port:3000");
 });

@@ -2,9 +2,9 @@ import React from "react";
 import socketIOClient from "socket.io-client";
 import {ScrollBox, ScrollAxes, FastTrack} from 'react-scroll-box'; 
 import './Chat.css';
-
-var socket = socketIOClient("http://localhost:3000/");
   
+var socket;
+
 class Chat extends React.Component {
   constructor(props) {
     super(props);
@@ -13,10 +13,10 @@ class Chat extends React.Component {
         message: ""
     };
   }
-
   // when the chat component mounts it will connect to socket.io, after it will emit a connection message and the message
   // will be sent to the chat list. 
   componentWillMount = () => {
+    socket = socketIOClient("http://localhost:3000/");
     socket.on("connected", (msg) => {
       console.log(msg);
       this.setState({displayData : [...this.state.displayData, msg.time + " - " + msg.username + " : " + msg.text]})

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Modal from "../login/LoginModal.js";
 import "./Dashboard.css";
+import axios from 'axios';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ export default class Dashboard extends Component {
       show: false,
       modalType: false,
       username: "",
-      password: ""
+      password: "",
+      userId: "testdummy1"
     };
   }
 
@@ -26,7 +28,39 @@ export default class Dashboard extends Component {
     this.setState({ show: false });
   };
 
-  submitModal = (type = this.state.modalType) => {};
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const user = {
+      username: this.state.name,
+      password: this.state.password,
+      userId: this.state.userId
+
+    };
+
+    axios.post(`http://localhost:3000/register`, { user })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  }
+
+  handleKeyPress = e => {
+    e.preventDefault();
+
+    const user = {
+      username: this.state.name,
+      password: this.state.password,
+      userId: this.state.userId
+
+    };
+
+    axios.post(`localhost:3000/register`, { user })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  };
 
   handleUsernameChange = e => {
     this.setState({ username: e.target.value });
@@ -35,18 +69,15 @@ export default class Dashboard extends Component {
     this.setState({ password: e.target.value });
   };
 
-  handleKeyPress = e => {
-    if (e.key === "Enter") {
-      alert("here");
-    }
-  };
+  
 
   render() {
     return (
       <main>
         <Modal
           show={this.state.show}
-          submit={this.submitModal}
+          submit={this.handleSubmit}
+          onEnter={this.handleKeyPress}
           handleClose={this.hideModal}
         >
           <input
