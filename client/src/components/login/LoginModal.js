@@ -3,7 +3,7 @@ import "./LoginModal.css";
 
 const Modal = ({ handleClose, type, submit, onEnter, show, children }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
-  const makeTitle = type ? "Register" : "Login";
+  const makeTitle = type ? "Login" : "Register";
 
   return (
     <div className={showHideClassName}>

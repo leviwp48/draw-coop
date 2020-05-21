@@ -5,6 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "concurrently": "^5.2.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-pino-logger": "^4.0.0",
     "moment": "^2.24.0",
@@ -18,11 +20,10 @@
   },
   "devDependencies": {},
   "scripts": {
-    "server": "node-env-run server --exec nodemon | pino-colada",
+    "server": "nodemon server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
-    "dev": "run-p server client",
-    "start": "nodemon server"
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",

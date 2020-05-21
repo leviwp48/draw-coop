@@ -4,6 +4,7 @@ const server = http.createServer(app);
 const io = require("socket.io")(server);
 const formatMessage = require("./utils/message");
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // DB Config
 const db = require('./config/keys').mongoURI;
@@ -18,18 +19,27 @@ mongoose
 const Users = require('./models/User');
 
 /*
-////
 
 Routing Begins
 
-////
 */
+
+// This will allow the CORS to be allowed over Express for using Axios in React.
+// Allows socket.io to work as well 
+app.use(cors());
+app.options('/api/hi', function (req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.end();
+});
 
 // @route   GET /
 // @desc    Dashboard
 // @access  Public
 // Opens the dashboard
 app.get("/", function(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.send("connected");
 });
 
@@ -37,7 +47,8 @@ app.get("/", function(req, res) {
 // @desc    Get All Items
 // @access  Public
 // Will grab user on login
-app.get('/login', (req, res) =>{
+app.get('/api/login', (req, res) =>{
+  res.setHeader("Access-Control-Allow-Origin", "*");
     Users.find({
           username: req.body.username
         })
@@ -48,7 +59,7 @@ app.get('/login', (req, res) =>{
 // @desc    Create A User
 // @access  Public
 // Will create new users using the requests body name 
-app.post('/register', (req, res) =>{
+app.post('/api/register', (req, res) =>{
     const newUser = new Users({
         username: req.body.username,
         password: req.body.password
@@ -60,14 +71,18 @@ app.post('/register', (req, res) =>{
 // @desc    Get the game room page
 // @access  Public
 // Get the game room after the user logs in
-app.get("/game-room", function(req, res) {
+app.get("/api/game-room", function(req, res) {
   console.log("in the game room");
+});
+
+app.get("/api/hi", function(req, res) {
+  console.log("HIIII");
+  res.json("hi");
 });
 
 
 
 /*
-////
 
 Routing Ends
 
@@ -75,7 +90,6 @@ Routing Ends
 
 Socket.io begins
 
-////
 */
 
 var botName = "Admin";
@@ -127,6 +141,6 @@ io.on("connection", function(socket) {
   });
 });
 
-server.listen(3000, function() {
-  console.log("listening on port:3000");
+server.listen(3001, function() {
+  console.log("listening on port:3001");
 });

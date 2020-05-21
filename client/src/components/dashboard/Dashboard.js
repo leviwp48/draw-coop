@@ -17,7 +17,6 @@ export default class Dashboard extends Component {
   }
 
   showModal = type => {
-    console.log(type);
     this.setState({
       modalType: type,
       show: true
@@ -35,16 +34,16 @@ export default class Dashboard extends Component {
       username: this.state.name,
       password: this.state.password,
       userId: this.state.userId
-
     };
 
-    axios.post(`http://localhost:3000/register`, { user })
+    axios.post(`http://localhost:3001/api/game-room`, { user })
       .then(res => {
         console.log(res);
         console.log(res.data);
       })
   }
 
+  /*
   handleKeyPress = e => {
     e.preventDefault();
 
@@ -55,12 +54,13 @@ export default class Dashboard extends Component {
 
     };
 
-    axios.post(`localhost:3000/register`, { user })
+    axios.post(`http://localhost:3001/api/register`, { user })
       .then(res => {
         console.log(res);
         console.log(res.data);
       })
   };
+*/
 
   handleUsernameChange = e => {
     this.setState({ username: e.target.value });
@@ -69,7 +69,13 @@ export default class Dashboard extends Component {
     this.setState({ password: e.target.value });
   };
 
-  
+  sayHi = () => {
+    axios.post(`http://localhost:3001/api/hi`)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  } 
 
   render() {
     return (
@@ -108,6 +114,13 @@ export default class Dashboard extends Component {
           onClick={() => this.showModal(true)}
         >
           Register
+        </button>
+        <button
+          className="button"
+          type="button"
+          onClick={this.sayHi}
+
+        >        buttons
         </button>
       </main>
     );
