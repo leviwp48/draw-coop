@@ -9,17 +9,22 @@ export default class Dashboard extends Component {
 
     this.state = {
       show: false,
-      modalType: false,
+      modalType: true,
       username: "",
       password: "",
-      userId: "testdummy1"
     };
   }
 
-  showModal = type => {
+  showModalLogin = () => {
     this.setState({
-      modalType: type,
-      show: true
+      show: true,
+      modalType: true
+    });
+  };
+  showModalRegister = () => {
+    this.setState({
+      show: true,
+      modalType: false
     });
   };
 
@@ -27,20 +32,42 @@ export default class Dashboard extends Component {
     this.setState({ show: false });
   };
 
-  handleSubmit = (e) => {
+  handleSubmitLogin = (e) => {
     e.preventDefault();
 
     const user = {
-      username: this.state.name,
+      username: this.state.username,
       password: this.state.password,
-      userId: this.state.userId
     };
-
-    axios.post(`http://localhost:3001/api/game-room`, { user })
+    
+    axios.get(`http://localhost:3001/api/login`, user)
       .then(res => {
         console.log(res);
         console.log(res.data);
       })
+      .catch(err => {
+        console.log(err.response)
+      });
+  }
+
+  handleSubmitRegister = (e) => {
+    e.preventDefault();
+
+    const user = {
+      username: this.state.username,
+      password: this.state.password,
+    };
+    console.log(user.username);
+    console.log(user.password);
+
+    axios.post(`http://localhost:3001/api/register`, user)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch(err => {
+        console.log(err.response)
+      });
   }
 
   /*
@@ -69,21 +96,15 @@ export default class Dashboard extends Component {
     this.setState({ password: e.target.value });
   };
 
-  sayHi = () => {
-    axios.post(`http://localhost:3001/api/hi`)
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
-  } 
-
   render() {
     return (
       <main>
         <Modal
           show={this.state.show}
-          submit={this.handleSubmit}
+          submitRegister={this.handleSubmitRegister}
+          submitLogin={this.handleSubmitLogin}
           onEnter={this.handleKeyPress}
+          modalType={this.state.modalType}
           handleClose={this.hideModal}
         >
           <input
@@ -104,23 +125,16 @@ export default class Dashboard extends Component {
         <button
           className="button-login"
           type="button"
-          onClick={() => this.showModal(false)}
+          onClick={() => this.showModalLogin()}
         >
           Login
         </button>
         <button
           className="button-register"
           type="button"
-          onClick={() => this.showModal(true)}
+          onClick={() => this.showModalRegister()}
         >
           Register
-        </button>
-        <button
-          className="button"
-          type="button"
-          onClick={this.sayHi}
-
-        >        buttons
         </button>
       </main>
     );

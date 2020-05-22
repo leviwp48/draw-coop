@@ -5,18 +5,24 @@ const io = require("socket.io")(server);
 const formatMessage = require("./utils/message");
 const mongoose = require('mongoose');
 const cors = require('cors');
+const PORTNUM = 3001;
+const bodyParser = require('body-parser');
 
 // DB Config
-const db = require('./config/keys').mongoURI;
+const dbkey = require('./config/keys').mongoURI;
 
+let db;
 // connecting to mongo with mongoose
 mongoose
-  .connect(db, {useNewUrlParser: true})
-  .then(() => console.log('MDB connected...'))
+  .connect(dbkey, {useNewUrlParser: true})
+  .then(() => {
+    db = mongoose.connection;
+    console.log('MDB connected...')
+  })
   .catch(err => console.log(err));
 
   // Projects model from the model folder
-const Users = require('./models/User');
+let User = require('./models/User');
 
 /*
 
@@ -24,10 +30,20 @@ Routing Begins
 
 */
 
+// parse application/json
+app.use(bodyParser.json());
+
 // This will allow the CORS to be allowed over Express for using Axios in React.
 // Allows socket.io to work as well 
 app.use(cors());
-app.options('/api/hi', function (req, res) {
+app.options('*', cors());
+app.options('/api/register', function (req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.end();
+});
+app.options('/api/login', function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader("Access-Control-Allow-Headers", "*");
@@ -47,12 +63,28 @@ app.get("/", function(req, res) {
 // @desc    Get All Items
 // @access  Public
 // Will grab user on login
+/*
+.then(user => res.json(username))
+        .catch(error => {
+          console.log(error.response)
+          res.json(error.response)
+        });
+*/
 app.get('/api/login', (req, res) =>{
-  res.setHeader("Access-Control-Allow-Origin", "*");
-    Users.find({
-          username: req.body.username
-        })
-        .then(user => res.json(username))
+  console.log("Logging in...");
+  console.log(JSON.stringify(req.body.username))
+
+    User.find({username: "tester"}, function(err, user){
+      if(err){
+        console.log("Couldn't log in.");
+        console.log(err);
+      }
+      else{
+        console.log('"Logged in as: ')
+        console.log(user)
+      }
+    })
+        
 });
 
 // @route   POST /register
@@ -60,11 +92,31 @@ app.get('/api/login', (req, res) =>{
 // @access  Public
 // Will create new users using the requests body name 
 app.post('/api/register', (req, res) =>{
-    const newUser = new Users({
-        username: req.body.username,
-        password: req.body.password
-    });
-    newUser.save().then(user => res.json(user));
+    console.log("Registering...");
+    User.create({
+      username: req.body.username,
+      password: req.body.password
+    }, (err, data) => {
+      if(err){
+        console.log("Couldn't register.");
+        console.log(err);
+      }
+      else{
+        console.log("User added: ");
+        console.log(data);
+      }
+    })
+    
+/*
+    user.save()
+      .then(user => {
+        res.json(user)
+      })
+      .catch(error => {
+        console.log(error.response)
+        res.json(error.response)
+      });
+      */
 });
 
 // @route   GET /game-room
@@ -141,6 +193,6 @@ io.on("connection", function(socket) {
   });
 });
 
-server.listen(3001, function() {
-  console.log("listening on port:3001");
+server.listen(PORTNUM, function() {
+  console.log(`listening on port: ${PORTNUM}`);
 });

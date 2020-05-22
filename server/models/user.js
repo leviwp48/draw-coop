@@ -13,12 +13,8 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
-    },
-    userId: {
-        type: String,
-        required: true
     }
 });
 
 // This exports the module as User, which uses this Schema
-module.exports = User = mongoose.model('user', UserSchema);
+let User = module.exports  = mongoose.model('user', UserSchema);

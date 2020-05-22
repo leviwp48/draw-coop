@@ -1,9 +1,10 @@
 import React from "react";
 import "./LoginModal.css";
 
-const Modal = ({ handleClose, type, submit, onEnter, show, children }) => {
+const Modal = ({ handleClose, modalType, submitRegister, submitLogin, onEnter, show, children }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
-  const makeTitle = type ? "Login" : "Register";
+  const makeTitle = modalType ? "Login" : "Register";
+  const chooseSubmit = modalType ? submitLogin : submitRegister;
 
   return (
     <div className={showHideClassName}>
@@ -11,7 +12,7 @@ const Modal = ({ handleClose, type, submit, onEnter, show, children }) => {
         <h1> {makeTitle} </h1>
         <button className="modal-close" onClick={handleClose} />
         {children}
-        <button className="modal-submit" onKeyPress={onEnter} onClick={submit}>submit</button>
+        <button className="modal-submit" onKeyPress={onEnter} onClick={chooseSubmit}>submit</button>
       </section>
     </div>
   );
