@@ -72,7 +72,6 @@ app.get("/", function(req, res) {
 */
 app.get('/api/login', (req, res) =>{
   console.log("Logging in...");
-  console.log(JSON.stringify(req.body.username))
 
     User.find({username: "tester"}, function(err, user){
       if(err){

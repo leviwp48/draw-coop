@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+mongoose.set('debug', true);
+
 
 // Create a Schema
 // This is a Schema to use with Mongoose with mongoDB
