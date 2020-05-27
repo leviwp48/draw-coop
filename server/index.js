@@ -70,10 +70,10 @@ app.get("/", function(req, res) {
           res.json(error.response)
         });
 */
-app.get('/api/login', (req, res) =>{
+app.post('/api/login', (req, res) =>{
   console.log("Logging in...");
 
-    User.find({username: "tester"}, function(err, user){
+    User.findOne({username: req.body.username, password: req.body.password}, function(err, user){
       if(err){
         console.log("Couldn't log in.");
         console.log(err);

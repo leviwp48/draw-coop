@@ -12,6 +12,7 @@ export default class Dashboard extends Component {
       modalType: true,
       username: "",
       password: "",
+      redirectTo: "/Dashboard"
     };
   }
 
@@ -40,10 +41,9 @@ export default class Dashboard extends Component {
       password: this.state.password,
     };
     
-    axios.get(`http://localhost:3001/api/login`, user)
+    axios.post(`http://localhost:3001/api/login`, user)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
+        console.log("got back here");
       })
       .catch(err => {
         console.log(err.response)
