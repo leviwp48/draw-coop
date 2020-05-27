@@ -22,9 +22,10 @@ export default class App extends Component{
   render(){
     return (
       <div className="App" id="darkmode">
-        <h1 className="Title">Mystery Machine</h1>
+        <h1 className="Title">Cha Cha</h1>
 
         <Dashboard />
+        <Chat />
       </div>
     );
   }

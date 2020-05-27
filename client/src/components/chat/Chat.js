@@ -59,20 +59,24 @@ class Chat extends React.Component {
 
 render() {
     return (
-    <div>  
+    <div className="chatBox">  
       <ScrollBox>
           <p>{this.state.displayData}</p>
       </ScrollBox>            
-      <div>
-      <input
-          type="text"
-          value={this.state.message}
-          onChange={this.handleChange}
-          onKeyPress={this.handleKeyPress}
-      />
-      </div>
-      <div>
-          <button onClick={this.handleClick}>Send</button>
+      <div className="chatInputBox">
+        <input
+            className="chatInput"
+            type="text"
+            value={this.state.message}
+            onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
+        />
+        <button 
+        className="chatButton"
+        type="button"
+        onClick={this.handleClick}>
+            Send
+        </button>
       </div>
     </div>      
     )

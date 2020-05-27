@@ -1,19 +1,5 @@
-* {
-    padding: 0;
-    margin: 0;
-  }
-  
-  #root {
-    height: 100vh;
-    background-color: #004777;
-  }
-  
-  .App {
-    font-family: sans-serif;
-    text-align: center;
-    color: #eeeeee;
-  }
-  
+
+   
   .Title {
     padding-top: 10px;
   }
