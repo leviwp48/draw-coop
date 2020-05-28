@@ -1,32 +1,51 @@
-import React from "react";
+import React, {Component, Context } from "react";
 import socketIOClient from "socket.io-client";
-import {ScrollBox, ScrollAxes, FastTrack} from 'react-scroll-box'; 
+import {ScrollBox, FastTrack} from 'react-scroll-box'; 
 import './Chat.css';
-  
-var socket;
 
-class Chat extends React.Component {
+var socket;
+export const MyContext = React.createContext();
+
+class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = { 
         displayData: [],
-        message: ""
+        message: "",
+        id: ""
     };
   }
   // when the chat component mounts it will connect to socket.io, after it will emit a connection message and the message
   // will be sent to the chat list. 
   componentWillMount = () => {
-    socket = socketIOClient("http://localhost:3000/");
+    socket = socketIOClient("http://localhost:3001/");
     socket.on("connected", (msg) => {
+      this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
+      console.log(this.state.displayData);
+    })
+    socket.on("user connected", (msg) => {
       console.log(msg);
-      this.setState({displayData : [...this.state.displayData, msg.time + " - " + msg.username + " : " + msg.text]})
+      this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
+    })
+    socket.on("user ready", (msg) => {
+      console.log(msg.id);
+      this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
+      this.setState({id: msg.id})
+      console.log(this.state.displayData);
+
     })
   }
 
+  newUserJoins = () => {
+
+  }
+
+  
   componentDidUpdate = () => {
-    socket.on("user join", (msg) => {
-      console.log(msg);
-      this.setState({displayData : [...this.state.displayData, msg.time + " - " + msg.username + " : " + msg.text]})
+    socket.on("user ready", (msg) => {
+      console.log(msg.id);
+      this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
+      this.setState({id: msg.id})
     })
   }
 
@@ -44,25 +63,27 @@ class Chat extends React.Component {
       console.log("here");
         socket.emit("chat message", this.state.message);
         socket.on("chat message", msg => {    
-          this.state.displayData.push(<div  id="display-data"><pre>{msg.time + " - " + msg.username + " : " + msg.message}</pre></div>);
+          this.state.displayData.push(<div  id="display-data"><span>{msg.time + " - " + msg.username + " : " + msg.message}</span></div>);
         });
         }
   }
 
   handleClick = e => {
-    console.log("here");
+    console.log("here " + this.state.message);
     socket.emit("chat message", this.state.message);  
     socket.on("chat message", msg => {    
-      this.state.displayData.push(<div  id="display-data"><pre>{msg.time + " - " + msg.username + " : " + msg.message}</pre></div>);    
+      this.state.displayData.push(<div  id="display-data"><span>{msg.time + " - " + msg.username + " : " + msg.message}</span></div>);    
      });  
   };
 
 render() {
     return (
     <div className="chatBox">  
-      <ScrollBox>
-          <p>{this.state.displayData}</p>
-      </ScrollBox>            
+      <div className="scrollBox">
+      <p> ID: {this.state.id} </p>
+
+          <span>{this.state.displayData}</span>
+      </div>            
       <div className="chatInputBox">
         <input
             className="chatInput"

@@ -8,6 +8,11 @@ const cors = require('cors');
 const PORTNUM = 3001;
 const bodyParser = require('body-parser');
 
+
+
+// TODO: create correct user login by authenticating on the back end then storing a token on the front end
+// well a makeshift version is probs good enough
+
 // DB Config
 const dbkey = require('./config/keys').mongoURI;
 
@@ -143,51 +148,62 @@ Socket.io begins
 
 */
 
-var botName = "Admin";
+var botName = "Admin Bot";
 var userOne = "";
 var userTwo = "";
+var hasConnected = false;
 
-io.on("connection", function(socket) {
-
-  console.log("connected");
-  io.emit("connected", formatMessage(botName, "Connection success!"));
-  socket.emit("chat message", formatMessage(botName, "Welcome!"));
+io.on("connect", function(socket) {
+  console.log("reconnecting...");
+  if(!hasConnected){
+    io.emit("connected", formatMessage(botName, "Connection success!"));
+    hasConnected = true;
+  }
+  else{
+    console.log('new user');
+    socket.broadcast.emit("user connected", formatMessage(botName, "A user has joined!"));
+  }
+  
+  // socket.emit("chat message", formatMessage(botName, "Welcome!"));
 
   // INTERESTING NOTE: using the socket.emit to the "my id" event made it so that the same socket id was used. Not sure why that is yet. 
   // It must have something to do with the a single socket version.
 
   // Not sure what broadcast does exactly
-  socket.broadcast.emit("user join", formatMessage(botName, "A user has joined!"));
   
   // conditional to see which player joins. I should have a sign in page where you can 
   // login as your user
+
+  console.log("current users, UserOne: " + userOne + ", " + "UserTwo: " + userTwo);
   if(userOne == ""){
     socket.join("game room");
     userOne = socket.id;
-    socket.emit("user join", formatMessage(botName, "User One has joined!"));
+    socket.broadcast.emit("user ready", formatMessage(botName, "User One has joined!", userOne));
   }
   else if(userTwo == ""){
     socket.join("game room");
     userTwo = socket.id;
-    socket.emit("user join", formatMessage(botName, "User Two has joined!"));
+    socket.broadcast.emit("user ready", formatMessage(botName, "User Two has joined!", userTwo));
   }
 
-
   socket.on("chat message", function(msg) {
-    console.log("got the message");
+    console.log("got the message: " + msg);
+    console.log(userOne + " = " + socket.id);
     if(userOne == socket.id){
-      io.to("game room").emit("chat message", formatMessage("User One", msg));
+
+      io.to("game room").emit("chat message", formatMessage("User One", msg, userOne));
     }
     else if(userTwo == socket.id){
-      io.to("game room").emit("chat message", formatMessage("User Two", msg));
+      io.to("game room").emit("chat message", formatMessage("User Two", msg, userTwo));
     }
 
     //io.emit("chat message", msg);
     socket.on("disconnect", () => {
-      console.log("here");
+      console.log("destroying");
 
       userOne = "";
       userTwo = "";
+      hasConnected = false;
     });
   });
 });
