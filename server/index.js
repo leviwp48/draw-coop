@@ -154,13 +154,15 @@ var userTwo = "";
 var hasConnected = false;
 
 io.on("connect", function(socket) {
-  console.log("reconnecting...");
+  console.log("connecting...");
+
   if(!hasConnected){
+    console.log("first time connecting!")
     io.emit("connected", formatMessage(botName, "Connection success!"));
     hasConnected = true;
   }
   else{
-    console.log('new user');
+    console.log('second time connecting!');
     socket.broadcast.emit("user connected", formatMessage(botName, "A user has joined!"));
   }
   
@@ -174,37 +176,46 @@ io.on("connect", function(socket) {
   // conditional to see which player joins. I should have a sign in page where you can 
   // login as your user
 
-  console.log("current users, UserOne: " + userOne + ", " + "UserTwo: " + userTwo);
+
   if(userOne == ""){
-    socket.join("game room");
     userOne = socket.id;
-    socket.broadcast.emit("user ready", formatMessage(botName, "User One has joined!", userOne));
+    //socket.join("game room");
+    //socket.broadcast.emit("user ready", formatMessage(botName, "User One has joined!", userOne));
   }
   else if(userTwo == ""){
-    socket.join("game room");
+    //socket.join("game room");
     userTwo = socket.id;
-    socket.broadcast.emit("user ready", formatMessage(botName, "User Two has joined!", userTwo));
+    //socket.broadcast.emit("user ready", formatMessage(botName, "User Two has joined!", userTwo));
   }
 
+  console.log("current users, UserOne: " + userOne + " & " + "UserTwo: " + userTwo);
+
   socket.on("chat message", function(msg) {
-    console.log("got the message: " + msg);
-    console.log(userOne + " = " + socket.id);
-    if(userOne == socket.id){
 
-      io.to("game room").emit("chat message", formatMessage("User One", msg, userOne));
-    }
-    else if(userTwo == socket.id){
-      io.to("game room").emit("chat message", formatMessage("User Two", msg, userTwo));
-    }
+    console.log(io.engine.clientsCount);
 
+    console.log("Sending message to client: " + msg);
+   // if(userOne == socket.id){
+      //io.to("game room").emit("chat message", formatMessage("User One", msg, userOne));
+
+      io.emit("chat message", formatMessage("User One", msg));
+   // }
+    //else if(userTwo == socket.id){
+      //io.to("game room").emit("chat message", formatMessage("User Two", msg, userTwo));
+      //io.emit("chat message", formatMessage("User Two", msg));
+    //}
+      //console.log("user ID and socket ID did not match... aborting")
+      console.log("User One: " + userOne + " => " + socket.id);
+      console.log("User Two: " + userTwo + " => " + socket.id);
+  
     //io.emit("chat message", msg);
-    socket.on("disconnect", () => {
-      console.log("destroying");
+  });
+  socket.on("disconnect", () => {
+    console.log("destroying");
 
-      userOne = "";
-      userTwo = "";
-      hasConnected = false;
-    });
+    userOne = "";
+    userTwo = "";
+    hasConnected = false;
   });
 });
 
