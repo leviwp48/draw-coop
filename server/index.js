@@ -7,8 +7,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const PORTNUM = 3001;
 const bodyParser = require('body-parser');
-
-
+const passport = require("passport");
+const users = require("./routes/api/users");
 
 // TODO: create correct user login by authenticating on the back end then storing a token on the front end
 // well a makeshift version is probs good enough
@@ -35,6 +35,11 @@ Routing Begins
 
 */
 
+// Passport middleware
+app.use(passport.initialize());
+// Passport config
+require("./config/passport")(passport);
+
 // parse application/json
 app.use(bodyParser.json());
 
@@ -55,6 +60,9 @@ app.options('/api/login', function (req, res) {
   res.end();
 });
 
+// Routes
+app.use("/api/users", users);
+
 // @route   GET /
 // @desc    Dashboard
 // @access  Public
@@ -62,65 +70,6 @@ app.options('/api/login', function (req, res) {
 app.get("/", function(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.send("connected");
-});
-
-// @route   GET api/projects
-// @desc    Get All Items
-// @access  Public
-// Will grab user on login
-/*
-.then(user => res.json(username))
-        .catch(error => {
-          console.log(error.response)
-          res.json(error.response)
-        });
-*/
-app.post('/api/login', (req, res) =>{
-  console.log("Logging in...");
-
-    User.findOne({username: req.body.username, password: req.body.password}, function(err, user){
-      if(err){
-        console.log("Couldn't log in.");
-        console.log(err);
-      }
-      else{
-        console.log('"Logged in as: ')
-        console.log(user)
-      }
-    })
-        
-});
-
-// @route   POST /register
-// @desc    Create A User
-// @access  Public
-// Will create new users using the requests body name 
-app.post('/api/register', (req, res) =>{
-    console.log("Registering...");
-    User.create({
-      username: req.body.username,
-      password: req.body.password
-    }, (err, data) => {
-      if(err){
-        console.log("Couldn't register.");
-        console.log(err);
-      }
-      else{
-        console.log("User added: ");
-        console.log(data);
-      }
-    })
-    
-/*
-    user.save()
-      .then(user => {
-        res.json(user)
-      })
-      .catch(error => {
-        console.log(error.response)
-        res.json(error.response)
-      });
-      */
 });
 
 // @route   GET /game-room
@@ -179,13 +128,13 @@ io.on("connect", function(socket) {
 
   if(userOne == ""){
     userOne = socket.id;
-    //socket.join("game room");
-    //socket.broadcast.emit("user ready", formatMessage(botName, "User One has joined!", userOne));
+    socket.join("game room");
+    socket.broadcast.emit("user ready", formatMessage(botName, "User One has joined!", userOne));
   }
   else if(userTwo == ""){
-    //socket.join("game room");
+    socket.join("game room");
     userTwo = socket.id;
-    //socket.broadcast.emit("user ready", formatMessage(botName, "User Two has joined!", userTwo));
+    socket.broadcast.emit("user ready", formatMessage(botName, "User Two has joined!", userTwo));
   }
 
   console.log("current users, UserOne: " + userOne + " & " + "UserTwo: " + userTwo);
@@ -195,15 +144,16 @@ io.on("connect", function(socket) {
     console.log(io.engine.clientsCount);
 
     console.log("Sending message to client: " + msg);
-   // if(userOne == socket.id){
+    if(userOne == socket.id){
       //io.to("game room").emit("chat message", formatMessage("User One", msg, userOne));
+      socket.broadcast.emit("chat message", formatMessage("User Two", msg, userTwo));
 
-      io.emit("chat message", formatMessage("User One", msg));
-   // }
-    //else if(userTwo == socket.id){
-      //io.to("game room").emit("chat message", formatMessage("User Two", msg, userTwo));
+      //io.emit("chat message", formatMessage("User One", msg));
+    }
+    else if(userTwo == socket.id){
+      io.to("game room").emit("chat message", formatMessage("User Two", msg, userTwo));
       //io.emit("chat message", formatMessage("User Two", msg));
-    //}
+    }
       //console.log("user ID and socket ID did not match... aborting")
       console.log("User One: " + userOne + " => " + socket.id);
       console.log("User Two: " + userTwo + " => " + socket.id);

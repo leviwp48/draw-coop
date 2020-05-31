@@ -22,14 +22,7 @@ class Chat extends Component {
     socket = socketIOClient("http://localhost:3001/");
     socket.on("connected", (msg) => {
       this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
-      socket.on("chat message", msg => {    
-        console.log("adding message");
-        this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
-    
-        //this.state.displayData.push(<div>{msg.time + " - " + msg.username + " : " + msg.text}</div>);
-        //this.state.displayData.push(msg.time + " - " + msg.username + " : " + msg.text);     
-        //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]});
-      }); 
+      
       console.log(this.state.displayData);
     })
     
@@ -39,7 +32,7 @@ class Chat extends Component {
     })
     socket.on("user ready", (msg) => {
       console.log(msg.id);
-      //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
+      this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
       this.setState({id: msg.id})
     })
     
@@ -90,6 +83,14 @@ class Chat extends Component {
   handleClick = e => {
     console.log(this.state.displayData);
     console.log("here " + this.state.message);
+    socket.once("chat message", msg => {    
+      console.log("adding message");
+      this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+  
+      //this.state.displayData.push(<div>{msg.time + " - " + msg.username + " : " + msg.text}</div>);
+      //this.state.displayData.push(msg.time + " - " + msg.username + " : " + msg.text);     
+      //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]});
+    }); 
     /*
     // would be using a callback function on the server side, so it won't have access to the state.. so we can't use that. 
     socket.emit("chat message", this.state.message, function(msg){

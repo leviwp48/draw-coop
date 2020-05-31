@@ -41,7 +41,7 @@ export default class Dashboard extends Component {
       password: this.state.password,
     };
     
-    axios.post(`http://localhost:3001/api/login`, user)
+    axios.post(`http://localhost:3001/api/users/login`, user)
       .then(res => {
         console.log("got back here");
       })
@@ -60,7 +60,7 @@ export default class Dashboard extends Component {
     console.log(user.username);
     console.log(user.password);
 
-    axios.post(`http://localhost:3001/api/register`, user)
+    axios.post(`http://localhost:3001/api/users/register`, user)
       .then(res => {
         console.log(res);
         console.log(res.data);
