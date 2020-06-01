@@ -10,21 +10,36 @@ export default class App extends Component{
 
     this.state = {
       username: "",
-      password: "",
-      redirectTo: "/Dashboard"
+      redirectTo: "/Dashboard",
+      token: "",
+      tokenStatus: false
     };
   }
 
-  changeScreen = () => {
-    
+  setUsername = (name) => {
+    this.setState({username: name});
   }
+
+  setToken = (jwt) => {
+    this.setState({token: jwt});
+    console.log("jwt: " + this.state.token);
+  }
+
+  getToken = () => {
+    return this.state.token;
+  }
+  getTokenStatus = () => {
+    return this.state.tokenStatus;
+  }
+
     //TODO implement React Router or pass down components to children to swtich pages
   render(){
     return (
       <div className="App" id="darkmode">
         <h1 className="Title">Zawardo!!!</h1>
 
-        <Dashboard />
+        <Dashboard setUsername={this.setUsername} setToken={this.setToken} getToken={this.getToken} getTokenStatus={this.getTokenStatus}/>
+        {this.state.username}
         <Chat />
       </div>
     );

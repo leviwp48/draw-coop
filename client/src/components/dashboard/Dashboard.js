@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import Modal from "../login/LoginModal.js";
 import "./Dashboard.css";
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      currentUsername: "",
+      currentUserId: "",
       show: false,
       modalType: true,
       username: "",
       password: "",
-      redirectTo: "/Dashboard"
     };
   }
 
@@ -43,7 +45,12 @@ export default class Dashboard extends Component {
     
     axios.post(`http://localhost:3001/api/users/login`, user)
       .then(res => {
-        console.log("got back here");
+        console.log("login response: ");
+        console.log(res.data.token);
+        console.log(jwt_decode(res.data.token).username);
+        this.props.setToken(res.data.token);
+        this.props.setUsername(jwt_decode(res.data.token).username);
+        //this.setState({currentUsername: jwt_decode(res.data.token).username})
       })
       .catch(err => {
         console.log(err.response)
@@ -96,6 +103,12 @@ export default class Dashboard extends Component {
     this.setState({ password: e.target.value });
   };
 
+  showLoginAndRegister = () => {
+    console.log("token: " + this.props.getTokenStatus());
+     
+    } 
+  
+
   render() {
     return (
       <main>
@@ -122,20 +135,31 @@ export default class Dashboard extends Component {
             onKeyPress={this.handleKeyPress}
           />
         </Modal>
-        <button
-          className="button-login"
-          type="button"
-          onClick={() => this.showModalLogin()}
-        >
+      
+        
+          {this.props.getTokenStatus() ?
+          
+          null
+          :
+          <div>
+          <button
+            className="button-login"
+            type="button"
+            onClick={() => this.showModalLogin()}
+          >
           Login
-        </button>
-        <button
-          className="button-register"
-          type="button"
-          onClick={() => this.showModalRegister()}
-        >
+          </button>
+          
+          <button
+            className="button-register"
+            type="button"
+            onClick={() => this.showModalRegister()}
+          >
           Register
-        </button>
+          </button>
+          </div>
+          
+          }
       </main>
     );
   }
