@@ -20,8 +20,11 @@ export default class App extends Component{
     this.setState({username: name});
   }
 
+  getUsername = () => {
+    return this.state.username
+  }
   setToken = (jwt) => {
-    this.setState({token: jwt});
+    this.setState({token: jwt, tokenStatus: true});
     console.log("jwt: " + this.state.token);
   }
 
@@ -38,8 +41,8 @@ export default class App extends Component{
       <div className="App" id="darkmode">
         <h1 className="Title">Zawardo!!!</h1>
 
-        <Dashboard setUsername={this.setUsername} setToken={this.setToken} getToken={this.getToken} getTokenStatus={this.getTokenStatus}/>
-        {this.state.username}
+        <Dashboard setUsername={this.setUsername} getUsername={this.getUsername} 
+                   setToken={this.setToken} getToken={this.getToken} getTokenStatus={this.getTokenStatus}/>
         <Chat />
       </div>
     );

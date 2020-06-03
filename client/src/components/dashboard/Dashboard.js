@@ -18,6 +18,12 @@ export default class Dashboard extends Component {
     };
   }
 
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleOutsideClick, false);
+  }
+  componentWillUnmount(){
+    
+  }
   showModalLogin = () => {
     this.setState({
       show: true,
@@ -99,6 +105,7 @@ export default class Dashboard extends Component {
   handleUsernameChange = e => {
     this.setState({ username: e.target.value });
   };
+
   handlePasswordChange = e => {
     this.setState({ password: e.target.value });
   };
@@ -112,7 +119,8 @@ export default class Dashboard extends Component {
   render() {
     return (
       <main>
-        <Modal
+        <Modal 
+          ref={node => this.node = node}
           show={this.state.show}
           submitRegister={this.handleSubmitRegister}
           submitLogin={this.handleSubmitLogin}
@@ -138,8 +146,7 @@ export default class Dashboard extends Component {
       
         
           {this.props.getTokenStatus() ?
-          
-          null
+          <div className="username">{this.props.getUsername()}</div>
           :
           <div>
           <button
