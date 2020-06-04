@@ -22,10 +22,8 @@ class Chat extends Component {
     socket = socketIOClient("http://localhost:3001/");
     socket.on("connected", (msg) => {
       this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
-      
       console.log(this.state.displayData);
-    })
-    
+    })  
     socket.on("user connected", (msg) => {
       console.log(msg);
       //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
@@ -34,8 +32,7 @@ class Chat extends Component {
       console.log(msg.id);
       this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
       this.setState({id: msg.id})
-    })
-    
+    })   
   }
 
   giveId = (pre) => {
@@ -86,7 +83,7 @@ class Chat extends Component {
     socket.once("chat message", msg => {    
       console.log("adding message");
       this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
-  
+
       //this.state.displayData.push(<div>{msg.time + " - " + msg.username + " : " + msg.text}</div>);
       //this.state.displayData.push(msg.time + " - " + msg.username + " : " + msg.text);     
       //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]});

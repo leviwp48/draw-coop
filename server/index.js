@@ -80,13 +80,6 @@ app.get("/api/game-room", function(req, res) {
   console.log("in the game room");
 });
 
-app.get("/api/hi", function(req, res) {
-  console.log("HIIII");
-  res.json("hi");
-});
-
-
-
 /*
 
 Routing Ends
@@ -126,6 +119,7 @@ io.on("connect", function(socket) {
   // login as your user
 
 
+  /*
   if(userOne == ""){
     userOne = socket.id;
     socket.join("game room");
@@ -136,6 +130,7 @@ io.on("connect", function(socket) {
     userTwo = socket.id;
     socket.broadcast.emit("user ready", formatMessage(botName, "User Two has joined!", userTwo));
   }
+*/
 
   console.log("current users, UserOne: " + userOne + " & " + "UserTwo: " + userTwo);
 
@@ -144,19 +139,20 @@ io.on("connect", function(socket) {
     console.log(io.engine.clientsCount);
 
     console.log("Sending message to client: " + msg);
-    if(userOne == socket.id){
+
+    //if(userOne == socket.id){
       //io.to("game room").emit("chat message", formatMessage("User One", msg, userOne));
-      socket.broadcast.emit("chat message", formatMessage("User Two", msg, userTwo));
+      io.emit("chat message", formatMessage("User", msg));
 
       //io.emit("chat message", formatMessage("User One", msg));
-    }
-    else if(userTwo == socket.id){
-      io.to("game room").emit("chat message", formatMessage("User Two", msg, userTwo));
+    //}
+    //else if(userTwo == socket.id){
+      //io.to("game room").emit("chat message", formatMessage("User Two", msg, userTwo));
       //io.emit("chat message", formatMessage("User Two", msg));
-    }
+   // }
       //console.log("user ID and socket ID did not match... aborting")
       console.log("User One: " + userOne + " => " + socket.id);
-      console.log("User Two: " + userTwo + " => " + socket.id);
+      //console.log("User Two: " + userTwo + " => " + socket.id);
   
     //io.emit("chat message", msg);
   });
