@@ -53,7 +53,7 @@ app.options('/api/register', function (req, res) {
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.end();
 });
-app.options('/api/login', function (req, res) {
+app.options('/api/users', function (req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader('Access-Control-Allow-Methods', '*');
   res.setHeader("Access-Control-Allow-Headers", "*");
@@ -91,23 +91,36 @@ Socket.io begins
 */
 
 var botName = "Admin Bot";
-var userOne = "";
-var userTwo = "";
+var userList = [];
 var hasConnected = false;
 
 io.on("connect", function(socket) {
   console.log("connecting...");
 
+/*
+  for(let i = 0; i < userList.length(); i++){
+    if(userList[i] == newUser){
+      return isUser = true;    
+    }  
+    else{
+      userList.push(newUser);
+      isUser = false;
+    }
+  }
+  */    
+ io.emit("connected", formatMessage(botName, "Connection success!"));
+
+
+ /*
   if(!hasConnected){
     console.log("first time connecting!")
-    io.emit("connected", formatMessage(botName, "Connection success!"));
     hasConnected = true;
   }
   else{
     console.log('second time connecting!');
     socket.broadcast.emit("user connected", formatMessage(botName, "A user has joined!"));
   }
-  
+  */
   // socket.emit("chat message", formatMessage(botName, "Welcome!"));
 
   // INTERESTING NOTE: using the socket.emit to the "my id" event made it so that the same socket id was used. Not sure why that is yet. 
@@ -132,17 +145,15 @@ io.on("connect", function(socket) {
   }
 */
 
-  console.log("current users, UserOne: " + userOne + " & " + "UserTwo: " + userTwo);
+  //console.log("current users, UserOne: " + userOne + " & " + "UserTwo: " + userTwo);
 
-  socket.on("chat message", function(msg) {
+  socket.on("chat message", function(msg, username) {
 
-    console.log(io.engine.clientsCount);
-
-    console.log("Sending message to client: " + msg);
+    console.log("Sending message to client: " + msg + " username: " + username);
 
     //if(userOne == socket.id){
       //io.to("game room").emit("chat message", formatMessage("User One", msg, userOne));
-      io.emit("chat message", formatMessage("User", msg));
+      io.emit("chat message", formatMessage(username, msg));
 
       //io.emit("chat message", formatMessage("User One", msg));
     //}
@@ -151,11 +162,12 @@ io.on("connect", function(socket) {
       //io.emit("chat message", formatMessage("User Two", msg));
    // }
       //console.log("user ID and socket ID did not match... aborting")
-      console.log("User One: " + userOne + " => " + socket.id);
+      //console.log("User One: " + userOne + " => " + socket.id);
       //console.log("User Two: " + userTwo + " => " + socket.id);
   
     //io.emit("chat message", msg);
   });
+  
   socket.on("disconnect", () => {
     console.log("destroying");
 

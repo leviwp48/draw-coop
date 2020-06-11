@@ -43,7 +43,7 @@ export default class App extends Component{
 
         <Dashboard setUsername={this.setUsername} getUsername={this.getUsername} 
                    setToken={this.setToken} getToken={this.getToken} getTokenStatus={this.getTokenStatus}/>
-        <Chat />
+        
       </div>
     );
   }

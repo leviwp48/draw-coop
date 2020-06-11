@@ -3,6 +3,10 @@ import Modal from "../login/LoginModal.js";
 import "./Dashboard.css";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import Chat from "../chat/Chat.js";
+import socketIOClient from "socket.io-client";
+
+var socket;
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -56,6 +60,14 @@ export default class Dashboard extends Component {
         console.log(jwt_decode(res.data.token).username);
         this.props.setToken(res.data.token);
         this.props.setUsername(jwt_decode(res.data.token).username);
+        console.log("almost connected");
+        
+    socket = socketIOClient("http://localhost:3001/");
+    socket.on("connected", (msg) => {
+      //this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+      console.log("we're connected!");
+    })
+
         //this.setState({currentUsername: jwt_decode(res.data.token).username})
       })
       .catch(err => {
@@ -167,6 +179,7 @@ export default class Dashboard extends Component {
           </div>
           
           }
+          <Chat getUsername={this.props.getUsername()} currentSocket={socket}/>
       </main>
     );
   }

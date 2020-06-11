@@ -12,14 +12,15 @@ class Chat extends Component {
     this.state = { 
         displayData: [],
         message: "",
-        id: 0
+        id: 0,
     };
   }
   
   // when the chat component mounts it will connect to socket.io, after it will emit a connection message and the message
   // will be sent to the chat list. 
+
   componentWillMount = () => {
-    socket = socketIOClient("http://localhost:3001/");
+     /*
     socket.on("connected", (msg) => {
       this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
       console.log(this.state.displayData);
@@ -32,25 +33,21 @@ class Chat extends Component {
       console.log(msg.id);
       this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
       this.setState({id: msg.id})
-    })   
+    }) 
+    */  
   }
+
 
   giveId = (pre) => {
     return `${ pre }_${ new Date().getTime() }`;
   }
 
-  newUserJoins = () => {
-
-  }
-
-  
-
   componentDidUpdate = () => {
-    socket.on("user ready", (msg) => {
-      console.log(msg.id);
+    //socket.on("user ready", (msg) => {
+      //console.log(msg.id);
       //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
-      this.setState({id: msg.id})
-    })
+      //this.setState({id: msg.id})
+   // })
   }
 
   componentWillUnmount = () => {
@@ -80,10 +77,11 @@ class Chat extends Component {
   handleClick = e => {
     console.log(this.state.displayData);
     console.log("here " + this.state.message);
-    socket.once("chat message", msg => {    
+    this.props.currentSocket.emit("chat message", this.state.message, this.props.getUsername);
+
+    this.props.currentSocket.once("chat message", msg => {    
       console.log("adding message");
       this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
-
       //this.state.displayData.push(<div>{msg.time + " - " + msg.username + " : " + msg.text}</div>);
       //this.state.displayData.push(msg.time + " - " + msg.username + " : " + msg.text);     
       //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]});
@@ -95,13 +93,12 @@ class Chat extends Component {
       this.state.displayData.push(<div>{msg.time + " - " + msg.username + " : " + msg.text}</div>);
     });
   }*/ 
-  socket.emit("chat message", this.state.message);
+ // socket.emit("chat message", this.state.message);
   }
 
 render() {
   //let list = this.state.displayData.map (data =>
     //<span key={this.giveId("lool")}>{data}</span> )
-
 
     return (
     <div className="chatBox">  
