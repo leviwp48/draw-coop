@@ -3,6 +3,7 @@ import socketIOClient from "socket.io-client";
 import {ScrollBox, FastTrack} from 'react-scroll-box'; 
 import './Chat.css';
 
+const ENDPOINT = "http://127.0.0.1:3001";
 var socket;
 export const MyContext = React.createContext();
 
@@ -13,6 +14,7 @@ class Chat extends Component {
         displayData: [],
         message: "",
         id: 0,
+        count: 0
     };
   }
   
@@ -20,6 +22,21 @@ class Chat extends Component {
   // will be sent to the chat list. 
 
   componentWillMount = () => {
+
+  socket = socketIOClient(ENDPOINT);
+
+  socket.on("connected", (msg) => {
+    console.log("Connecting...");
+    this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+  })
+  socket.on("chat message", msg => {    
+    console.log("adding message: " + msg);
+    this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+    //this.state.displayData.push(<div>{msg.time + " - " + msg.username + " : " + msg.text}</div>);
+    //this.state.displayData.push(msg.time + " - " + msg.username + " : " + msg.text);     
+    //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]});
+    console.log(...this.state.displayData);
+  }); 
      /*
     socket.on("connected", (msg) => {
       this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
@@ -43,6 +60,7 @@ class Chat extends Component {
   }
 
   componentDidUpdate = () => {
+    
     //socket.on("user ready", (msg) => {
       //console.log(msg.id);
       //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]})
@@ -58,8 +76,6 @@ class Chat extends Component {
 
   handleChange = e => {
     this.setState({ message: e.target.value });
-    console.log(this.state.displayData);
-
   }
 
   handleKeyPress = e => {
@@ -74,18 +90,15 @@ class Chat extends Component {
         }
   }
 
-  handleClick = e => {
-    console.log(this.state.displayData);
-    console.log("here " + this.state.message);
-    this.props.currentSocket.emit("chat message", this.state.message, this.props.getUsername);
-
-    this.props.currentSocket.once("chat message", msg => {    
-      console.log("adding message");
-      this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
-      //this.state.displayData.push(<div>{msg.time + " - " + msg.username + " : " + msg.text}</div>);
-      //this.state.displayData.push(msg.time + " - " + msg.username + " : " + msg.text);     
-      //this.setState({displayData : [...this.state.displayData, <p>{msg.time + " - " + msg.username + ": " + msg.text + " "}</p>]});
-    }); 
+  handleClick = e => {   
+    if(this.props.getUsername == ""){
+      socket.emit("chat message", "Login to send a message", "");
+    }
+    else{
+      socket.emit("chat message", this.state.message, this.props.getUsername);
+    }
+    
+    
     /*
     // would be using a callback function on the server side, so it won't have access to the state.. so we can't use that. 
     socket.emit("chat message", this.state.message, function(msg){

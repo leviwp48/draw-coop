@@ -108,7 +108,8 @@ io.on("connect", function(socket) {
     }
   }
   */    
- io.emit("connected", formatMessage(botName, "Connection success!"));
+
+ socket.emit("connected", formatMessage(botName, socket.id));
 
 
  /*
@@ -149,11 +150,15 @@ io.on("connect", function(socket) {
 
   socket.on("chat message", function(msg, username) {
 
+    if(username == ""){
+      username = "Admin Bot";
+    }
+
     console.log("Sending message to client: " + msg + " username: " + username);
 
     //if(userOne == socket.id){
       //io.to("game room").emit("chat message", formatMessage("User One", msg, userOne));
-      io.emit("chat message", formatMessage(username, msg));
+    io.emit("chat message", formatMessage(username, msg));
 
       //io.emit("chat message", formatMessage("User One", msg));
     //}

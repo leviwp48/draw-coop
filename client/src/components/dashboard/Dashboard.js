@@ -6,8 +6,6 @@ import jwt_decode from 'jwt-decode';
 import Chat from "../chat/Chat.js";
 import socketIOClient from "socket.io-client";
 
-var socket;
-
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -62,11 +60,11 @@ export default class Dashboard extends Component {
         this.props.setUsername(jwt_decode(res.data.token).username);
         console.log("almost connected");
         
-    socket = socketIOClient("http://localhost:3001/");
-    socket.on("connected", (msg) => {
+    //socket = socketIOClient("http://localhost:3001/");
+    //socket.on("connected", (msg) => {
       //this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
-      console.log("we're connected!");
-    })
+      //console.log("we're connected!");
+    //})
 
         //this.setState({currentUsername: jwt_decode(res.data.token).username})
       })
@@ -179,7 +177,7 @@ export default class Dashboard extends Component {
           </div>
           
           }
-          <Chat getUsername={this.props.getUsername()} currentSocket={socket}/>
+          <Chat getUsername={this.props.getUsername()} />
       </main>
     );
   }
