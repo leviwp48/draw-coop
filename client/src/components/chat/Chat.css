@@ -41,3 +41,7 @@
     border: solid #7289da;
     background: #7289da;
 }
+.chatButton:hover,
+  :focus {
+    cursor: pointer;
+  }

@@ -151,7 +151,8 @@ io.on("connect", function(socket) {
   socket.on("chat message", function(msg, username) {
 
     if(username == ""){
-      username = "Admin Bot";
+      username = "Anonymous";
+      socket.emit("No login", formatMessage("Admin Bot", "Please login"));
     }
 
     console.log("Sending message to client: " + msg + " username: " + username);

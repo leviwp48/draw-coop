@@ -34,15 +34,20 @@ export default class App extends Component{
   getTokenStatus = () => {
     return this.state.tokenStatus;
   }
+  deleteToken = () => {
+    this.setState({token: "", tokenStatus: false});
+    console.log("loggin out");
+  }
 
     //TODO implement React Router or pass down components to children to swtich pages
   render(){
     return (
       <div className="App" id="darkmode">
-        <h1 className="Title">Zawardo!!!</h1>
+        <h1 className="Title">Chat</h1>
 
         <Dashboard setUsername={this.setUsername} getUsername={this.getUsername} 
-                   setToken={this.setToken} getToken={this.getToken} getTokenStatus={this.getTokenStatus}/>
+                   setToken={this.setToken} getToken={this.getToken} getTokenStatus={this.getTokenStatus}
+                   deleteToken={this.deleteToken}/>
         
       </div>
     );

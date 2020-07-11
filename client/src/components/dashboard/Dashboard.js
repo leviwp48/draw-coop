@@ -19,19 +19,14 @@ export default class Dashboard extends Component {
       password: "",
     };
   }
-
-  componentWillMount() {
-    document.addEventListener('mousedown', this.handleOutsideClick, false);
-  }
-  componentWillUnmount(){
-    
-  }
+ 
   showModalLogin = () => {
     this.setState({
       show: true,
       modalType: true
     });
   };
+
   showModalRegister = () => {
     this.setState({
       show: true,
@@ -58,15 +53,8 @@ export default class Dashboard extends Component {
         console.log(jwt_decode(res.data.token).username);
         this.props.setToken(res.data.token);
         this.props.setUsername(jwt_decode(res.data.token).username);
-        console.log("almost connected");
-        
-    //socket = socketIOClient("http://localhost:3001/");
-    //socket.on("connected", (msg) => {
-      //this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
-      //console.log("we're connected!");
-    //})
-
-        //this.setState({currentUsername: jwt_decode(res.data.token).username})
+        console.log("almost connected");    
+        this.setState({show: false});
       })
       .catch(err => {
         console.log(err.response)
@@ -87,10 +75,22 @@ export default class Dashboard extends Component {
       .then(res => {
         console.log(res);
         console.log(res.data);
+        this.setState({show: false});
       })
       .catch(err => {
         console.log(err.response)
       });
+  }
+
+  onEnter = (e) => {
+    if (e.key === "Enter"){
+      if(this.state.modalType === true){
+        this.handleSubmitLogin(e)
+      }
+      else{
+        this.handleSubmitRegister(e)
+      }
+    } 
   }
 
   /*
@@ -121,10 +121,12 @@ export default class Dashboard extends Component {
   };
 
   showLoginAndRegister = () => {
-    console.log("token: " + this.props.getTokenStatus());
-     
-    } 
-  
+    console.log("token: " + this.props.getTokenStatus());    
+  } 
+
+  logout = () => {
+    this.props.deleteToken();
+  }
 
   render() {
     return (
@@ -134,7 +136,7 @@ export default class Dashboard extends Component {
           show={this.state.show}
           submitRegister={this.handleSubmitRegister}
           submitLogin={this.handleSubmitLogin}
-          onEnter={this.handleKeyPress}
+          onEnter={this.onEnter}
           modalType={this.state.modalType}
           handleClose={this.hideModal}
         >
@@ -143,20 +145,23 @@ export default class Dashboard extends Component {
             type="text"
             value={this.username}
             onChange={this.handleUsernameChange}
-            onKeyPress={this.handleKeyPress}
+            onKeyPress={this.onEnter}
           />
           <input
             className="input-password"
             type="text"
             value={this.state.password}
             onChange={this.handlePasswordChange}
-            onKeyPress={this.handleKeyPress}
+            onKeyPress={this.onEnter}
           />
         </Modal>
       
         
           {this.props.getTokenStatus() ?
-          <div className="username">{this.props.getUsername()}</div>
+          <div>
+            <div className="username">{this.props.getUsername()}</div>
+            <div className="logout" onClick={this.logout}>Logout</div>
+          </div>
           :
           <div>
           <button

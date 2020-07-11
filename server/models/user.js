@@ -16,6 +16,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     }
+
 });
 
 // This exports the module as User, which uses this Schema
