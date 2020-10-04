@@ -47,10 +47,3 @@ class ChatInput extends React.Component {
 
 export default ChatInput;
 
-/*
-<Box component="div" className="textInput">
-      <MyContainer maxWidth="xs">
-          <ChatInput callbackFromParent={this.textCallback} />
-      </MyContainer>
-      </Box>
-      */

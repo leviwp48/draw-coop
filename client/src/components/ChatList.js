@@ -9,19 +9,6 @@ const MyContainer = styled(Container)({
   backgroundColor: "green"
 });
 
-/*
--- was a function to update state in the mapping 
-function addText(state, props) {
-  if (state == false) {
-    return null;
-  }
-
-  return {
-    odd: !state.odd,
-  }
-}
-*/
-
 class ChatList extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +44,8 @@ class ChatList extends React.Component {
       </Box>  
     )
   }
-  
+}
+export default ChatList;
 
   /*
   defineText = (data) => {
@@ -159,5 +147,4 @@ class ChatList extends React.Component {
         />
       </div>
 */
-}
-export default ChatList;
+

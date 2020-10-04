@@ -4,7 +4,6 @@ import "./Dashboard.css";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import Chat from "../chat/Chat.js";
-import socketIOClient from "socket.io-client";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -92,25 +91,6 @@ export default class Dashboard extends Component {
       }
     } 
   }
-
-  /*
-  handleKeyPress = e => {
-    e.preventDefault();
-
-    const user = {
-      username: this.state.name,
-      password: this.state.password,
-      userId: this.state.userId
-
-    };
-
-    axios.post(`http://localhost:3001/api/register`, { user })
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
-  };
-*/
 
   handleUsernameChange = e => {
     this.setState({ username: e.target.value });

@@ -111,19 +111,6 @@ io.on("connect", function(socket) {
 
  socket.emit("connected", formatMessage(botName, socket.id));
 
-
- /*
-  if(!hasConnected){
-    console.log("first time connecting!")
-    hasConnected = true;
-  }
-  else{
-    console.log('second time connecting!');
-    socket.broadcast.emit("user connected", formatMessage(botName, "A user has joined!"));
-  }
-  */
-  // socket.emit("chat message", formatMessage(botName, "Welcome!"));
-
   // INTERESTING NOTE: using the socket.emit to the "my id" event made it so that the same socket id was used. Not sure why that is yet. 
   // It must have something to do with the a single socket version.
 
@@ -132,27 +119,11 @@ io.on("connect", function(socket) {
   // conditional to see which player joins. I should have a sign in page where you can 
   // login as your user
 
-
-  /*
-  if(userOne == ""){
-    userOne = socket.id;
-    socket.join("game room");
-    socket.broadcast.emit("user ready", formatMessage(botName, "User One has joined!", userOne));
-  }
-  else if(userTwo == ""){
-    socket.join("game room");
-    userTwo = socket.id;
-    socket.broadcast.emit("user ready", formatMessage(botName, "User Two has joined!", userTwo));
-  }
-*/
-
-  //console.log("current users, UserOne: " + userOne + " & " + "UserTwo: " + userTwo);
-
   socket.on("chat message", function(msg, username) {
 
     if(username == ""){
       username = "Anonymous";
-      socket.emit("No login", formatMessage("Admin Bot", "Please login"));
+      // socket.emit("No login", formatMessage("Admin Bot", "Please login"));
     }
 
     console.log("Sending message to client: " + msg + " username: " + username);
