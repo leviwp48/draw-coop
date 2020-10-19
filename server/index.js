@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const passport = require("passport");
 const users = require("./routes/api/users");
 
+// TODO: need to migrate to Atlas from MLab
 // TODO: create correct user login by authenticating on the back end then storing a token on the front end
 // well a makeshift version is probs good enough
 
@@ -109,7 +110,7 @@ io.on("connect", function(socket) {
   }
   */    
 
- socket.emit("connected", formatMessage(botName, socket.id));
+ socket.emit("connected", formatMessage(botName, "Connected!"));
 
   // INTERESTING NOTE: using the socket.emit to the "my id" event made it so that the same socket id was used. Not sure why that is yet. 
   // It must have something to do with the a single socket version.

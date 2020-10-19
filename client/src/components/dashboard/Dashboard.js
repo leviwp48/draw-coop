@@ -75,6 +75,19 @@ export default class Dashboard extends Component {
         console.log(res);
         console.log(res.data);
         this.setState({show: false});
+        axios.post(`http://localhost:3001/api/users/login`, user)
+        .then(res => {
+          console.log("login response: ");
+          console.log(res.data.token);
+          console.log(jwt_decode(res.data.token).username);
+          this.props.setToken(res.data.token);
+          this.props.setUsername(jwt_decode(res.data.token).username);
+          console.log("almost connected");    
+          this.setState({show: false});
+        })
+        .catch(err => {
+          console.log(err.response)
+        });
       })
       .catch(err => {
         console.log(err.response)

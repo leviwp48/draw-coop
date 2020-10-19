@@ -59,9 +59,11 @@ class Chat extends Component {
     if (e.key === "Enter") {
       if(this.props.getUsername == ""){
         socket.emit("chat message", this.state.message, "");
+        this.setState({message: ""});
       }
       else{
         socket.emit("chat message", this.state.message, this.props.getUsername);
+        this.setState({message: ""});
       }
     }
   }
@@ -69,9 +71,11 @@ class Chat extends Component {
   handleClick = e => {   
     if(this.props.getUsername == ""){
       socket.emit("chat message", this.state.message, "");
+      this.setState({message: ""});
     }
     else{
       socket.emit("chat message", this.state.message, this.props.getUsername);
+      this.setState({message: ""});
     }
   }
 
