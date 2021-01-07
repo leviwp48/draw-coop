@@ -1,0 +1,39 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  .whiteboard-container{
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+  }
+
+  .whiteboard-wrapper{
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+
+  .whiteboard {
+    height: 100%;
+    width: 100%;
+    color: white;
+  }
+  
+  .colors {
+    display: flex;
+    position: fixed;
+
+  }
+  
+  .color {
+    display: inline-block;
+    height: 48px;
+    width: 48px;
+  }
+  
+  .color.black { background-color: black; }
+  .color.red { background-color: red; }
+  .color.green { background-color: green; }
+  .color.blue { background-color: blue; }
+  .color.yellow { background-color: yellow; }

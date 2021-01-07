@@ -4,6 +4,7 @@ import "./Dashboard.css";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import Chat from "../chat/Chat.js";
+import Board from "../board/Board";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -176,6 +177,7 @@ export default class Dashboard extends Component {
           
           }
           <Chat getUsername={this.props.getUsername()} />
+          <Board/>
       </main>
     );
   }
