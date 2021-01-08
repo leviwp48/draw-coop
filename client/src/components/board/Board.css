@@ -3,8 +3,8 @@
   }
   
   .whiteboard-container{
-    width: 100px;
-    height: 100px;
+    width: 50%;
+    height: 600px;
     margin: 0 auto;
   }
 
@@ -22,8 +22,6 @@
   
   .colors {
     display: flex;
-    position: fixed;
-
   }
   
   .color {
