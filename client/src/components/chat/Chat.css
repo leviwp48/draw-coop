@@ -15,18 +15,29 @@
     white-space: pre-line;
     overflow-y: scroll;
     width: 65%;
-    height: 200px;
+    height: 150px;
     padding: 5px 0px 5px 10px;
     background-color: #23272a;
     color: #FFFFFF;
     text-align: left;
 }
 
+.chatBox::-webkit-scrollbar {
+  width: 1em;
+}
+
+.chatBox::-webkit-scrollbar-thumb {
+background-color: darkgrey;
+outline: 1px solid slategrey;
+}
+
 .chatInputBox{
     display: inline-block;
     width: 65%;
-    height: 55px;
+    height: 50px;
     margin-top: -5px;
+    padding: 15px 0px 5px 10px;
+    padding-bottom: px;
     background-color: #23272a;
 }
 
@@ -34,13 +45,11 @@
     display: inline-block;
     background-color: #2c2f33;
     color: #FFFFFF;
-
-    margin: 5px 0px 0px 0px;
     width: 75%;
     border: none;
     border-radius: 7px;
-    font-size: 25px;
-    padding: 3px 7px 3px 7px;
+    font-size: 20px;
+    padding: 4px 7px 4px 7px;
     outline: none;
     caret-color: #FFFFFF;
 }

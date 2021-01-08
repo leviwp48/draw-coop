@@ -67,6 +67,8 @@ const Board = () => {
       drawing = true;
       current.x = e.clientX || e.touches[0].clientX;
       current.y = e.clientY || e.touches[0].clientY;
+      console.log("x of draw " + current.x);
+      console.log("x of mouse " + e.clientX);
     };
 
     const onMouseMove = (e) => {
@@ -136,15 +138,17 @@ const Board = () => {
     <div className="whiteboard-container">
       <div className="whiteboard-wrapper">
         <canvas ref={canvasRef} className="whiteboard" />
-
-        <div ref={colorsRef} className="colors">
-          <div className="color black" />
-          <div className="color red" />
-          <div className="color green" />
-          <div className="color blue" />
-          <div className="color yellow" />
+        <div className="colors-wrapper">
+          <div ref={colorsRef} className="colors">
+              <div className="color black" />
+              <div className="color red" />
+              <div className="color green" />
+              <div className="color blue" />
+              <div className="color yellow" />
+              <div className="color purple"/>
+          </div>
         </div>
-      </div>   
+      </div>     
     </div>
   );
 };
