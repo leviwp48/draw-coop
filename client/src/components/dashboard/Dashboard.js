@@ -176,6 +176,7 @@ export default class Dashboard extends Component {
           </div>
           
           }
+
           <Board/>
           <Chat getUsername={this.props.getUsername()} />
       </main>

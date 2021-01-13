@@ -2,11 +2,17 @@ import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import './Board.css';
 
-
 const Board = () => {
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
   const socketRef = useRef();
+
+  const draw = ctx => {
+    ctx.fillStyle = '#000000'
+    ctx.beginPath()
+    ctx.arc(50, 100, 20, 0, 2*Math.PI)
+    ctx.fill()
+  }
 
   useEffect(() => {
 
@@ -65,23 +71,33 @@ const Board = () => {
 
     const onMouseDown = (e) => {
       drawing = true;
-      current.x = e.clientX || e.touches[0].clientX;
-      current.y = e.clientY || e.touches[0].clientY;
+      let canvasBounds = canvas.getBoundingClientRect();
+      console.log("canvasBounds: " + canvasBounds.left + " cavas bounds Y: " + canvasBounds.top);
+      let offsetX = canvasBounds.left;
+      let offsetY = canvasBounds.top;
+      current.x = (e.clientX || e.touches[0].clientX) - offsetX;
+      current.y = (e.clientY || e.touches[0].clientY) - offsetY;
       console.log("x of draw " + current.x);
       console.log("x of mouse " + e.clientX);
     };
 
     const onMouseMove = (e) => {
       if (!drawing) { return; }
-      drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
-      current.x = e.clientX || e.touches[0].clientX;
-      current.y = e.clientY || e.touches[0].clientY;
+      let canvasBounds = canvas.getBoundingClientRect();
+      let offsetX = canvasBounds.left;
+      let offsetY = canvasBounds.top;
+      drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, true);
+      current.x = (e.clientX || e.touches[0].clientX) - offsetX;
+      current.y = (e.clientY || e.touches[0].clientY) - offsetY;
     };
 
     const onMouseUp = (e) => {
       if (!drawing) { return; }
       drawing = false;
-      drawLine(current.x, current.y, e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY, current.color, true);
+      let canvasBounds = canvas.getBoundingClientRect();
+      let offsetX = canvasBounds.left;
+      let offsetY = canvasBounds.top;
+      drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, true);
     };
 
     // ----------- limit the number of events per second -----------------------
@@ -114,8 +130,20 @@ const Board = () => {
     // -------------- make the canvas fill its parent component -----------------
 
     const onResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      let {width, height} = canvas.getBoundingClientRect();
+      if(canvas.width !== width || canvas.height !== height){
+        canvas.width = width;
+        canvas.height = height;
+      }
+      /*
+      let scaleX = window.innerWidth / canvas.width;
+      let scaleY = window.innerWidth / canvas.height;
+      let scaleToFit = Math.min(scaleX, scaleY);
+      let scaleToCover = Math.max(scaleX, scaleY);
+
+      canvas.style.transformOrigin = '0 0'; // scale from top left
+      canvas.style.transform = 'scale(' + scaleToFit + ')';
+      */
     };
 
     window.addEventListener('resize', onResize, false);
@@ -136,8 +164,15 @@ const Board = () => {
 
   return (
     <div className="drawing-container">
-      <canvas ref={canvasRef} className="whiteboard" />
-      <section ref={colorsRef} className="colors">
+      <canvas ref={canvasRef} className="canvas" />
+    </div>
+  );
+};
+
+export default Board;
+
+/*
+<section ref={colorsRef} className="colors">
         <div className="color black" />
         <div className="color red" />
         <div className="color green" />
@@ -145,8 +180,4 @@ const Board = () => {
         <div className="color yellow" />
         <div className="color purple"/>
       </section>
-    </div>
-  );
-};
-
-export default Board;
+*/
