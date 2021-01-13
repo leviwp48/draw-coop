@@ -135,20 +135,16 @@ const Board = () => {
   // ------------- The Canvas and color elements --------------------------
 
   return (
-    <div className="whiteboard-container">
-      <div className="whiteboard-wrapper">
-        <canvas ref={canvasRef} className="whiteboard" />
-        <div className="colors-wrapper">
-          <div ref={colorsRef} className="colors">
-              <div className="color black" />
-              <div className="color red" />
-              <div className="color green" />
-              <div className="color blue" />
-              <div className="color yellow" />
-              <div className="color purple"/>
-          </div>
-        </div>
-      </div>     
+    <div className="drawing-container">
+      <canvas ref={canvasRef} className="whiteboard" />
+      <section ref={colorsRef} className="colors">
+        <div className="color black" />
+        <div className="color red" />
+        <div className="color green" />
+        <div className="color blue" />
+        <div className="color yellow" />
+        <div className="color purple"/>
+      </section>
     </div>
   );
 };

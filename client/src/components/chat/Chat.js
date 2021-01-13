@@ -81,22 +81,20 @@ class Chat extends Component {
 
   render() {
     return (
-    <div className="chatBoxContainer">
-      <div className="chatBoxWrapper">
-        <div className="chatBox">  
-          {this.state.displayData}        
-        </div>    
-        <div className="chatInputBox">
-            <input
-                className="chatInput"
-                type="text"
-                placeholder="Type here" 
-                value={this.state.message}
-                onChange={this.handleChange}
-                onKeyPress={this.handleKeyPress}
-            />
-          </div>  
-      </div>
+    <div className="chatBox-container">
+      <div className="chatBox">  
+        {this.state.displayData}        
+      </div>    
+      <div className="chatInputBox">
+        <input
+            className="chatInput"
+            type="text"
+            placeholder="Type here" 
+            value={this.state.message}
+            onChange={this.handleChange}
+            onKeyPress={this.handleKeyPress}
+        />
+      </div>  
     </div>
     
     )

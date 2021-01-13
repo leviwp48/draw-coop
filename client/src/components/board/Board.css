@@ -1,37 +1,29 @@
 
-  .whiteboard-container{
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  .whiteboard-wrapper{
+  .drawing-container{
     display: flex;
     justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    width: 100%;
+    margin-bottom: 10px;
   }
-
+  
   .whiteboard {
-    display: inline-block;
-    height: 50%;
     width: 50%;
+    height: 30vh;
     color: white;
     background-color: white;
   }
   
-  .colors-wrapper{
+  .colors{
     display: flex;
-    width: 15%;
-  }
-
-  .colors {
-    display: inline-block;
+    flex-flow: row wrap;
+    width:16%;
+    height:100%;
   }
   
   .color {
-    display: inline-block;
-    height: 48px;
-    width: 48px;
+    margin: 1px;
+    height: 40px;
+    width: 40px;
   }
   
   .color.black { background-color: black; }
