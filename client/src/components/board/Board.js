@@ -71,21 +71,21 @@ const Board = () => {
 
     const onMouseDown = (e) => {
       drawing = true;
-      let canvasBounds = canvas.getBoundingClientRect();
-      console.log("canvasBounds: " + canvasBounds.left + " cavas bounds Y: " + canvasBounds.top);
-      let offsetX = canvasBounds.left;
-      let offsetY = canvasBounds.top;
-      current.x = (e.clientX || e.touches[0].clientX) - offsetX;
-      current.y = (e.clientY || e.touches[0].clientY) - offsetY;
-      console.log("x of draw " + current.x);
-      console.log("x of mouse " + e.clientX);
+      canvas.canvasBounds = canvas.getBoundingClientRect();
+      current.x = (e.clientX || e.touches[0].clientX) - canvas.canvasBounds.left;
+      current.y = (e.clientY || e.touches[0].clientY) - canvas.canvasBounds.top;
+      // let offsetX = canvasBounds.left;
+      // let offsetY = canvasBounds.top;
+      // console.log("mouse down");
+      // current.x = (e.clientX || e.touches[0].clientX) - offsetX;
+      // current.y = (e.clientY || e.touches[0].clientY) - offsetY;
     };
 
     const onMouseMove = (e) => {
       if (!drawing) { return; }
-      let canvasBounds = canvas.getBoundingClientRect();
-      let offsetX = canvasBounds.left;
-      let offsetY = canvasBounds.top;
+      console.log("drawing");
+      let offsetX = canvas.canvasBounds.left;
+      let offsetY = canvas.canvasBounds.top;
       drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, true);
       current.x = (e.clientX || e.touches[0].clientX) - offsetX;
       current.y = (e.clientY || e.touches[0].clientY) - offsetY;
@@ -94,9 +94,8 @@ const Board = () => {
     const onMouseUp = (e) => {
       if (!drawing) { return; }
       drawing = false;
-      let canvasBounds = canvas.getBoundingClientRect();
-      let offsetX = canvasBounds.left;
-      let offsetY = canvasBounds.top;
+      let offsetX = canvas.canvasBounds.left;
+      let offsetY = canvas.canvasBounds.top;
       drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, true);
     };
 
@@ -165,14 +164,7 @@ const Board = () => {
   return (
     <div className="drawing-container">
       <canvas ref={canvasRef} className="canvas" />
-    </div>
-  );
-};
-
-export default Board;
-
-/*
-<section ref={colorsRef} className="colors">
+      <section ref={colorsRef} className="colors">
         <div className="color black" />
         <div className="color red" />
         <div className="color green" />
@@ -180,4 +172,11 @@ export default Board;
         <div className="color yellow" />
         <div className="color purple"/>
       </section>
-*/
+    </div>
+  );
+};
+
+export default Board;
+
+
+
