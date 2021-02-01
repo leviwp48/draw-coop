@@ -1,6 +1,9 @@
 import React, { useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import socketIOClient from "socket.io-client";
 import './Board.css';
+
+const ENDPOINT = "http://127.0.0.1:3001";
 
 const Board = () => {
   const canvasRef = useRef(null);
@@ -83,7 +86,6 @@ const Board = () => {
 
     const onMouseMove = (e) => {
       if (!drawing) { return; }
-      console.log("drawing");
       let offsetX = canvas.canvasBounds.left;
       let offsetY = canvas.canvasBounds.top;
       drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, true);
@@ -94,7 +96,7 @@ const Board = () => {
     const onMouseUp = (e) => {
       if (!drawing) { return; }
       drawing = false;
-      let offsetX = canvas.canvasBounds.left;
+       let offsetX = canvas.canvasBounds.left;
       let offsetY = canvas.canvasBounds.top;
       drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, true);
     };
@@ -155,7 +157,7 @@ const Board = () => {
       drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
     }
 
-    socketRef.current = io.connect('/');
+    socketRef.current = socketIOClient(ENDPOINT);
     socketRef.current.on('drawing', onDrawingEvent);
   }, []);
 

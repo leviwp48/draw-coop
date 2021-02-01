@@ -146,6 +146,12 @@ io.on("connect", function(socket) {
     //io.emit("chat message", msg);
   });
   
+  socket.on("drawing", (data) => {
+    console.log("drawing");
+    io.emit("drawing", data);
+  });
+  
+
   socket.on("disconnect", () => {
     console.log("destroying");
 
