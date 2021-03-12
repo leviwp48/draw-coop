@@ -40,10 +40,10 @@ export default class App extends Component{
   }
 
     //TODO implement React Router or pass down components to children to swtich pages
+    // NEED to look into context to keep state instead of passing down to children
   render(){
     return (
       <div className="App" id="darkmode">
-        <h1 className="Title">Chat</h1>
 
         <Dashboard setUsername={this.setUsername} getUsername={this.getUsername} 
                    setToken={this.setToken} getToken={this.getToken} getTokenStatus={this.getTokenStatus}

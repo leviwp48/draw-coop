@@ -133,7 +133,7 @@ io.on("connect", function(socket) {
       //io.to("game room").emit("chat message", formatMessage("User One", msg, userOne));
     io.emit("chat message", formatMessage(username, msg));
 
-      //io.emit("chat message", formatMessage("User One", msg));
+      //io.emit("chat message", formatMesrsage("User One", msg));
     //}
     //else if(userTwo == socket.id){
       //io.to("game room").emit("chat message", formatMessage("User Two", msg, userTwo));

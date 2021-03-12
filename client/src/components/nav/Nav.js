@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import Modal from "../login/LoginModal.js";
-import "./Dashboard.css";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import Chat from "../chat/Chat.js";
-import Board from "../board/Board";
-import Nav from "../nav/Nav";
+import './Nav.css';
 
-export default class Dashboard extends Component {
+
+export default class Nav extends Component {
   constructor(props) {
     super(props);
 
@@ -123,14 +121,70 @@ export default class Dashboard extends Component {
     this.props.deleteToken();
   }
 
+  showLogin = () => {
+
+    if(this.props.getTokenStatus()){
+      return( 
+      <div>
+        <div className="username">{this.props.getUsername()}</div>
+        <div className="logout" onClick={this.logout}>Logout</div>
+      </div>
+      );
+    }
+    else{
+      return (
+      <div>
+        <button
+          className="button-login"
+          type="button"
+          onClick={() => this.showModalLogin()}
+        >
+        Login
+        </button>
+        
+        <button
+          className="button-register"
+          type="button"
+          onClick={() => this.showModalRegister()}
+        >
+        Register
+        </button>
+      </div>
+      );
+    }           
+  }
+
   render() {
     return (
-      <div>        
-        <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
-             setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
-             deleteToken={this.props.deleteToken}/>
-        <Board/>
-        <Chat getUsername={this.props.getUsername} />
+      <div className="nav-container">             
+        <Modal 
+          ref={node => this.node = node}
+          show={this.state.show}
+          submitRegister={this.handleSubmitRegister}
+          submitLogin={this.handleSubmitLogin}
+          onEnter={this.onEnter}
+          modalType={this.state.modalType}
+          handleClose={this.hideModal}
+        >
+          <input
+            className="input-username"
+            type="text"
+            value={this.username}
+            onChange={this.handleUsernameChange}
+            onKeyPress={this.onEnter}
+          />
+          <input
+            className="input-password"
+            type="text"
+            value={this.state.password}
+            onChange={this.handlePasswordChange}
+            onKeyPress={this.onEnter}
+          />
+        </Modal>
+        <div className="nav-bar">
+          <h1 className="title">Chat</h1>
+          {this.showLogin()}  
+        </div>          
       </div>
     );
   }

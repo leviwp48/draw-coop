@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
+
+.nav-container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;;
+}
+.title{
+}
+
+.nav-bar{
+  width: 100%; 
+  background-color: blue;
+}
+
+.button-login {
+  top: 15px;
+  right: 250px;
+  min-width: 100px;
+  width: 10%;
+  height: 40px;
+  font-size: 20px;
+  color: #eeeeee;
+  border-radius: 5px;
+  border: solid #007ea7;
+  background: #007ea7;
+}
+.button-login:hover,
+:focus {
+  cursor: pointer;
+}
+
+.button-register {
+
+  min-width: 100px;
+  width: 10%;
+  height: 40px;
+  font-size: 20px;
+  color: #eeeeee;
+  border-radius: 5px;
+  border: solid #8d6a9f;
+  background: #8d6a9f;
+}
+.button-register:hover,
+:focus {
+  cursor: pointer;
+}
+
+.username{
+
+  min-width: 100px;
+  width: 10%;
+  height: 30px;
+  font-size: 20px;
+  padding-top: 5px;
+  font-family: sans-serif;   
+  color: #eeeeee;
+  border-radius: 3px;
+  border: solid 2px #baabda;
+  background: #baabda;
+}
+.username:hover,
+:focus {
+  cursor: pointer;
+}
+
+.logout{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  min-width: 100px;
+  width: 10%;
+  height: 30px;
+  font-size: 20px;
+  padding-top: 5px;
+  font-family: sans-serif;   
+  color: #eeeeee;
+  border-radius: 3px;
+  border: solid 2px #ff6962;
+  background: #ff6962;
+}
+.logout:hover,
+:focus {
+  cursor: pointer;
+}
