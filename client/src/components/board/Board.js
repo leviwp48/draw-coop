@@ -96,9 +96,11 @@ const Board = () => {
     const onMouseUp = (e) => {
       if (!drawing) { return; }
       drawing = false;
-       let offsetX = canvas.canvasBounds.left;
+      let offsetX = canvas.canvasBounds.left;
       let offsetY = canvas.canvasBounds.top;
-      drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, true);
+      //let touchX = e.touches[0].clientX;
+      //let touchY = e.touches[0].clientY;
+      //drawLine(current.x, current.y, (e.clientX || touchX) - offsetX, (e.clientY || touchY) - offsetY, current.color, true);
     };
 
     // ----------- limit the number of events per second -----------------------

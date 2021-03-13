@@ -136,6 +136,7 @@ export default class Nav extends Component {
       <div>
         <button
           className="button-login"
+          id="user"
           type="button"
           onClick={() => this.showModalLogin()}
         >
@@ -144,6 +145,7 @@ export default class Nav extends Component {
         
         <button
           className="button-register"
+          id="user"
           type="button"
           onClick={() => this.showModalRegister()}
         >
@@ -181,7 +183,7 @@ export default class Nav extends Component {
             onKeyPress={this.onEnter}
           />
         </Modal>
-        <div className="nav-bar">
+        <div className="nav-bar" >
           <h1 className="title">Chat</h1>
           {this.showLogin()}  
         </div>          

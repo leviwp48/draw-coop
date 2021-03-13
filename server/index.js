@@ -15,13 +15,16 @@ const users = require("./routes/api/users");
 // well a makeshift version is probs good enough
 
 // DB Config
-const dbkey = require('./config/keys').mongoURI;
+const uri = require('./config/keys').mongoURI;
 
 let db;
 // connecting to mongo with mongoose
+//const MongoClient = require('mongodb').MongoClient;
+//const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 mongoose
-  .connect(dbkey, {useNewUrlParser: true})
-  .then(() => {
+.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true})
+.then(() => {
     db = mongoose.connection;
     console.log('MDB connected...')
   })

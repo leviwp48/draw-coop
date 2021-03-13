@@ -1,54 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
 
-.nav-container{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin: 0 auto;;
-}
 .title{
+  cursor: pointer;
+  margin-right: auto;
 }
 
 .nav-bar{
-  width: 100%; 
-  background-color: blue;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem 10%;
+  background-color: #34495e;
 }
 
 .button-login {
-  top: 15px;
-  right: 250px;
-  min-width: 100px;
-  width: 10%;
-  height: 40px;
-  font-size: 20px;
-  color: #eeeeee;
-  border-radius: 5px;
-  border: solid #007ea7;
-  background: #007ea7;
-}
-.button-login:hover,
-:focus {
+  border: none;
+  background: none; 
   cursor: pointer;
-}
+  font-size: 20px;
+  color: #ecf0f1;
+ }
 
 .button-register {
-
-  min-width: 100px;
-  width: 10%;
-  height: 40px;
-  font-size: 20px;
-  color: #eeeeee;
-  border-radius: 5px;
-  border: solid #8d6a9f;
-  background: #8d6a9f;
-}
-.button-register:hover,
-:focus {
+  border: none;
+  background: none; 
   cursor: pointer;
+  font-size: 20px;
+  color: #ecf0f1;
+}
+
+#user{
+  padding: 0rem 1rem;
+  transition: all 0.3s ease 0s;
+}
+
+#user:hover, :focus {
+  color: #d35400;
 }
 
 .username{
-
   min-width: 100px;
   width: 10%;
   height: 30px;
