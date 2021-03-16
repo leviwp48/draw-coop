@@ -20,4 +20,4 @@ const UserSchema = new Schema({
 });
 
 // This exports the module as User, which uses this Schema
-let User = module.exports  = mongoose.model('user', UserSchema);
+module.exports  = mongoose.model('user', UserSchema);

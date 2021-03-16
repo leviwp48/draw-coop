@@ -1,8 +1,7 @@
 
-// User router file
-
+// User route file
 const express = require("express");
-const router = express.Router();
+const app = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
@@ -16,7 +15,7 @@ const User = require("../../models/User");
 // @desc    Get User
 // @access  Public
 // Will grab user on login
-router.post('/login', (req, res) =>{
+app.post('/login', (req, res) =>{
   console.log("Logging in...");
 
   // Form validation
@@ -72,7 +71,7 @@ router.post('/login', (req, res) =>{
 // @desc    Create A User
 // @access  Public
 // Will create new users using the requests body name 
-router.post('/register', (req, res) =>{
+app.post('/register', (req, res) =>{
 
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);  
@@ -107,4 +106,4 @@ router.post('/register', (req, res) =>{
   console.log("Registering...");
 });
 
-module.exports = router;
+module.exports = app;

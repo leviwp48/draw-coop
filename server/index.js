@@ -9,6 +9,8 @@ const PORTNUM = 3001;
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const users = require("./routes/api/users");
+const canvas = require("./routes/api/canvas");
+
 
 // TODO: need to migrate to Atlas from MLab
 // TODO: create correct user login by authenticating on the back end then storing a token on the front end
@@ -31,7 +33,6 @@ mongoose
   .catch(err => console.log(err));
 
   // Projects model from the model folder
-let User = require('./models/User');
 
 /*
 
@@ -66,6 +67,7 @@ app.options('/api/users', function (req, res) {
 
 // Routes
 app.use("/api/users", users);
+app.use("/api/canvas", canvas);
 
 // @route   GET /
 // @desc    Dashboard
@@ -84,6 +86,7 @@ app.get("/api/game-room", function(req, res) {
   console.log("in the game room");
 });
 
+app.get("/")
 /*
 
 Routing Ends
