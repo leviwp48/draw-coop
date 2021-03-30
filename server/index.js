@@ -5,11 +5,12 @@ const io = require("socket.io")(server);
 const formatMessage = require("./utils/message");
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config();
 const PORTNUM = 3001;
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const users = require("./routes/api/users");
-const canvas = require("./routes/api/canvas");
+//const canvas = require("./routes/api/canvas");
 
 
 // TODO: need to migrate to Atlas from MLab
@@ -67,7 +68,7 @@ app.options('/api/users', function (req, res) {
 
 // Routes
 app.use("/api/users", users);
-app.use("/api/canvas", canvas);
+//app.use("/api/canvas", canvas);
 
 // @route   GET /
 // @desc    Dashboard
@@ -100,31 +101,11 @@ Socket.io begins
 var botName = "Admin Bot";
 var userList = [];
 var hasConnected = false;
+var Canvas = require("./models/canvas")
 
-io.on("connect", function(socket) {
-  console.log("connecting...");
+io.on("connect", function(socket) {    
 
-/*
-  for(let i = 0; i < userList.length(); i++){
-    if(userList[i] == newUser){
-      return isUser = true;    
-    }  
-    else{
-      userList.push(newUser);
-      isUser = false;
-    }
-  }
-  */    
-
- socket.emit("connected", formatMessage(botName, "Connected!"));
-
-  // INTERESTING NOTE: using the socket.emit to the "my id" event made it so that the same socket id was used. Not sure why that is yet. 
-  // It must have something to do with the a single socket version.
-
-  // Not sure what broadcast does exactly
-  
-  // conditional to see which player joins. I should have a sign in page where you can 
-  // login as your user
+  socket.emit("connected", formatMessage(botName, "Connected!"));
 
   socket.on("chat message", function(msg, username) {
 
@@ -144,17 +125,26 @@ io.on("connect", function(socket) {
     //else if(userTwo == socket.id){
       //io.to("game room").emit("chat message", formatMessage("User Two", msg, userTwo));
       //io.emit("chat message", formatMessage("User Two", msg));
-   // }
+    // }
       //console.log("user ID and socket ID did not match... aborting")
       //console.log("User One: " + userOne + " => " + socket.id);
       //console.log("User Two: " + userTwo + " => " + socket.id);
-  
+
     //io.emit("chat message", msg);
   });
-  
+
   socket.on("drawing", (data) => {
-    console.log("drawing");
-    io.emit("drawing", data);
+    console.log(data);
+    // need to check if canvas id exits and need to capture it
+    let newCanvas = new Canvas({
+      canvasData: [data],
+      lastModified: Date.now()
+  });
+
+   //newCanvas.save()
+     // .catch(err => console.log(err));
+
+  io.emit("drawing", data);
   });
   
 

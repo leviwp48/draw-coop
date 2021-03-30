@@ -6,6 +6,7 @@ import jwt_decode from 'jwt-decode';
 import Chat from "../chat/Chat.js";
 import Board from "../board/Board";
 import Nav from "../nav/Nav";
+import BoardList from "../boardlist/BoardList";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -129,10 +130,11 @@ export default class Dashboard extends Component {
         <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
              setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
              deleteToken={this.props.deleteToken}/>
-        <Board/>
-        <Chat getUsername={this.props.getUsername} />
+        <BoardList/>
       </div>
     );
   }
 }
+
+//         <Chat getUsername={this.props.getUsername} />
 

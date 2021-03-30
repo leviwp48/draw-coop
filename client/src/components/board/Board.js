@@ -98,9 +98,9 @@ const Board = () => {
       drawing = false;
       let offsetX = canvas.canvasBounds.left;
       let offsetY = canvas.canvasBounds.top;
-      //let touchX = e.touches[0].clientX;
-      //let touchY = e.touches[0].clientY;
-      //drawLine(current.x, current.y, (e.clientX || touchX) - offsetX, (e.clientY || touchY) - offsetY, current.color, true);
+      context.save();
+      console.log(context);
+      // need to send the current state of the canvas to db
     };
 
     // ----------- limit the number of events per second -----------------------
