@@ -13,100 +13,40 @@ export default class Dashboard extends Component {
     super(props);
 
     this.state = {
-      currentUsername: "",
-      currentUserId: "",
-      show: false,
-      modalType: true,
-      username: "",
-      password: "",
-    };
+      userId: "",
+    }
   }
- 
-  showModalLogin = () => {
-    this.setState({
-      show: true,
-      modalType: true
-    });
-  };
-
-  showModalRegister = () => {
-    this.setState({
-      show: true,
-      modalType: false
-    });
-  };
-
-  hideModal = () => {
-    this.setState({ show: false });
-  };
-
-  handleSubmitLogin = (e) => {
-    e.preventDefault();
-
-    const user = {
-      username: this.state.username,
-      password: this.state.password,
-    };
-    
-    axios.post(`http://localhost:3001/api/users/login`, user)
-      .then(res => {
-        console.log("login response: ");
-        console.log(res.data.token);
-        console.log(jwt_decode(res.data.token).username);
-        this.props.setToken(res.data.token);
-        this.props.setUsername(jwt_decode(res.data.token).username);
-        console.log("almost connected");    
-        this.setState({show: false});
-      })
-      .catch(err => {
-        console.log(err.response)
-      });
+  
+  setUserId = (id) =>{
+    this.setState({userId: id})
   }
 
-  handleSubmitRegister = (e) => {
-    e.preventDefault();
+  createBoard = () => {
+    const userId = {
+      id:this.state.userId
+    }
 
-    const user = {
-      username: this.state.username,
-      password: this.state.password,
-    };
-    console.log(user.username);
-    console.log(user.password);
-
-    axios.post(`http://localhost:3001/api/users/register`, user)
+    console.log(userId);
+    axios.post(`http://localhost:3001/api/board/createBoard`, userId)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
-        this.setState({show: false});
-        axios.post(`http://localhost:3001/api/users/login`, user)
-        .then(res => {
-          console.log("login response: ");
-          console.log(res.data.token);
-          console.log(jwt_decode(res.data.token).username);
-          this.props.setToken(res.data.token);
-          this.props.setUsername(jwt_decode(res.data.token).username);
-          console.log("almost connected");    
-          this.setState({show: false});
+        console.log("creating a new board for user: " + userId)
         })
         .catch(err => {
           console.log(err.response)
         });
+    }
+  
+
+  getImage = () => {
+  
+    axios.get(`http://localhost:3001/api/board/image`)
+      .then(res => {
+        console.log("Grabbing board image for: ");
       })
       .catch(err => {
         console.log(err.response)
       });
-  }
-
-  onEnter = (e) => {
-    if (e.key === "Enter"){
-      if(this.state.modalType === true){
-        this.handleSubmitLogin(e)
-      }
-      else{
-        this.handleSubmitRegister(e)
-      }
-    } 
-  }
+  };
 
   handleUsernameChange = e => {
     this.setState({ username: e.target.value });
@@ -129,8 +69,15 @@ export default class Dashboard extends Component {
       <div>        
         <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
              setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
-             deleteToken={this.props.deleteToken}/>
-        <BoardList/>
+             deleteToken={this.props.deleteToken} setUserId={this.setUserId}/>
+        <BoardList getImage={this.getImage} getAuthor={this.getAuthor} getLastModified={this.getModified} />
+          <button
+            className="createBoard"
+            type="button"
+            onClick={() => this.createBoard()}
+          >
+          create board
+          </button>
       </div>
     );
   }

@@ -10,8 +10,6 @@ export default class Nav extends Component {
     super(props);
 
     this.state = {
-      currentUsername: "",
-      currentUserId: "",
       show: false,
       modalType: true,
       username: "",
@@ -52,6 +50,7 @@ export default class Nav extends Component {
         console.log(jwt_decode(res.data.token).username);
         this.props.setToken(res.data.token);
         this.props.setUsername(jwt_decode(res.data.token).username);
+        this.props.setUserId(jwt_decode(res.data.token).id);
         console.log("almost connected");    
         this.setState({show: false});
       })

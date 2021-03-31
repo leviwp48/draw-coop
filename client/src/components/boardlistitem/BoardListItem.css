@@ -1,8 +1,34 @@
 .listItem{
     display: flex;
+    flex-flow: wrap;
     justify-content:center;
-    align-items: center;
+    align-content: flex-start;
     height: 15rem;
     width:15rem;
     background: orange;
+}
+
+.imgContainer{
+    width:100%;
+    height: 75%;
+}
+
+img{
+    width:100%;
+    height: 100%;
+}
+
+.infoContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 25%;
+}
+
+#author{
+    padding-left: 1rem;
+}
+#lastModified{
+    padding-right: 1rem;
 }

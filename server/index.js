@@ -10,7 +10,7 @@ const PORTNUM = 3001;
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const users = require("./routes/api/users");
-//const canvas = require("./routes/api/canvas");
+const board = require("./routes/api/board");
 
 
 // TODO: need to migrate to Atlas from MLab
@@ -68,7 +68,7 @@ app.options('/api/users', function (req, res) {
 
 // Routes
 app.use("/api/users", users);
-//app.use("/api/canvas", canvas);
+app.use("/api/board", board);
 
 // @route   GET /
 // @desc    Dashboard
@@ -101,7 +101,7 @@ Socket.io begins
 var botName = "Admin Bot";
 var userList = [];
 var hasConnected = false;
-var Canvas = require("./models/canvas")
+var Board = require("./models/board")
 
 io.on("connect", function(socket) {    
 
@@ -136,8 +136,8 @@ io.on("connect", function(socket) {
   socket.on("drawing", (data) => {
     console.log(data);
     // need to check if canvas id exits and need to capture it
-    let newCanvas = new Canvas({
-      canvasData: [data],
+    let newBoard = new Board({
+      boardData: [data],
       lastModified: Date.now()
   });
 
