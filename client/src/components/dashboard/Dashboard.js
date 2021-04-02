@@ -14,9 +14,26 @@ export default class Dashboard extends Component {
 
     this.state = {
       userId: "",
+      image: "",
+      author: "",
+      lastModified: ""
     }
   }
   
+  setBoardData = async () => {
+    console.log(this.state.userId);
+    axios.post(`http://localhost:3001/api/board/getMyBoards`, this.state.userId)
+    console.log("doing stuff after login")   
+
+    .then(res => {
+      console.log("getting user's boards")
+      
+      })
+      .catch(err => {
+        console.log(err.response)
+      });
+  }
+
   setUserId = (id) =>{
     this.setState({userId: id})
   }
@@ -69,7 +86,7 @@ export default class Dashboard extends Component {
       <div>        
         <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
              setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
-             deleteToken={this.props.deleteToken} setUserId={this.setUserId}/>
+             deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData}/>
         <BoardList getImage={this.getImage} getAuthor={this.getAuthor} getLastModified={this.getModified} />
           <button
             className="createBoard"

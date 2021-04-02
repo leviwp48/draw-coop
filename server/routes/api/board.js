@@ -10,12 +10,11 @@ const Board = require("../../models/board");
 // @desc    Get User
 // @access  Public
 // Will grab user on login
-app.get('/getBoard', (req, res) =>{
-  console.log("Getting board data");
-
+app.post('/getMyBoards', (req, res) =>{
+  console.log("Getting user board data");
   // Find user by email
-  Board.find().then(boardData => {
-      console.log(boardData);
+  Board.find({ userId: req.body.userId }).then(myBoards => {
+      console.log(myBoards);
   })
 });
 
