@@ -1,9 +1,10 @@
-import React ,{useState} from "react";
+import React ,{useEffect, useRef, useState} from "react";
 import "./BoardList.css" 
 import BoardListItem from "../boardlistitem/BoardListItem";
 import sephImage from "./sephrioth.original.jpg";
 
-const BoardList=()=>{
+const BoardList=({image, author, lastModified})=>{
+
     return (
         <div className="listWrapper">
             <div className="listGrid">

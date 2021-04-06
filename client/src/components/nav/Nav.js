@@ -16,7 +16,7 @@ export default class Nav extends Component {
       password: "",
     };
   }
- 
+
   showModalLogin = () => {
     this.setState({
       show: true,
@@ -45,17 +45,15 @@ export default class Nav extends Component {
     
     axios.post(`http://localhost:3001/api/users/login`, user)
       .then(res => {
-        console.log("login response: ");
-        console.log(res.data.token);
-        console.log(jwt_decode(res.data.token).username);
-        this.props.setToken(res.data.token);
         this.props.setUsername(jwt_decode(res.data.token).username);
-        console.log("almost connected");    
+        this.props.setToken(res.data.token);
         this.setState({show: false});
       })     
       .catch(err => {
         console.log(err.response)
       });
+
+      
   }
 
   handleSubmitRegister = (e) => {

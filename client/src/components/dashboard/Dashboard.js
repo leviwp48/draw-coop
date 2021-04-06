@@ -16,37 +16,36 @@ export default class Dashboard extends Component {
       userId: "",
       image: "",
       author: "",
-      lastModified: ""
+      lastModified: "",
+      boardList: [],
+      boardsAdded: false,
     }
   }
   
-  setBoardData = async () => {
-    console.log(this.state.userId);
-    axios.post(`http://localhost:3001/api/board/getMyBoards`, this.state.userId)
-    console.log("doing stuff after login")   
-
+  getBoardData = () => {
+    axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: this.props.getUsername()})
     .then(res => {
       console.log("getting user's boards")
-      
+      console.log(res.data)
+      this.setState({boardList: res.data, boardsAdded: true});
       })
       .catch(err => {
         console.log(err.response)
       });
   }
 
-  setUserId = (id) =>{
-    this.setState({userId: id})
+  componentDidUpdate() {
+    console.log("using effect")
+    if(this.props.getTokenStatus() == true && this.state.boardsAdded == false){
+      this.getBoardData()
+      console.log("adding board stuff");
+    }
   }
 
   createBoard = () => {
-    const userId = {
-      id:this.state.userId
-    }
-
-    console.log(userId);
-    axios.post(`http://localhost:3001/api/board/createBoard`, userId)
+    axios.post(`http://localhost:3001/api/board/createBoard`, {userId: this.props.getUsername()})
       .then(res => {
-        console.log("creating a new board for user: " + userId)
+        console.log("creating a new board for user: " + this.props.getUsername())
         })
         .catch(err => {
           console.log(err.response)
@@ -87,7 +86,7 @@ export default class Dashboard extends Component {
         <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
              setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
              deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData}/>
-        <BoardList getImage={this.getImage} getAuthor={this.getAuthor} getLastModified={this.getModified} />
+        <BoardList getImage={this.getImage} getAuthor={this.getAuthor} getLastModified={this.getModified} getBoardData={this.getBoardData}/>
           <button
             className="createBoard"
             type="button"
