@@ -27,7 +27,21 @@ app.post('/createBoard', (req, res) =>{
     console.log("Making a new board");
     console.log(req.body.userId);
    const newBoard = new Board({
-        boardData: [], 
+            b1: [{
+                  x0: 0,
+                  y0: 0,
+                  x1: 50,
+                  y1: 39,
+                  color: "black",
+            }],
+            b2: [{
+                  x0: 50,
+                  y0: 39,
+                  x1: 100,
+                  y1: 100,
+                  color: "red",
+            }],
+        
         lastModified: Date.now(),
         userId: req.body.userId
     });
@@ -36,7 +50,7 @@ app.post('/createBoard', (req, res) =>{
         .then(newBoard => res.json(newBoard))
         .catch(err => console.log(err));
          
-    console.log("Adding...");
+    console.log("Adding..." + newBoard);
 });
 
 module.exports = app;

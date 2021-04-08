@@ -1,16 +1,27 @@
 import React ,{useEffect, useRef, useState} from "react";
 import "./BoardList.css" 
 import BoardListItem from "../boardlistitem/BoardListItem";
-import sephImage from "./sephrioth.original.jpg";
+import axios from 'axios';
 
-const BoardList=({image, author, lastModified})=>{
+const BoardList=({boardInfo, username})=>{
+
+    useEffect(() => {
+        axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: username})
+        .then(res => {
+          console.log("getting user's boards")
+          console.log(res.data.boardData[2].boardData[0].b1)
+          })
+          .catch(err => {
+            console.log(err.response)
+          });
+        
+    }, []);
+
 
     return (
         <div className="listWrapper">
-            <div className="listGrid">
-                <BoardListItem image={sephImage} author="me" lastModified="11:00PM"/>
-                <BoardListItem image={sephImage} author="me" lastModified="11:00PM"/>
-                <BoardListItem image={sephImage} author="me" lastModified="11:00PM"/>
+            <div className="listGrid">              
+                <BoardListItem boardInfo={boardInfo} />
             </div>
         </div>
     )
@@ -18,4 +29,3 @@ const BoardList=({image, author, lastModified})=>{
  
 export default BoardList;
 
-//                <BoardListItem image={this.props.image} author={this.props.author} lastModified={this.props.lastModified}/>

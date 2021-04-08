@@ -1,43 +1,18 @@
 import React ,{useEffect, useRef, useState} from "react";
 import "./BoardListItem.css" 
 
-const BoardListItem = ({image, author, lastModified}) =>{
- 
+const BoardListItem = ({boardInfo, author, lastModified}) =>{
+    const [boardData, setBoardData] = useState(boardInfo);
     const canvasRef = useRef(null);
     const colorsRef = useRef(null);
     const socketRef = useRef();
-
-    const draw = ctx => {
-    ctx.fillStyle = '#000000'
-    ctx.beginPath()
-    ctx.arc(50, 100, 20, 0, 2*Math.PI)
-    ctx.fill()
-    }
+    
     useEffect(() => {
 
         const canvas = canvasRef.current;
         const test = colorsRef.current;
         const context = canvas.getContext('2d');
-
-        // ----------------------- Colors --------------------------------------------------
-
-        const colors = document.getElementsByClassName('color');
-        console.log(colors, 'the colors');
-        console.log(test);
-        // set the current color
-        const current = {
-            color: 'black',
-        };
-
-        // helper that will update the current color
-        const onColorUpdate = (e) => {
-            current.color = e.target.className.split(' ')[1];
-        };
-
-        // loop through the color elements and add the click event listeners
-        for (let i = 0; i < colors.length; i++) {
-            colors[i].addEventListener('click', onColorUpdate, false);
-        }
+      
         let drawing = false;
 
         const drawLine = (x0, y0, x1, y1, color, emit) => {
@@ -48,7 +23,26 @@ const BoardListItem = ({image, author, lastModified}) =>{
             context.lineWidth = 2;
             context.stroke();
             context.closePath(); 
-            };
+        };
+
+        const onResize = () => {
+        let {width, height} = canvas.getBoundingClientRect();
+        if(canvas.width !== width || canvas.height !== height){
+            canvas.width = width;
+            canvas.height = height;
+            }
+        };
+
+        window.addEventListener('resize', onResize, false);
+        onResize();
+        
+        const w = canvas.width;
+        const h = canvas.height;
+        console.log("got this thing here: " + boardInfo)
+        //drawLine(boardInfo.b1[0].x0, boardInfo.b1[0].y0, boardInfo.b1[0].x1, boardInfo.b1[0].y1, boardInfo.b1[0].color);
+       // drawLine(boardInfo.b2[0].x0, boardInfo.b2[0].y0, boardInfo.b2[0].x1, boardInfo.b2[0].y1, boardInfo.b2[0].color);
+        console.log("drew the line dude")
+
     }, []);
 
     return (
@@ -59,7 +53,14 @@ const BoardListItem = ({image, author, lastModified}) =>{
             <div className="infoContainer"> 
                 <p id="author"> {author} </p>
                 <p id="lastModified"> {lastModified} </p>
+                <button className="goToBoard"
+            type="button"
+            onClick={() => this.goToBoard()}
+          >
+          go to board
+          </button> 
             </div>
+            
         </div>
     )
 }
