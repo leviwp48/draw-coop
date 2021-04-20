@@ -6,11 +6,12 @@ const BoardListItem = ({boardInfo, author, lastModified}) =>{
     const canvasRef = useRef(null);
     const colorsRef = useRef(null);
     const socketRef = useRef();
-    
+    //           console.log(stuff.boardData[0].boardData[0].b1[0].x0)
+
     useEffect(() => {
+        console.log("board data " + boardInfo)
 
         const canvas = canvasRef.current;
-        const test = colorsRef.current;
         const context = canvas.getContext('2d');
       
         let drawing = false;
@@ -45,6 +46,7 @@ const BoardListItem = ({boardInfo, author, lastModified}) =>{
 
     }, []);
 
+    
     return (
         <div className="listItem">
             <div className="imgContainer">

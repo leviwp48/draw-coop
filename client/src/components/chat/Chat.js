@@ -1,6 +1,5 @@
 import React, {Component, Context } from "react";
 import socketIOClient from "socket.io-client";
-import {ScrollBox, FastTrack} from 'react-scroll-box'; 
 import './Chat.css';
 
 const ENDPOINT = "http://127.0.0.1:3001";

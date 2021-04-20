@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import Modal from "../login/LoginModal.js";
 import "./Dashboard.css";
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
-import Chat from "../chat/Chat.js";
-import Board from "../board/Board";
 import Nav from "../nav/Nav";
 import BoardList from "../boardlist/BoardList";
 
@@ -21,6 +17,7 @@ export default class Dashboard extends Component {
       boardsAdded: false,
     }
   }
+ 
   /*
   getBoardData = () => {
     axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: this.props.getUsername()})
@@ -74,15 +71,6 @@ export default class Dashboard extends Component {
 
   showList = () => {
     if(this.props.getTokenStatus() == true){
-      return <BoardList boardInfo={this.state.boardList}/>
-    }
-    else{
-      return <p> you should login </p>
-    }
-  }
-
-  showList = () => {
-    if(this.props.getTokenStatus() == true){
       return <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()}/>
     }
     else{
@@ -110,5 +98,4 @@ export default class Dashboard extends Component {
   }
 }
 
-//         <Chat getUsername={this.props.getUsername} />
 

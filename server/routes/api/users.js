@@ -10,33 +10,34 @@ const validateRegisterInput = require("../../auth/register");
 const validateLoginInput = require("../../auth/login");
 // Load User model
 const User = require("../../models/User");
-
-// @route   POST api/login
-// @desc    Get User
-// @access  Public
-// Will grab user on login
+/*
+  * @route   POST api/login
+  * @desc    Get User
+  * @access  Public
+  * Will grab user on login
+*/
 app.post('/login', (req, res) =>{
-  console.log("Logging in...");
+  console.log("Logging in");
 
-  // Form validation
+  // * Form validation
   const { errors, isValid } = validateLoginInput(req.body);
-  // Check validation
+  // * Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  // Find user by email
+  // * Find user by email
   User.findOne({ username: req.body.username }).then(user => {
-    // Check if user exists
+    // * Check if user exists
     if (!user) {
       return res.status(404).json({ usernotfound: "Username not found" });
     }
     console.log(user);
-    // Check password 
+    // * Check password 
     bcrypt.compare(req.body.password, user.password).then(isMatch => {
       if (isMatch) {
-        // User matched
-        // Create JWT Payload
+        // * User matched
+        // * Create JWT Payload
         const payload = {
           id: user.id,
           username: user.username
@@ -84,7 +85,9 @@ app.post('/register', (req, res) =>{
     } else {
       const newUser = new User({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        createdAt: Date.now(),
+        role: "user" 
       });
     
 
