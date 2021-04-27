@@ -14,19 +14,46 @@ const Board = require("../../models/board");
     
 */
 app.post('/getMyBoards', (req, res) =>{
-  Board.find({ userId: req.body.userId })
+  Board.find({ ownerId: "test" })
   .then(myBoards => {
       console.log("For the user: " + req.body.userId + "\n These were found: " + myBoards);
+      var keys = Object.keys(myBoards);
+      console.log(keys.length)
       res.status(200).json({
-          boardData: myBoards
+          boardData: myBoards,
+          length: keys
       })
+      
+      
   })
   .catch(err => console.log(err));
 });
 
+app.post('/getBoard', (req, res) =>{
+    Board.find({ ownerId: "test", boardId: req.boardId })
+    .then(myBoard => {
+        console.log("For the user: " + req.body.userId + "\n This was found: " + myBoard);
+        res.status(200).json({
+            boardData: myBoard
+        })
+        
+        
+    })
+    .catch(err => console.log(err));
+});
+
 app.post('/createBoard', (req, res) =>{
-   const newBoard = new Board({
-        boardData: [],
+   const newBoard = new Board(
+       {
+        boardData:[
+            [90, 20, 10, 100, "red"],
+            [70, 100, 25, 100, "red"],
+            [20, 110, 25, 100, "blue"],
+            [40, 140, 25, 100, "black"],
+            [70, 100, 35, 100, "yellow"],
+            [43, 100, 45, 120, "orange"],
+            [70, 190, 75, 130, "green"]
+        ],
         lastModified: Date.now(),
         createdAt: Date.now(),
         ownerId: req.body.userId,

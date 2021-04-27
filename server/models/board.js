@@ -9,7 +9,9 @@ const Schema = mongoose.Schema;
     * ownerId -> holds the userId that created the baord
     * contributors -> holds the Id's of users that drew on the board
 */
-  
+
+
+
 let BoardSchema = new Schema({ 
     boardData: {
         type: Array,

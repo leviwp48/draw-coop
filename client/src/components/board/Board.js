@@ -1,11 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import socketIOClient from "socket.io-client";
 import './Board.css';
 
 const ENDPOINT = "http://127.0.0.1:3001";
 
-const Board = () => {
+const Board = (boardData) => {
+  const [boardInfo, setBoardInfo] = useState(boardData);
+  const [firstLoad, setFirstLoad] = useState(true);
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
   const socketRef = useRef();
@@ -69,6 +71,14 @@ const Board = () => {
         color,
       });
     };
+
+    //if(firstLoad){
+      //for (var i in boardInfo.boardData){
+        //drawLine(boardInfo.boardData[i][0], boardInfo.boardData[i][1], boardInfo.boardData[i][2], boardInfo.boardData[i][3], boardInfo.boardData[i][4]);
+        drawLine(10,20,40,39,"red");
+      //};
+      //setFirstLoad(false);
+    //}
 
     // ---------------- mouse movement --------------------------------------
 

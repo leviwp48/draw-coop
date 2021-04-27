@@ -3,6 +3,7 @@ import "./Dashboard.css";
 import axios from 'axios';
 import Nav from "../nav/Nav";
 import BoardList from "../boardlist/BoardList";
+import Board from "../board/Board";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -15,6 +16,8 @@ export default class Dashboard extends Component {
       lastModified: "",
       boardList: [],
       boardsAdded: false,
+      showBoard: false,
+      display: []
     }
   }
  
@@ -69,9 +72,19 @@ export default class Dashboard extends Component {
     this.props.deleteToken();
   }
 
+  goToBoard = (boardId) => {
+    axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId})
+    .then(res => {
+      this.setState({showBoard: true, display: <Board boardData={res.data.boardData}/>});
+      })
+      .catch(err => {
+        console.log(err.response)
+      });
+  }
+
   showList = () => {
     if(this.props.getTokenStatus() == true){
-      return <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()}/>
+      return <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard()}/>
     }
     else{
       return <p> you should login </p>
@@ -80,12 +93,18 @@ export default class Dashboard extends Component {
 
   render() {
 
+    let display;
+    if (this.state.showBoard){
+      display = this.state.display;
+    } else{
+      display = this.showList();
+    }
     return (
       <div>        
         <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
              setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
              deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData}/>
-          {this.showList()}
+          {display}
           <button
             className="createBoard"
             type="button"

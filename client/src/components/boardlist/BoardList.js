@@ -3,17 +3,18 @@ import "./BoardList.css"
 import BoardListItem from "../boardlistitem/BoardListItem";
 import axios from 'axios';
 
-const BoardList=({getTokenStatus, username})=>{
+const BoardList=({getTokenStatus, username, goToBoard})=>{
 
     const[dataLoaded, setDataLoaded] = useState(false)
     const[boardInfo, setBoardInfo] = useState()
+    const[numOfBoards, setNumOfBoards] = useState(0)
 
     useEffect(() => {
         axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: username})
         .then(res => {
-          console.log("getting user's boards")         
+          //console.log("getting user's boards: " + res.data.boardData[2].boardData[0])       
           setBoardInfo(res.data.boardData)
-          console.log(boardInfo)
+          setNumOfBoards(res.data.boardData.length)
           setDataLoaded(true)
           })
           .catch(err => {
@@ -24,11 +25,12 @@ const BoardList=({getTokenStatus, username})=>{
 
 
     if(dataLoaded){
-        
         return (
             <div className="listWrapper">
-                <div className="listGrid">  
-                    <BoardListItem boardInfo={boardInfo}/>
+                <div className="listGrid">
+                    {boardInfo.map((board, id) => 
+                        <BoardListItem boardInfo={board} key={id} goToBoard={goToBoard}/>
+                    )}  
                 </div>
             </div>
         )
