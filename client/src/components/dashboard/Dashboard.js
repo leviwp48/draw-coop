@@ -4,6 +4,7 @@ import axios from 'axios';
 import Nav from "../nav/Nav";
 import BoardList from "../boardlist/BoardList";
 import Board from "../board/Board";
+import jwt_decode from 'jwt-decode';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -38,12 +39,26 @@ export default class Dashboard extends Component {
   }
 */
 
+  componentDidMount() {
+    let loggedInUser = sessionStorage.getItem("user");
+    if(loggedInUser) {
+      console.log("very nice")
+      this.props.setUsername(jwt_decode(loggedInUser).username);
+      this.props.setToken(loggedInUser);
+      //console.log("without JSON: " + loggedInUser);
+      //let foundUser = loggedInUser;
+      //console.log("with JSON: " + foundUser);
+    }
+  }
+
   componentDidUpdate() {
     console.log("using effect")
     if(this.props.getTokenStatus() == true && this.state.boardsAdded == false){
       //this.getBoardData()
       console.log("adding board stuff");
     }
+    // might not want to put this here but oh well I'm testing
+    
   }
 
   createBoard = () => {
@@ -59,7 +74,10 @@ export default class Dashboard extends Component {
   handleUsernameChange = e => {
     this.setState({ username: e.target.value });
   };
-
+  goBack = () => {
+    console.log("show board = false")
+    this.setState({showBoard: false})
+  }
   handlePasswordChange = e => {
     this.setState({ password: e.target.value });
   };
@@ -72,46 +90,51 @@ export default class Dashboard extends Component {
     this.props.deleteToken();
   }
 
+ 
+
   goToBoard = (boardId) => {
     axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId})
     .then(res => {
-      this.setState({showBoard: true, display: <Board boardData={res.data.boardData}/>});
-      })
+      console.log(boardId)
+      this.setState({showBoard: true, display: <Board boardData={res.data.boardData} goBack={this.goBack}/>});
+    })
       .catch(err => {
         console.log(err.response)
       });
   }
+  
+  
 
-  showList = () => {
-    if(this.props.getTokenStatus() == true){
-      return <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard()}/>
+  // showList = () => {
+  //   if(this.props.getTokenStatus() == true){
+  //     return <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard}/>
+  //   }
+  //   else{
+  //     return <p> you should login </p>
+  //   }
+  // }
+
+  setDisplay = () => {
+    if(this.state.showBoard && this.props.getTokenStatus() == true){
+      return this.state.display
+    }
+    else if(this.props.getTokenStatus() == true){
+      return <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard} createBoard={this.createBoard}/>
     }
     else{
       return <p> you should login </p>
     }
   }
 
+  
   render() {
-
-    let display;
-    if (this.state.showBoard){
-      display = this.state.display;
-    } else{
-      display = this.showList();
-    }
+  
     return (
       <div>        
         <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
              setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
              deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData}/>
-          {display}
-          <button
-            className="createBoard"
-            type="button"
-            onClick={() => this.createBoard()}
-          >
-          create board
-          </button>
+        {this.setDisplay()}     
       </div>
     );
   }

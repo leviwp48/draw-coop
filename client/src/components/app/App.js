@@ -25,7 +25,6 @@ export default class App extends Component{
   }
   setToken = (jwt) => {
     this.setState({token: jwt, tokenStatus: true});
-    console.log("jwt: " + this.state.token);
   }
 
   getToken = () => {
@@ -35,7 +34,7 @@ export default class App extends Component{
     return this.state.tokenStatus;
   }
   deleteToken = () => {
-    this.setState({token: "", tokenStatus: false});
+    this.setState({token: "", tokenStatus: false, username: ""});
     console.log("loggin out");
   }
 

@@ -26,21 +26,40 @@ const BoardList=({getTokenStatus, username, goToBoard})=>{
 
     if(dataLoaded){
         return (
-            <div className="listWrapper">
-                <div className="listGrid">
-                    {boardInfo.map((board, id) => 
-                        <BoardListItem boardInfo={board} key={id} goToBoard={goToBoard}/>
-                    )}  
+            <div>
+                <div className="listWrapper">
+                    <div className="listGrid">
+                        {boardInfo.map((board, id) => 
+                            <BoardListItem boardInfo={board} key={id} goToBoard={goToBoard}/>
+                        )}  
+                    </div>
+                    
                 </div>
+                
+                <button
+                className="createBoard"
+                type="button"
+                onClick={() => this.createBoard()}
+                >
+                    create board
+                </button>
             </div>
+            
         )
     }
     else{
         return(
             <div className="listWrapper">
             <div className="listGrid">     
-                you must wait        
+                No Boards Found
             </div>
+            <button
+            className="createBoard"
+            type="button"
+            onClick={() => this.createBoard()}
+            >
+                create board
+            </button>
         </div>
         )
     }

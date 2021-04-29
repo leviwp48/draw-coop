@@ -30,14 +30,12 @@ app.post('/getMyBoards', (req, res) =>{
 });
 
 app.post('/getBoard', (req, res) =>{
-    Board.find({ ownerId: "test", boardId: req.boardId })
+    Board.find({ ownerId: "test", _id: req.body.boardId })
     .then(myBoard => {
-        console.log("For the user: " + req.body.userId + "\n This was found: " + myBoard);
+        console.log("Board Id: " + req.body.boardId + " \nand the board is: " + myBoard)
         res.status(200).json({
             boardData: myBoard
-        })
-        
-        
+        })        
     })
     .catch(err => console.log(err));
 });

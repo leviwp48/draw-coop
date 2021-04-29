@@ -5,8 +5,8 @@ import './Board.css';
 
 const ENDPOINT = "http://127.0.0.1:3001";
 
-const Board = (boardData) => {
-  const [boardInfo, setBoardInfo] = useState(boardData);
+const Board = (boardData, goBack) => {
+  //const [boardInfo, setBoardInfo] = useState(boardData);
   const [firstLoad, setFirstLoad] = useState(true);
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
@@ -22,7 +22,6 @@ const Board = (boardData) => {
   useEffect(() => {
 
     // --------------- getContext() method returns a drawing context on the canvas-----
-
     const canvas = canvasRef.current;
     const test = colorsRef.current;
     const context = canvas.getContext('2d');
@@ -51,6 +50,7 @@ const Board = (boardData) => {
     // ------------------------------- create the drawing ----------------------------
 
     const drawLine = (x0, y0, x1, y1, color, emit) => {
+      console.log("here are the things: " + x0 + y0 + x1 + y1 + color)
       context.beginPath();
       context.moveTo(x0, y0);
       context.lineTo(x1, y1);
@@ -62,31 +62,36 @@ const Board = (boardData) => {
       if (!emit) { return; }
       const w = canvas.width;
       const h = canvas.height;
+      console.log("here x4")
 
-      socketRef.current.emit('drawing', {
-        x0: x0 / w,
-        y0: y0 / h,
-        x1: x1 / w,
-        y1: y1 / h,
-        color,
-      });
+      // socketRef.current.emit('drawing', {
+      //   x0: x0 / w,
+      //   y0: y0 / h,
+      //   x1: x1 / w,
+      //   y1: y1 / h,
+      //   color,
+      // });
     };
 
-    //if(firstLoad){
-      //for (var i in boardInfo.boardData){
-        //drawLine(boardInfo.boardData[i][0], boardInfo.boardData[i][1], boardInfo.boardData[i][2], boardInfo.boardData[i][3], boardInfo.boardData[i][4]);
-        drawLine(10,20,40,39,"red");
-      //};
-      //setFirstLoad(false);
-    //}
+    
 
     // ---------------- mouse movement --------------------------------------
 
     const onMouseDown = (e) => {
+
       drawing = true;
       canvas.canvasBounds = canvas.getBoundingClientRect();
       current.x = (e.clientX || e.touches[0].clientX) - canvas.canvasBounds.left;
       current.y = (e.clientY || e.touches[0].clientY) - canvas.canvasBounds.top;
+    //   if(firstLoad){
+    //     console.log("here")
+    //     for (var i in boardData.boardData){
+    //       console.log(boardData.boardData[0].boardData[i][0])
+
+    //       drawLine(boardData.boardData[0].boardData[i][0], boardData.boardData[0].boardData[i][1], boardData.boardData[0].boardData[i][2], boardData.boardData[0].boardData[i][3], boardData.boardData[0].boardData[i][4]);
+    //     };
+    //   setFirstLoad(false);      
+    // }
       // let offsetX = canvasBounds.left;
       // let offsetY = canvasBounds.top;
       // console.log("mouse down");
@@ -143,6 +148,7 @@ const Board = (boardData) => {
     // -------------- make the canvas fill its parent component -----------------
 
     const onResize = () => {
+      
       let {width, height} = canvas.getBoundingClientRect();
       if(canvas.width !== width || canvas.height !== height){
         canvas.width = width;
@@ -169,6 +175,15 @@ const Board = (boardData) => {
       drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
     }
 
+    if(firstLoad){
+      console.log("length: " + boardData.boardData[0].boardData.length)
+      for (var i = 0;i <= boardData.boardData.length; i++) {
+        drawLine(boardData.boardData[0].boardData[i][0], boardData.boardData[0].boardData[i][1], boardData.boardData[0].boardData[i][2], boardData.boardData[0].boardData[i][3], boardData.boardData[0].boardData[i][4], true);
+        console.log(boardData.boardData[0].boardData[i][0])
+      };
+      setFirstLoad(false);
+    }
+
     socketRef.current = socketIOClient(ENDPOINT);
     socketRef.current.on('drawing', onDrawingEvent);
   }, []);
@@ -186,6 +201,13 @@ const Board = (boardData) => {
         <div className="color yellow" />
         <div className="color purple"/>
       </section>
+      <button
+                className="createBoard"
+                type="button"
+                onClick={() => goBack}
+                >
+                    back
+                </button>
     </div>
   );
 };

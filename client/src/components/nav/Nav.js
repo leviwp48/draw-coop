@@ -48,6 +48,7 @@ export default class Nav extends Component {
         this.props.setUsername(jwt_decode(res.data.token).username);
         this.props.setToken(res.data.token);
         this.setState({show: false});
+        sessionStorage.setItem('user', res.data.token)
       })     
       .catch(err => {
         console.log(err.response)
@@ -73,9 +74,6 @@ export default class Nav extends Component {
         this.setState({show: false});
         axios.post(`http://localhost:3001/api/users/login`, user)
         .then(res => {
-          console.log("login response: ");
-          console.log(res.data.token);
-          console.log(jwt_decode(res.data.token).username);
           this.props.setToken(res.data.token);
           this.props.setUsername(jwt_decode(res.data.token).username);
           console.log("almost connected");    
@@ -115,6 +113,7 @@ export default class Nav extends Component {
 
   logout = () => {
     this.props.deleteToken();
+    sessionStorage.clear();
   }
 
   showLogin = () => {

@@ -6,7 +6,7 @@ const formatMessage = require("./utils/message");
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-const PORTNUM = 3001;
+const PORTNUM = 3005;
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const users = require("./routes/api/users");
