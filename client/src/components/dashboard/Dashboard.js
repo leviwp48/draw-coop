@@ -74,10 +74,7 @@ export default class Dashboard extends Component {
   handleUsernameChange = e => {
     this.setState({ username: e.target.value });
   };
-  goBack = () => {
-    console.log("show board = false")
-    this.setState({showBoard: false})
-  }
+
   handlePasswordChange = e => {
     this.setState({ password: e.target.value });
   };
@@ -90,21 +87,22 @@ export default class Dashboard extends Component {
     this.props.deleteToken();
   }
 
- 
-
+  goBack = () => {
+    console.log("show board = false")
+    this.setState({showBoard: false})
+  }
+  
   goToBoard = (boardId) => {
     axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId})
     .then(res => {
-      console.log(boardId)
-      this.setState({showBoard: true, display: <Board boardData={res.data.boardData} goBack={this.goBack}/>});
+      console.log("dashboard board id: " + boardId)
+      this.setState({showBoard: true, display: <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} />});
     })
       .catch(err => {
         console.log(err.response)
       });
   }
   
-  
-
   // showList = () => {
   //   if(this.props.getTokenStatus() == true){
   //     return <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard}/>

@@ -5,9 +5,10 @@ import './Board.css';
 
 const ENDPOINT = "http://127.0.0.1:3001";
 
-const Board = (boardData, goBack) => {
+const Board = (props) => {
   //const [boardInfo, setBoardInfo] = useState(boardData);
   const [firstLoad, setFirstLoad] = useState(true);
+  //const [boardId, setboardId] = useState(props.boardId)
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
   const socketRef = useRef();
@@ -49,28 +50,36 @@ const Board = (boardData, goBack) => {
 
     // ------------------------------- create the drawing ----------------------------
 
-    const drawLine = (x0, y0, x1, y1, color, emit) => {
-      console.log("here are the things: " + x0 + y0 + x1 + y1 + color)
-      context.beginPath();
-      context.moveTo(x0, y0);
-      context.lineTo(x1, y1);
-      context.strokeStyle = color;
-      context.lineWidth = 2;
-      context.stroke();
-      context.closePath();
+    const drawLine = (x0, y0, x1, y1, color, mouseDown, emit) => {
+      if(mouseDown){
+        context.fillStyle = color;
+        context.lineWidth = 3;
+        context.fillRect(x0,y0,3,3); // fill in the pixel at (10,10)
+      }
+      else{
+        console.log("here are the things: " + x0 + y0 + x1 + y1 + color)
+        context.beginPath();
+        context.moveTo(x0, y0);
+        context.lineTo(x1, y1);
+        context.strokeStyle = color;
+        context.lineWidth = 3;
+        context.stroke();
+        context.closePath();
+      }
 
       if (!emit) { return; }
       const w = canvas.width;
       const h = canvas.height;
-      console.log("here x4")
-
-      // socketRef.current.emit('drawing', {
-      //   x0: x0 / w,
-      //   y0: y0 / h,
-      //   x1: x1 / w,
-      //   y1: y1 / h,
-      //   color,
-      // });
+      
+      console.log("here is boardID: " + props.boardId)
+      socketRef.current.emit('drawing', {
+         x0: x0 / w,
+         y0: y0 / h,
+         x1: x1 / w,
+         y1: y1 / h,
+         color,
+         boardId: props.boardId,
+       });
     };
 
     
@@ -81,8 +90,11 @@ const Board = (boardData, goBack) => {
 
       drawing = true;
       canvas.canvasBounds = canvas.getBoundingClientRect();
+      let offsetX = canvas.canvasBounds.left;
+      let offsetY = canvas.canvasBounds.top;
       current.x = (e.clientX || e.touches[0].clientX) - canvas.canvasBounds.left;
       current.y = (e.clientY || e.touches[0].clientY) - canvas.canvasBounds.top;
+      drawLine(current.x, current.y, current.x, current.y, current.color, true, true);
     //   if(firstLoad){
     //     console.log("here")
     //     for (var i in boardData.boardData){
@@ -103,7 +115,7 @@ const Board = (boardData, goBack) => {
       if (!drawing) { return; }
       let offsetX = canvas.canvasBounds.left;
       let offsetY = canvas.canvasBounds.top;
-      drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, true);
+      drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, false, true);
       current.x = (e.clientX || e.touches[0].clientX) - offsetX;
       current.y = (e.clientY || e.touches[0].clientY) - offsetY;
     };
@@ -175,17 +187,19 @@ const Board = (boardData, goBack) => {
       drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
     }
 
+    socketRef.current = socketIOClient(ENDPOINT);
+    socketRef.current.on('drawing', onDrawingEvent);
+
     if(firstLoad){
-      console.log("length: " + boardData.boardData[0].boardData.length)
-      for (var i = 0;i <= boardData.boardData.length; i++) {
-        drawLine(boardData.boardData[0].boardData[i][0], boardData.boardData[0].boardData[i][1], boardData.boardData[0].boardData[i][2], boardData.boardData[0].boardData[i][3], boardData.boardData[0].boardData[i][4], true);
-        console.log(boardData.boardData[0].boardData[i][0])
+      let data = props.boardData[0].boardData;
+      console.log(data)
+      console.log("length: " + data[0][4])
+      for (var i = 0;i < data.length; i++) {
+        drawLine(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], false);
+        console.log(data[i][0])
       };
       setFirstLoad(false);
     }
-
-    socketRef.current = socketIOClient(ENDPOINT);
-    socketRef.current.on('drawing', onDrawingEvent);
   }, []);
 
   // ------------- The Canvas and color elements --------------------------
@@ -202,9 +216,9 @@ const Board = (boardData, goBack) => {
         <div className="color purple"/>
       </section>
       <button
-                className="createBoard"
+                className="goBack"
                 type="button"
-                onClick={() => goBack}
+                onClick={props.goBack}
                 >
                     back
                 </button>

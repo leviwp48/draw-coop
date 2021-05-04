@@ -6,7 +6,7 @@ const formatMessage = require("./utils/message");
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-const PORTNUM = 3005;
+const PORTNUM = 3001;
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const users = require("./routes/api/users");
@@ -133,16 +133,12 @@ io.on("connect", function(socket) {
     //io.emit("chat message", msg);
   });
 
-  socket.on("drawing", (data) => {
-    console.log(data);
+  socket.on("drawing", async (data) => {
+    console.log("here is the data I'm getting: " + JSON.stringify(data.boardId));
     // need to check if canvas id exits and need to capture it
-    let newBoard = new Board({
-      boardData: [data],
-      lastModified: Date.now()
-  });
-
-   //newCanvas.save()
-     // .catch(err => console.log(err));
+   
+  let oldBoard = await Board.findById(data.boardId).exec();
+  console.log(JSON.stringify(oldBoard))
 
   io.emit("drawing", data);
   });
