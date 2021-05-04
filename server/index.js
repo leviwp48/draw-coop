@@ -33,6 +33,9 @@ mongoose
   })
   .catch(err => console.log(err));
 
+// To avoid the error msg here: https://mongoosejs.com/docs/deprecations.html#findandmodify
+mongoose.set("useFindAndModify", false);
+
   // Projects model from the model folder
 
 /*
@@ -136,9 +139,20 @@ io.on("connect", function(socket) {
   socket.on("drawing", async (data) => {
     console.log("here is the data I'm getting: " + JSON.stringify(data.boardId));
     // need to check if canvas id exits and need to capture it
-   
-  let oldBoard = await Board.findById(data.boardId).exec();
-  console.log(JSON.stringify(oldBoard))
+  let boardId = data.boardId;
+  let oldBoard = await Board.findById(boardId).exec();
+  oldBoard.boardData.push([data.x0, data.y0, data.x1, data.y1, data.color])
+  oldBoard.lastModified = Date.now()
+
+  console.log(oldBoard)
+  Board.findByIdAndUpdate(boardId, {boardData: oldBoard.boardData, lastModified: oldBoard.lastModified}, function(err, res) {
+    if (err) {
+      console.log(err);
+    }
+    else{
+      console.log("Updated the board : ", res);
+    }
+  });
 
   io.emit("drawing", data);
   });

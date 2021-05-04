@@ -14,7 +14,7 @@ const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
     
-        const drawLine = (x0, y0, x1, y1, color, emit) => {
+        const drawLine = (x0, y0, x1, y1, color) => {
             context.beginPath();
             context.moveTo(x0, y0);
             context.lineTo(x1, y1);
@@ -34,12 +34,11 @@ const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
 
         window.addEventListener('resize', onResize, false);
         onResize();
-        
+        //console.log(JSON.stringify(boardData.boardData))
         for (var i in boardData.boardData){
+            console.log("1")
             drawLine(boardData.boardData[i][0], boardData.boardData[i][1], boardData.boardData[i][2], boardData.boardData[i][3], boardData.boardData[i][4]);
         }
-        //drawLine(boardData.boardData[0][0], boardData.boardData[0][1], boardData.boardData[0][2], boardData.boardData[0][3], boardData.boardData[0][4]);
-        //drawLine(boardData.boardData[1][0], boardData.boardData[1][1], boardData.boardData[1][2], boardData.boardData[1][3], boardData.boardData[1][4]);
         console.log("drew the line dude")
 
         // eslint-disable-next-line react-hooks/exhaustive-deps

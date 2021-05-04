@@ -77,7 +77,7 @@ const Board = (props) => {
          y0: y0 / h,
          x1: x1 / w,
          y1: y1 / h,
-         color,
+         color: color,
          boardId: props.boardId,
        });
     };
