@@ -137,9 +137,13 @@ io.on("connect", function(socket) {
   });
 
   socket.on("drawing", async (data) => {
-    console.log("here is the data I'm getting: " + JSON.stringify(data.boardId));
+  //console.log("here is the data I'm getting: " + JSON.stringify(data));
     // need to check if canvas id exits and need to capture it
+  
   let boardId = data.boardId;
+  console.log(data)
+  
+  /*
   let oldBoard = await Board.findById(boardId).exec();
   oldBoard.boardData.push([data.x0, data.y0, data.x1, data.y1, data.color])
   oldBoard.lastModified = Date.now()
@@ -153,6 +157,7 @@ io.on("connect", function(socket) {
       console.log("Updated the board : ", res);
     }
   });
+  */
 
   io.emit("drawing", data);
   });

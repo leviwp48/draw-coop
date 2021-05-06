@@ -18,7 +18,9 @@ export default class Dashboard extends Component {
       boardList: [],
       boardsAdded: false,
       showBoard: false,
-      display: []
+      display: [],
+      boardImage: "",
+      boardState: []
     }
   }
  
@@ -87,16 +89,35 @@ export default class Dashboard extends Component {
     this.props.deleteToken();
   }
 
-  goBack = () => {
+  setBoardState = (boardData) => {
+    
+  }
+
+  convertBoardToImage = (board) => {
+    console.log("its type is: " + typeof board)
+    var image = new Image();
+    image.src = board.toDataURL("image/png");
+    this.setState({boardImage: image.src})
+  }
+
+  goBack = (boardId, canvas) => {
     console.log("show board = false")
     this.setState({showBoard: false})
+    //let image = this.state.boardImage
+    axios.post(`http://localhost:3001/api/board/saveBoard`, {boardId: boardId, canvas: canvas})
+    .then(res => {
+      console.log("Board was saved")
+    })
+    .catch(err => {
+      console.log(err.response)
+    })
   }
   
   goToBoard = (boardId) => {
     axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId})
     .then(res => {
       console.log("dashboard board id: " + boardId)
-      this.setState({showBoard: true, display: <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} />});
+      this.setState({showBoard: true, display: <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} convertBoardToImage={this.convertBoardToImage} />});
     })
       .catch(err => {
         console.log(err.response)

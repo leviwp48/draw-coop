@@ -36,10 +36,10 @@ const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
         onResize();
         //console.log(JSON.stringify(boardData.boardData))
         for (var i in boardData.boardData){
-            console.log("1")
+            //console.log(i)
             drawLine(boardData.boardData[i][0], boardData.boardData[i][1], boardData.boardData[i][2], boardData.boardData[i][3], boardData.boardData[i][4]);
         }
-        console.log("drew the line dude")
+        //console.log("drew the line dude")
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
 

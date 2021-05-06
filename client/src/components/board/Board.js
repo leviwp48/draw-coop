@@ -5,10 +5,9 @@ import './Board.css';
 
 const ENDPOINT = "http://127.0.0.1:3001";
 
-const Board = (props) => {
-  //const [boardInfo, setBoardInfo] = useState(boardData);
+const Board = (props) => { 
   const [firstLoad, setFirstLoad] = useState(true);
-  //const [boardId, setboardId] = useState(props.boardId)
+  const [boardState, setBoardState] = useState;
   const canvasRef = useRef(null);
   const colorsRef = useRef(null);
   const socketRef = useRef();
@@ -55,9 +54,10 @@ const Board = (props) => {
         context.fillStyle = color;
         context.lineWidth = 3;
         context.fillRect(x0,y0,3,3); // fill in the pixel at (10,10)
+        setBoardState([...boardState, [x0, y0, x1, y1, color]])
       }
       else{
-        console.log("here are the things: " + x0 + y0 + x1 + y1 + color)
+        //console.log("here are the things: " + x0 + y0 + x1 + y1 + color)
         context.beginPath();
         context.moveTo(x0, y0);
         context.lineTo(x1, y1);
@@ -65,20 +65,23 @@ const Board = (props) => {
         context.lineWidth = 3;
         context.stroke();
         context.closePath();
+        setBoardState([...boardState, [x0, y0, x1, y1, color]])
+        console.log(boardState)
       }
 
+      console.log(boardState)
       if (!emit) { return; }
       const w = canvas.width;
       const h = canvas.height;
       
-      console.log("here is boardID: " + props.boardId)
+      //console.log("here is boardID: " + props.boardId)
       socketRef.current.emit('drawing', {
-         x0: x0 / w,
-         y0: y0 / h,
-         x1: x1 / w,
-         y1: y1 / h,
-         color: color,
-         boardId: props.boardId,
+          x0: x0,
+          y0: y0,
+          x1: x1,
+          y1: y1,
+          color: color,
+          boardId: props.boardId,
        });
     };
 
@@ -94,6 +97,7 @@ const Board = (props) => {
       let offsetY = canvas.canvasBounds.top;
       current.x = (e.clientX || e.touches[0].clientX) - canvas.canvasBounds.left;
       current.y = (e.clientY || e.touches[0].clientY) - canvas.canvasBounds.top;
+      //console.log("x" + current.x)
       drawLine(current.x, current.y, current.x, current.y, current.color, true, true);
     //   if(firstLoad){
     //     console.log("here")
@@ -179,6 +183,8 @@ const Board = (props) => {
 
     window.addEventListener('resize', onResize, false);
     onResize();
+    context.fillStyle = 'white';
+    context.fillRect(0, 0,canvas.width,canvas.height);
 
     // ----------------------- socket.io connection ----------------------------
     const onDrawingEvent = (data) => {
@@ -192,11 +198,13 @@ const Board = (props) => {
 
     if(firstLoad){
       let data = props.boardData[0].boardData;
-      console.log(data)
-      console.log("length: " + data[0][4])
+      //console.log("below is the board data")
+      //console.log(data)
+      //console.log("length: " + data[0][4])
       for (var i = 0;i < data.length; i++) {
+        //console.log("drawing a line at: " + data[i][0])
         drawLine(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], false);
-        console.log(data[i][0])
+        //console.log(data[i][0])
       };
       setFirstLoad(false);
     }
@@ -218,8 +226,10 @@ const Board = (props) => {
       <button
                 className="goBack"
                 type="button"
-                onClick={props.goBack}
-                >
+                onClick={() => {
+                  props.goBack(props.boardId); 
+                  props.convertBoardToImage(canvasRef.current);
+                }}>
                     back
                 </button>
     </div>
