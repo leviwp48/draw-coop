@@ -3,11 +3,12 @@ import "./BoardList.css"
 import BoardListItem from "../boardlistitem/BoardListItem";
 import axios from 'axios';
 
-const BoardList=({getTokenStatus, username, goToBoard})=>{
+const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
 
     const[dataLoaded, setDataLoaded] = useState(false)
     const[boardInfo, setBoardInfo] = useState()
     const[numOfBoards, setNumOfBoards] = useState(0)
+    const[boardImage, setBoardImage] = useState(0)
 
     useEffect(() => {
         axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: username})
@@ -15,7 +16,9 @@ const BoardList=({getTokenStatus, username, goToBoard})=>{
           //console.log("getting user's boards: " + res.data.boardData[2].boardData[0])       
           setBoardInfo(res.data.boardData)
           setNumOfBoards(res.data.boardData.length)
+          //setBoardImage(res.data.boardData[6].image)
           setDataLoaded(true)
+          //console.log(res.data.boardData[6].image)
           })
           .catch(err => {
             console.log(err.response)
@@ -39,7 +42,7 @@ const BoardList=({getTokenStatus, username, goToBoard})=>{
                 <button
                 className="createBoard"
                 type="button"
-                onClick={() => this.createBoard()}
+                onClick={() => createBoard()}
                 >
                     create board
                 </button>
@@ -56,7 +59,7 @@ const BoardList=({getTokenStatus, username, goToBoard})=>{
             <button
             className="createBoard"
             type="button"
-            onClick={() => this.createBoard()}
+            onClick={() => createBoard()}
             >
                 create board
             </button>

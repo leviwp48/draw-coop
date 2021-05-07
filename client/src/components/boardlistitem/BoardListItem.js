@@ -3,14 +3,24 @@ import "./BoardListItem.css"
 
 const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
     const [boardData, setBoardData] = useState(boardInfo);
+    const [boardImage, setBoardImage] = useState(boardInfo.image)
     const canvasRef = useRef(null);
     const socketRef = useRef();
     
-    //console.log(stuff.boardData[0].boardData[0].b1[0].x0)
+    console.log(boardInfo)
 
     useEffect(() => {
+        for (var i in boardData.boardData){
+            //console.log(i)
+            setBoardImage(boardData.image)
+            //boardData.boardData[i][0], boardData.boardData[i][1], boardData.boardData[i][2], boardData.boardData[i][3], boardData.boardData[i][4]);
+        }
+
+        
+        //console.log(JSON.stringify(boardImage))
         //console.log("board data " + (boardData[0].boardData[1][0]))
         //console.log("board data " + (boardData.boardData[0]))
+        /*
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
     
@@ -42,14 +52,14 @@ const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
         //console.log("drew the line dude")
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-
+        */
     }, []);
 
    
     return (
         <div className="listItem">
             <div className="imgContainer">
-                <canvas ref={canvasRef} className="canvas-sm" />
+                <img src={boardImage} alt="No Data"/>
             </div>
             <div className="infoContainer"> 
                 <p id="author"> {author} </p>

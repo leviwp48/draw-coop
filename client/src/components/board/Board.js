@@ -87,8 +87,6 @@ export default class Board extends Component {
         let drawing = false;
         
         const drawLine = (x0, y0, x1, y1, color, mouseDown, emit, resizing) => {
-            const canvas = this.canvasRef.current;
-            const context = canvas.getContext('2d');
     
             if(mouseDown){
                 context.fillStyle = color;
@@ -97,7 +95,6 @@ export default class Board extends Component {
                 this.setState({boardState: [...this.state.boardState, [x0, y0, x1, y1, color]]})
             }
             else if(resizing){
-                console.log("resizing")
                 context.beginPath();
                 context.moveTo(x0, y0);
                 context.lineTo(x1, y1);
@@ -116,10 +113,10 @@ export default class Board extends Component {
                 context.stroke();
                 context.closePath();
                 this.setState({boardState: [...this.state.boardState, [x0, y0, x1, y1, color]]})
-                console.log(this.state.boardState)
+                //console.log(this.state.boardState)
             }
     
-            console.log(this.state.boardState)
+            //console.log(this.state.boardState)
             if (!emit) { return; }
             const w = canvas.width;
             const h = canvas.height;
@@ -178,7 +175,7 @@ export default class Board extends Component {
             let offsetX = canvas.canvasBounds.left;
             let offsetY = canvas.canvasBounds.top;
             context.save();
-            console.log(context);
+            //console.log(context);
             // need to send the current state of the canvas to db
         };
 
@@ -222,7 +219,7 @@ export default class Board extends Component {
             context.fillRect(0, 0, canvas.width,canvas.height);
             // have to redraw canvas
             for (var i = 0;i < this.state.boardState.length; i++) {
-                console.log(this.state.boardState[i][0])
+                //console.log(this.state.boardState[i][0])
                 //console.log("drawing a line at: " + data[i][0])
                 drawLine(this.state.boardState[i][0], this.state.boardState[i][1], this.state.boardState[i][2], this.state.boardState[i][3], this.state.boardState[i][4], false, false, true);
                 //console.log(data[i][0])
@@ -264,9 +261,9 @@ export default class Board extends Component {
             drawLine(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], false);
             //console.log(data[i][0])
             };
-            this.setState({false: false, boardState: [...this.props.boardData[0].boardData]})
-            console.log(...this.props.boardData[0].boardData)
-            console.log(this.state.boardState)
+            this.setState({false: false})
+            //console.log(...this.props.boardData[0].boardData)
+            //console.log(this.state.boardState)
             
         }
     }
@@ -286,14 +283,21 @@ render() {
         <div className="color purple"/>
       </section>
       <button
-                className="goBack"
-                type="button"
-                onClick={() => {
-                  this.props.goBack(this.props.boardId); 
-                  this.props.convertBoardToImage(this.canvasRef.current);
-                }}>
-                    back
-                </button>
+        className="goBack"
+        type="button"
+        onClick={() => {
+            this.props.goBack(this.props.boardId, this.state.boardState, this.canvasRef.current); 
+        }}>
+        back
+      </button>
+      <button
+        className="save"
+        type="button"
+        onClick={() => {
+            this.props.save(this.props.boardId, this.state.boardState);
+        }}>
+        save
+      </button>
     </div>
   );
 }

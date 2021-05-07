@@ -32,7 +32,11 @@ let BoardSchema = new Schema({
     contributors: {
         type: Array,
         required: true
+    },
+    image: {
+        type: String,
     }
+    
 }); 
   
 module.exports  = mongoose.model('board', BoardSchema);

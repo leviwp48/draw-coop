@@ -16,6 +16,7 @@ const Board = require("../../models/board");
 app.post('/getMyBoards', (req, res) =>{
   Board.find({ ownerId: "test" })
   .then(myBoards => {
+      console.log(myBoards)
       //console.log("For the user: " + req.body.userId + "\n These were found: " + myBoards);
       var keys = Object.keys(myBoards);
       //console.log(keys.length)
@@ -48,7 +49,8 @@ app.post('/createBoard', (req, res) =>{
         lastModified: Date.now(),
         createdAt: Date.now(),
         ownerId: req.body.userId,
-        contributors: []
+        contributors: [],
+        image: ''
     });
 
     newBoard.save()
@@ -62,19 +64,23 @@ app.post('/saveBoard', async (req, res) =>{
     console.log("here")
     let oldBoard = await Board.findById(req.body.boardId).exec();
     //console.log(oldBoard)
-    let data = req.body
-    // oldBoard.boardData.push([data.x0, data.y0, data.x1, data.y1, data.color])
-    // oldBoard.lastModified = Date.now()
+    let data = [req.body.boardState]
+    //console.log(data)
 
-    console.log("body data: " + data)
-//     Board.findByIdAndUpdate(boardId, {boardData: oldBoard.boardData, lastModified: oldBoard.lastModified}, function(err, res) {
-//         if (err) {
-//             console.log(err);
-//         }
-//         else{
-//             res.status(200) 
-//         } 
-//  });
+    for (let i in data) {
+        //console.log(data[i])
+        oldBoard.boardData.push(...data[i])
+    }
+
+    Board.findByIdAndUpdate(req.body.boardId, {boardData: oldBoard.boardData, lastModified: Date.now(), image: req.body.image}, function(err, res) {
+        if (err) {
+            console.log(err);
+        }
+        else{
+            //console.log(JSON.stringify(res)) 
+        } 
+    });
+    res.status(200).send("Updated Board")
 });
 
 module.exports = app;

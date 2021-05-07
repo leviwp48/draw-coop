@@ -71,6 +71,7 @@ export default class Dashboard extends Component {
         .catch(err => {
           console.log(err.response)
         });
+        this.forceUpdate({})
     }
 
   handleUsernameChange = e => {
@@ -94,17 +95,27 @@ export default class Dashboard extends Component {
   }
 
   convertBoardToImage = (board) => {
-    console.log("its type is: " + typeof board)
     var image = new Image();
     image.src = board.toDataURL("image/png");
-    this.setState({boardImage: image.src})
+    return image.src
+    //this.setState({boardImage: image.src})
   }
 
-  goBack = (boardId, canvas) => {
-    console.log("show board = false")
-    this.setState({showBoard: false})
+  goBack = (boardId, boardState, boardRef) => {
+    this.setState({showBoard: false, display: ""})
     //let image = this.state.boardImage
-    axios.post(`http://localhost:3001/api/board/saveBoard`, {boardId: boardId, canvas: canvas})
+    axios.post(`http://localhost:3001/api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.convertBoardToImage(boardRef)})
+    .then(res => {
+      console.log("Board was saved")
+    })
+    .catch(err => {
+      console.log(err.response)
+    })
+  }
+
+  save = (boardId, boardState) => {
+    //let image = this.state.boardImage
+    axios.post(`http://localhost:3001/api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.state.boardImage})
     .then(res => {
       console.log("Board was saved")
     })
@@ -114,10 +125,11 @@ export default class Dashboard extends Component {
   }
   
   goToBoard = (boardId) => {
+    console.log("here again")
     axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId})
     .then(res => {
       console.log("dashboard board id: " + boardId)
-      this.setState({showBoard: true, display: <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} convertBoardToImage={this.convertBoardToImage} />});
+      this.setState({showBoard: true, display: <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} save={this.save} convertBoardToImage={this.convertBoardToImage} />});
     })
       .catch(err => {
         console.log(err.response)

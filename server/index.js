@@ -141,7 +141,7 @@ io.on("connect", function(socket) {
     // need to check if canvas id exits and need to capture it
   
   let boardId = data.boardId;
-  console.log(data)
+  //console.log(data)
   
   /*
   let oldBoard = await Board.findById(boardId).exec();
