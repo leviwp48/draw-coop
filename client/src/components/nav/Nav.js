@@ -49,6 +49,7 @@ export default class Nav extends Component {
         this.props.setToken(res.data.token);
         this.setState({show: false});
         sessionStorage.setItem('user', res.data.token)
+        
       })     
       .catch(err => {
         console.log(err.response)
@@ -64,19 +65,16 @@ export default class Nav extends Component {
       username: this.state.username,
       password: this.state.password,
     };
-    console.log(user.username);
-    console.log(user.password);
+    
 
     axios.post(`http://localhost:3001/api/users/register`, user)
       .then(res => {
-        console.log(res);
-        console.log(res.data);
+      
         this.setState({show: false});
         axios.post(`http://localhost:3001/api/users/login`, user)
         .then(res => {
           this.props.setToken(res.data.token);
           this.props.setUsername(jwt_decode(res.data.token).username);
-          console.log("almost connected");    
           this.setState({show: false});
         })
         .catch(err => {

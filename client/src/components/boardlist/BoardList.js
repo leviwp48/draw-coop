@@ -8,22 +8,21 @@ const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
     const[dataLoaded, setDataLoaded] = useState(false)
     const[boardInfo, setBoardInfo] = useState()
     const[numOfBoards, setNumOfBoards] = useState(0)
-    const[boardImage, setBoardImage] = useState(0)
 
     useEffect(() => {
-        axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: username})
-        .then(res => {
-          //console.log("getting user's boards: " + res.data.boardData[2].boardData[0])       
-          setBoardInfo(res.data.boardData)
-          setNumOfBoards(res.data.boardData.length)
-          //setBoardImage(res.data.boardData[6].image)
-          setDataLoaded(true)
-          //console.log(res.data.boardData[6].image)
-          })
-          .catch(err => {
-            console.log(err.response)
-          });
-        
+        async function getMyBoards() {
+            axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: username})
+            .then(res => {
+            setBoardInfo(res.data.boardData)
+            setNumOfBoards(res.data.boardData.length)
+            setDataLoaded(true)
+            })
+            .catch(err => {
+                console.log(err.response)
+            });
+        }
+
+        getMyBoards();
     }, []);
 
 

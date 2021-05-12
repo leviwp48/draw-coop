@@ -15,6 +15,7 @@ class Chat extends Component {
         id: 0,
         count: 0
     };
+    socket = socketIOClient(ENDPOINT);
   }
   
   // when the chat component mounts it will connect to socket.io, after it will emit a connection message and the message
@@ -22,20 +23,30 @@ class Chat extends Component {
 
   componentWillMount = () => {
 
-    socket = socketIOClient(ENDPOINT);
-
-    socket.on("connected", (msg) => {
+    let messages = localStorage.getItem('messages')
+    if (messages){
+      let test = []
+      for(var i in messages){
+        console.log(JSON.stringify(messages))
+      }
+      //this.setState({displayData: messages})
+    }
+    socket.on("join server", (msg) => {
       console.log("Connecting...");
       this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+      localStorage.setItem('messages', this.state.displayData)
+      socket.emit("join notification", (this.props.username))
     })
     socket.on("chat message", msg => {    
       console.log("adding message: " + msg);
       this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+      localStorage.setItem('messages', this.state.displayData)
       console.log(...this.state.displayData);
     }); 
     socket.on("No login", msg => {    
       console.log("adding message: " + msg);
-      this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})     
+      this.setState({displayData : [...this.state.displayData, msg.time + " - " + msg.username + ": " + msg.text + " "]})     
+      localStorage.setItem('messages', this.state.displayData)
       console.log(...this.state.displayData);
     }); 
   }
@@ -44,38 +55,28 @@ class Chat extends Component {
     return `${ pre }_${ new Date().getTime() }`;
   }
 
-  componentWillUnmount = () => {
-    this.setState({displayData: []});
-    this.setState({message: ""});
-    this.setState({id: 0});
-  }
-
   handleChange = e => {
     this.setState({ message: e.target.value });
   }
 
   handleKeyPress = e => {
     if (e.key === "Enter") {
-      if(this.props.getUsername == ""){
-        socket.emit("chat message", this.state.message, "");
-        this.setState({message: ""});
-      }
-      else{
-        socket.emit("chat message", this.state.message, this.props.getUsername);
-        this.setState({message: ""});
-      }
+      // if(this.props.username == ""){
+      //   socket.emit("chat message", this.state.message, "");
+      //   this.setState({message: ""});
+      // }
+      socket.emit("chat message", this.state.message, this.props.username);
+      this.setState({message: ""});
     }
   }
 
   handleClick = e => {   
-    if(this.props.getUsername == ""){
-      socket.emit("chat message", this.state.message, "");
-      this.setState({message: ""});
-    }
-    else{
-      socket.emit("chat message", this.state.message, this.props.getUsername);
-      this.setState({message: ""});
-    }
+    // if(this.props.username == ""){
+    //   socket.emit("chat message", this.state.message, "");
+    //   this.setState({message: ""});
+    // }
+    socket.emit("chat message", this.state.message, this.props.username);
+    this.setState({message: ""});
   }
 
   render() {

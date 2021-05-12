@@ -16,10 +16,7 @@ const Board = require("../../models/board");
 app.post('/getMyBoards', (req, res) =>{
   Board.find({ ownerId: "test" })
   .then(myBoards => {
-      console.log(myBoards)
-      //console.log("For the user: " + req.body.userId + "\n These were found: " + myBoards);
       var keys = Object.keys(myBoards);
-      //console.log(keys.length)
       res.status(200).json({
           boardData: myBoards,
           length: keys
@@ -33,7 +30,6 @@ app.post('/getMyBoards', (req, res) =>{
 app.post('/getBoard', (req, res) =>{
     Board.find({ ownerId: "test", _id: req.body.boardId })
     .then(myBoard => {
-        //console.log("Board Id: " + req.body.boardId + " \nand the board is: " + myBoard)
         res.status(200).json({
             boardData: myBoard
         })        
@@ -61,14 +57,10 @@ app.post('/createBoard', (req, res) =>{
 });
 
 app.post('/saveBoard', async (req, res) =>{
-    console.log("here")
     let oldBoard = await Board.findById(req.body.boardId).exec();
-    //console.log(oldBoard)
     let data = [req.body.boardState]
-    //console.log(data)
 
     for (let i in data) {
-        //console.log(data[i])
         oldBoard.boardData.push(...data[i])
     }
 

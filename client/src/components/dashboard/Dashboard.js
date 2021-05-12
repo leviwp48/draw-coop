@@ -4,6 +4,7 @@ import axios from 'axios';
 import Nav from "../nav/Nav";
 import BoardList from "../boardlist/BoardList";
 import Board from "../board/Board";
+import Chat from "../chat/Chat"
 import jwt_decode from 'jwt-decode';
 
 export default class Dashboard extends Component {
@@ -23,44 +24,13 @@ export default class Dashboard extends Component {
       boardState: []
     }
   }
- 
-  /*
-  getBoardData = () => {
-    axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: this.props.getUsername()})
-    .then(res => {
-      console.log("getting user's boards")
-      console.log(res.data.boardData[2].boardData[0].b1)
-      let boards = [];
-      boards = res.data.boardData;
-      console.log(boards[2].boardData[0].b1)
-      this.setState({boardList: boards, boardsAdded: true});
-      })
-      .catch(err => {
-        console.log(err.response)
-      });
-  }
-*/
 
   componentDidMount() {
     let loggedInUser = sessionStorage.getItem("user");
     if(loggedInUser) {
-      console.log("very nice")
       this.props.setUsername(jwt_decode(loggedInUser).username);
       this.props.setToken(loggedInUser);
-      //console.log("without JSON: " + loggedInUser);
-      //let foundUser = loggedInUser;
-      //console.log("with JSON: " + foundUser);
     }
-  }
-
-  componentDidUpdate() {
-    console.log("using effect")
-    if(this.props.getTokenStatus() == true && this.state.boardsAdded == false){
-      //this.getBoardData()
-      console.log("adding board stuff");
-    }
-    // might not want to put this here but oh well I'm testing
-    
   }
 
   createBoard = () => {
@@ -80,42 +50,31 @@ export default class Dashboard extends Component {
 
   handlePasswordChange = e => {
     this.setState({ password: e.target.value });
-  };
-
-  showLoginAndRegister = () => {
-    console.log("token: " + this.props.getTokenStatus());    
-  } 
+  }; 
 
   logout = () => {
     this.props.deleteToken();
-  }
-
-  setBoardState = (boardData) => {
-    
   }
 
   convertBoardToImage = (board) => {
     var image = new Image();
     image.src = board.toDataURL("image/png");
     return image.src
-    //this.setState({boardImage: image.src})
   }
 
   goBack = (boardId, boardState, boardRef) => {
-    this.setState({showBoard: false, display: ""})
-    //let image = this.state.boardImage
-    axios.post(`http://localhost:3001/api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.convertBoardToImage(boardRef)})
+     axios.post(`http://localhost:3001/api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.convertBoardToImage(boardRef)})
     .then(res => {
       console.log("Board was saved")
+      this.setState({showBoard: false, display: ""})
     })
     .catch(err => {
       console.log(err.response)
     })
   }
 
-  save = (boardId, boardState) => {
-    //let image = this.state.boardImage
-    axios.post(`http://localhost:3001/api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.state.boardImage})
+  save = (boardId, boardState, boardRef) => {
+    axios.post(`http://localhost:3001/api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.convertBoardToImage(boardRef)})
     .then(res => {
       console.log("Board was saved")
     })
@@ -125,10 +84,8 @@ export default class Dashboard extends Component {
   }
   
   goToBoard = (boardId) => {
-    console.log("here again")
     axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId})
     .then(res => {
-      console.log("dashboard board id: " + boardId)
       this.setState({showBoard: true, display: <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} save={this.save} convertBoardToImage={this.convertBoardToImage} />});
     })
       .catch(err => {
@@ -136,21 +93,17 @@ export default class Dashboard extends Component {
       });
   }
   
-  // showList = () => {
-  //   if(this.props.getTokenStatus() == true){
-  //     return <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard}/>
-  //   }
-  //   else{
-  //     return <p> you should login </p>
-  //   }
-  // }
-
   setDisplay = () => {
     if(this.state.showBoard && this.props.getTokenStatus() == true){
       return this.state.display
     }
     else if(this.props.getTokenStatus() == true){
-      return <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard} createBoard={this.createBoard}/>
+      return (
+      <>
+        <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard} createBoard={this.createBoard}/>
+        <Chat username={this.props.getUsername()}/>
+      </>
+      );
     }
     else{
       return <p> you should login </p>
