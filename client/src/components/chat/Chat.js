@@ -15,7 +15,7 @@ class Chat extends Component {
         id: 0,
         count: 0
     };
-    socket = socketIOClient(ENDPOINT);
+    socket = this.props.socket;
   }
   
   // when the chat component mounts it will connect to socket.io, after it will emit a connection message and the message

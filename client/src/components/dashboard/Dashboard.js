@@ -6,6 +6,8 @@ import BoardList from "../boardlist/BoardList";
 import Board from "../board/Board";
 import Chat from "../chat/Chat"
 import jwt_decode from 'jwt-decode';
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://127.0.0.1:3001";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -21,7 +23,8 @@ export default class Dashboard extends Component {
       showBoard: false,
       display: [],
       boardImage: "",
-      boardState: []
+      boardState: [],
+      socket: socketIOClient(ENDPOINT)
     }
   }
 
@@ -86,6 +89,7 @@ export default class Dashboard extends Component {
   goToBoard = (boardId) => {
     axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId})
     .then(res => {
+      this.state.socket.emit("joining", boardId);
       this.setState({showBoard: true, display: <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} save={this.save} convertBoardToImage={this.convertBoardToImage} />});
     })
       .catch(err => {
@@ -101,7 +105,7 @@ export default class Dashboard extends Component {
       return (
       <>
         <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard} createBoard={this.createBoard}/>
-        <Chat username={this.props.getUsername()}/>
+        <Chat username={this.props.getUsername()} socket={this.state.socket}/>
       </>
       );
     }

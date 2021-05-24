@@ -173,7 +173,11 @@ export default class Board extends Component {
         }
 
         this.socketRef.current = socketIOClient(ENDPOINT);
-        this.socketRef.current.on('drawing', onDrawingEvent);
+        this.socketRef.current.on('drawing',  (data) => {
+            onDrawingEvent(data)
+            console.log(this.socketRef.current.rooms)
+            console.log("got drawing bad")
+        });
 
         if(this.state.firstLoad){
             let data = this.props.boardData[0].boardData;     

@@ -142,15 +142,15 @@ io.on("connect", socket => {
     socket.broadcast.emit("chat message", formatMessage("Admin", `${ username } has arrived!`))
   })
   socket.on("joining", (boardId, callback) => {
-    socket.join("room: " + boardId)
+    socket.join(boardId)
   })
   socket.on("drawing", async (data) => {
-  
-  let boardId = data.boardId;
+    let boardId = data.boardId;
+    console.log(socket.rooms)
 
-  io.emit("drawing", data);
+    console.log(boardId)
+    io.to(boardId).emit("drawing", data);
   });
-  
 
   socket.on("disconnect", () => {
     console.log("destroying");
