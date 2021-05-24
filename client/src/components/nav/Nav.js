@@ -163,21 +163,25 @@ export default class Nav extends Component {
         >
           <input
             className="input-username"
+            id="input"
             type="text"
+            placeholder="username"
             value={this.username}
             onChange={this.handleUsernameChange}
             onKeyPress={this.onEnter}
           />
           <input
             className="input-password"
+            id="input"
             type="text"
+            placeholder="password"
             value={this.state.password}
             onChange={this.handlePasswordChange}
             onKeyPress={this.onEnter}
           />
         </Modal>
         <div className="nav-bar" >
-          <h1 className="title">Chat</h1>
+          <h1 className="title">Draw Stuff</h1>
           {this.showLogin()}  
         </div>          
       </div>

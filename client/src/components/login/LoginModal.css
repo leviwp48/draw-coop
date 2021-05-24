@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
+
   .Title {
     padding-top: 10px;
   }
@@ -14,13 +16,13 @@
   .modal-main {
     position: fixed;
     background: white;
-    width: 80%;
+    width: 30%;
     height: auto;
     top: 50%;
     left: 50%;
-    border: solid #007ea7;
+    border: solid #2d4059;
     border-radius: 5px;
-    background-color: #007ea7;
+    background-color: #2d4059;
     transform: translate(-50%, -50%);
   }
   
@@ -37,8 +39,10 @@
     margin: 10px auto 5px auto;
     padding: 2px 5px 3px 5px;
     border-radius: 3px;
+    text-decoration-color: black;
     border: solid #eeeeee;
     background-color: #eeeeee;
+    font-family: sans-serif;   
   }
   .input-password {
     display: block;
@@ -47,14 +51,24 @@
     border-radius: 3px;
     border: solid #eeeeee;
     background-color: #eeeeee;
+    font-family: sans-serif;   
+  }
+  
+  #input:focus{
+    outline: none;
+    cursor: pointer;
+    border: solid #fd7014;
+    color:black;
   }
   
   .modal-submit {
     width: 20%;
     height: 25px;
     border-radius: 3px;
-    border: solid #ff7700;
-    background-color: #ff7700;
+    font-family: sans-serif;
+    color: #eeeeee;   
+    border: solid #fd7014;
+    background-color: #fd7014;
   }
   
   /*
@@ -68,7 +82,7 @@
   
   .close:hover,
   :focus {
-    color: #000;
+    color: #fd7014;
     text-decoration: none;
     cursor: pointer;
   }
