@@ -70,6 +70,7 @@ export default class Dashboard extends Component {
     .then(res => {
       console.log("Board was saved")
       this.setState({showBoard: false, display: ""})
+      this.state.socket.emit("leaving", boardId)
     })
     .catch(err => {
       console.log(err.response)
@@ -87,10 +88,15 @@ export default class Dashboard extends Component {
   }
   
   goToBoard = (boardId) => {
-    axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId})
+    axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId, userId: this.props.getUsername()})
     .then(res => {
       this.state.socket.emit("joining", boardId);
-      this.setState({showBoard: true, display: <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} save={this.save} convertBoardToImage={this.convertBoardToImage} />});
+      this.setState({showBoard: true, display: 
+        <>
+          <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} save={this.save} convertBoardToImage={this.convertBoardToImage} />
+          <Chat username={this.props.getUsername()} socket={this.state.socket} />
+        </>
+      });
     })
       .catch(err => {
         console.log(err.response)
@@ -105,7 +111,7 @@ export default class Dashboard extends Component {
       return (
       <>
         <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard} createBoard={this.createBoard}/>
-        <Chat username={this.props.getUsername()} socket={this.state.socket}/>
+        <Chat username={this.props.getUsername()} socket={this.state.socket} />
       </>
       );
     }
@@ -122,7 +128,8 @@ export default class Dashboard extends Component {
         <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
              setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
              deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData}/>
-        {this.setDisplay()}     
+        {this.setDisplay()}
+             
       </div>
     );
   }

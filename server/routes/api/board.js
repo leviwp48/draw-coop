@@ -14,7 +14,9 @@ const Board = require("../../models/board");
     
 */
 app.post('/getMyBoards', (req, res) =>{
-  Board.find({ ownerId: "test" })
+    console.log("my user id is: " + req.body.userId)
+
+  Board.find({})
   .then(myBoards => {
       var keys = Object.keys(myBoards);
       res.status(200).json({
@@ -28,7 +30,7 @@ app.post('/getMyBoards', (req, res) =>{
 });
 
 app.post('/getBoard', (req, res) =>{
-    Board.find({ ownerId: "test", _id: req.body.boardId })
+    Board.find({_id: req.body.boardId })
     .then(myBoard => {
         res.status(200).json({
             boardData: myBoard

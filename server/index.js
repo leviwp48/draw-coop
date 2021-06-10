@@ -111,11 +111,16 @@ io.on("connect", socket => {
 
   socket.emit("join server", formatMessage(botName, "Connected!"));
 
-  socket.on("chat message", (msg, username) => {
+  socket.on("chat message", (msg, username, boardId) => {
 
-
-    io.emit("chat message", formatMessage(username, msg));
-    console.log("Sending message to client: " + msg + " username: " + username);
+    if(boardId == ""){
+      io.emit("chat message", formatMessage(username, msg));
+    }
+    else{
+      console.log("getting here")
+      console.log(boardId)
+      io.to(boardId).emit("chat message", formatMessage(username, msg))
+    }
     // if(username == ""){
     //   username = "Anonymous";
     //   // socket.emit("No login", formatMessage("Admin Bot", "Please login"));
@@ -142,8 +147,20 @@ io.on("connect", socket => {
     socket.broadcast.emit("chat message", formatMessage("Admin", `${ username } has arrived!`))
   })
   socket.on("joining", (boardId, callback) => {
-    socket.join(boardId)
+    if(boardId){
+      socket.join(boardId)
+      socket.emit("joined", boardId)
+      return io.emit("chat message", formatMessage("test", "I am joining a room: " + boardId))
+    }
+    else{
+      return io.emit("err", "ERROR")
+    }
   })
+  socket.on("leaving", boardId =>{
+    socket.leave(boardId)
+    socket.emit("left room")
+  })
+  
   socket.on("drawing", async (data) => {
     let boardId = data.boardId;
     console.log(socket.rooms)

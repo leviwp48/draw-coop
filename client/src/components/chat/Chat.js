@@ -13,7 +13,8 @@ class Chat extends Component {
         displayData: [],
         message: "",
         id: 0,
-        count: 0
+        count: 0,
+        boardId: ""
     };
     socket = this.props.socket;
   }
@@ -35,6 +36,7 @@ class Chat extends Component {
       console.log("Connecting...");
       this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
       localStorage.setItem('messages', this.state.displayData)
+      console.log(this.props.username)
       socket.emit("join notification", (this.props.username))
     })
     socket.on("chat message", msg => {    
@@ -49,8 +51,14 @@ class Chat extends Component {
       localStorage.setItem('messages', this.state.displayData)
       console.log(...this.state.displayData);
     }); 
+    socket.on("joined", boardId => {
+      this.setState({boardId: boardId})
+    });
+    socket.on("left room", res => {
+      this.setState({boardId: ""})
+    });
   }
-
+ 
   giveId = (pre) => {
     return `${ pre }_${ new Date().getTime() }`;
   }
@@ -65,7 +73,7 @@ class Chat extends Component {
       //   socket.emit("chat message", this.state.message, "");
       //   this.setState({message: ""});
       // }
-      socket.emit("chat message", this.state.message, this.props.username);
+      socket.emit("chat message", this.state.message, this.props.username, this.state.boardId);
       this.setState({message: ""});
     }
   }
@@ -75,7 +83,7 @@ class Chat extends Component {
     //   socket.emit("chat message", this.state.message, "");
     //   this.setState({message: ""});
     // }
-    socket.emit("chat message", this.state.message, this.props.username);
+    socket.emit("chat message", this.state.message, this.props.username, this.state.boardId);
     this.setState({message: ""});
   }
 

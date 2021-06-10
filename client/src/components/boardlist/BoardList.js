@@ -11,6 +11,7 @@ const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
 
     useEffect(() => {
         async function getMyBoards() {
+            console.log(username)
             axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: username})
             .then(res => {
             setBoardInfo(res.data.boardData)
