@@ -15,7 +15,7 @@ export default class Board extends Component {
         }
         this.canvasRef = React.createRef();
         this.colorsRef = React.createRef();
-        this.socketRef = React.createRef();
+        //this.socketRef = React.createRef();
     }
 
     componentDidMount = () => { 
@@ -76,7 +76,8 @@ export default class Board extends Component {
             const w = canvas.width;
             const h = canvas.height;
             
-            this.socketRef.current.emit('drawing', {
+            //this.socketRef.current.emit('drawing', {
+            this.props.socket.emit('drawing', {
                 x0: x0,
                 y0: y0,
                 x1: x1,
@@ -155,7 +156,9 @@ export default class Board extends Component {
             }
             context.fillStyle = 'white';
             context.fillRect(0, 0, canvas.width,canvas.height);
+            console.log('redarwing board')
             for (var i = 0;i < this.state.boardState.length; i++) {    
+                console.log(this.state.boardState[i][0])
                 drawLine(this.state.boardState[i][0], this.state.boardState[i][1], this.state.boardState[i][2], this.state.boardState[i][3], this.state.boardState[i][4], false, false, true);
             };      
         };
@@ -169,14 +172,14 @@ export default class Board extends Component {
         const onDrawingEvent = (data) => {
             const w = canvas.width;
             const h = canvas.height;
-            drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
+            drawLine(data.x0, data.y0, data.x1, data.y1, data.color);
         }
 
-        this.socketRef.current = socketIOClient(ENDPOINT);
-        this.socketRef.current.on('drawing',  (data) => {
+        ///this.socketRef.current = this.props.socket;
+        this.props.socket.on('drawing',  (data) => {
+            console.log("drawing data: " + JSON.stringify(data))
             onDrawingEvent(data)
-            console.log(this.socketRef.current.rooms)
-            console.log("got drawing bad")
+            console.log(this.props.socket.rooms)
         });
 
         if(this.state.firstLoad){
@@ -184,7 +187,7 @@ export default class Board extends Component {
             for (var i = 0;i < data.length; i++) {
                 drawLine(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], false);
             };
-            this.setState({false: false})
+            this.setState({boardState: [...this.state.boardState, ...data], false: false})
             //console.log(...this.props.boardData[0].boardData)
             //console.log(this.state.boardState)
             

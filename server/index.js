@@ -146,11 +146,11 @@ io.on("connect", socket => {
   socket.on("join notification", username =>{
     socket.broadcast.emit("chat message", formatMessage("Admin", `${ username } has arrived!`))
   })
-  socket.on("joining", (boardId, callback) => {
+  socket.on("joining", (boardId, username) => {
     if(boardId){
       socket.join(boardId)
       socket.emit("joined", boardId)
-      return io.emit("chat message", formatMessage("test", "I am joining a room: " + boardId))
+      return io.emit("chat message", formatMessage(`${username} I am joining a room: ${boardId}`))
     }
     else{
       return io.emit("err", "ERROR")
@@ -163,10 +163,15 @@ io.on("connect", socket => {
   
   socket.on("drawing", async (data) => {
     let boardId = data.boardId;
-    console.log(socket.rooms)
 
-    console.log(boardId)
-    io.to(boardId).emit("drawing", data);
+    // check if the boardId is null
+    if(boardId == ""){
+      console.log("failed no board Id")
+    }
+    else{
+      console.log(`have id sending to room: ${boardId} with data: ${data}`)
+      socket.to(boardId).emit("drawing", data)
+    }
   });
 
   socket.on("disconnect", () => {

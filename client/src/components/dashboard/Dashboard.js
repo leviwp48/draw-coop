@@ -90,10 +90,10 @@ export default class Dashboard extends Component {
   goToBoard = (boardId) => {
     axios.post(`http://localhost:3001/api/board/getBoard`, {boardId: boardId, userId: this.props.getUsername()})
     .then(res => {
-      this.state.socket.emit("joining", boardId);
+      this.state.socket.emit("joining", boardId, this.props.getUsername());
       this.setState({showBoard: true, display: 
         <>
-          <Board boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} save={this.save} convertBoardToImage={this.convertBoardToImage} />
+          <Board socket={this.state.socket} boardId={boardId} boardData={res.data.boardData} goBack={this.goBack} save={this.save} convertBoardToImage={this.convertBoardToImage} />
           <Chat username={this.props.getUsername()} socket={this.state.socket} />
         </>
       });
