@@ -104,6 +104,7 @@ Socket.io begins
 var botName = "Admin Bot";
 var userList = [];
 var messages = [];
+let lines = new Map();
 var Board = require("./models/board");
 const { strictEqual } = require("assert");
 
@@ -163,7 +164,8 @@ io.on("connect", socket => {
   
   socket.on("drawing", async (data) => {
     let boardId = data.boardId;
-
+    lines[boardId] = data;
+    console.log(JSON.stringify(lines[boardId]))
     // check if the boardId is null
     if(boardId == ""){
       console.log("failed no board Id")
