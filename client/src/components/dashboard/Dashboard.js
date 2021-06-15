@@ -116,7 +116,17 @@ export default class Dashboard extends Component {
       );
     }
     else{
-      return <p> you should login </p>
+      return (
+        <div className="intro-container">   
+          <div className="intro">
+            <p> Drawing stuff is better with friends </p>
+          </div>
+          <div className="intro-login">
+            Register or login to get started
+          </div>
+        </div>
+
+      );
     }
   }
 

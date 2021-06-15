@@ -15,7 +15,8 @@ body{
   justify-content: flex-end;
   align-items: center;
   padding: 1rem 10%;
-  background-color: #222831;
+  background-color: #272c48;
+  border-bottom: 3px solid #ed5a14;
 }
 
 .button-login {
@@ -40,7 +41,7 @@ body{
 }
 
 #user:hover, :focus {
-  color: #fd7014;
+  color: #ed5a14;
 }
 
 .username{
