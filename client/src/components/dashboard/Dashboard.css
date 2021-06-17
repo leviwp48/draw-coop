@@ -45,6 +45,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 5vh;
     width: 100%;
     height: 40vh;
   }
@@ -56,7 +57,57 @@
   }
 
   .intro-login{
-    padding-top: 10vh;
+    height: 40vh;
+    padding-top: 0;
     font-size: 1.5em;
+    color: #FFFFFF;
+  }
+
+  .dashboard-button-login {
+    border: none;
+    background: none;
+    margin-right: .25em; 
+    cursor: pointer;
     color: #ed5a14;
+    font-size: 1em;
+   }
+  
+  .dashboard-button-register {
+    border: none;
+    background: none; 
+    margin-right: .25em; 
+    margin-left: .25em; 
+    cursor: pointer;
+    color: #ed5a14;
+    font-size: 1em;
+  }
+  
+  #dashboard-user{
+    transition: all 0.3s ease 0s;
+  }
+  
+  #dashboard-user:hover, :focus {
+    color: #bf480f;
+  }
+
+  .action-text{
+    color: #FFFFFF;
+  }
+
+  .outro-container{
+    display: inline-block;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 30vh;
+    background: #ed5a14;
+  }
+
+  .outro-message{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
   }
