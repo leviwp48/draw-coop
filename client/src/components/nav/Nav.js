@@ -115,7 +115,6 @@ export default class Nav extends Component {
   }
 
   showLogin = () => {
-
     if(this.props.getTokenStatus()){
       return( 
       <div>
