@@ -9,7 +9,9 @@ const keys = require("./../../config/keys");
 const validateRegisterInput = require("../../auth/register");
 const validateLoginInput = require("../../auth/login");
 // Load User model
-const User = require("../../models/User");
+//const User = require("../../models/User");
+const User = process.env.MONGO_URI;
+const secretOrKey = "secret";
 /*
   * @route   POST api/login
   * @desc    Get User
