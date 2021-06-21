@@ -12,7 +12,7 @@ const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
     useEffect(() => {
         async function getMyBoards() {
             console.log(username)
-            axios.post(`http://localhost:3001/api/board/getMyBoards`, {userId: username})
+            axios.post(`https://drawmuch.herokuapp.com/api/board/getMyBoards`, {userId: username})
             .then(res => {
             setBoardInfo(res.data.boardData)
             setNumOfBoards(res.data.boardData.length)

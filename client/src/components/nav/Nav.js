@@ -43,7 +43,7 @@ export default class Nav extends Component {
       password: this.state.password,
     };
     
-    axios.post(`http://localhost:3001/api/users/login`, user)
+    axios.post(`https://drawmuch.herokuapp.com/api/users/login`, user)
       .then(res => {
         this.props.setUsername(jwt_decode(res.data.token).username);
         this.props.setToken(res.data.token);
@@ -67,11 +67,11 @@ export default class Nav extends Component {
     };
     
 
-    axios.post(`http://localhost:3001/api/users/register`, user)
+    axios.post(`https://drawmuch.herokuapp.com/api/users/register`, user)
       .then(res => {
       
         this.setState({show: false});
-        axios.post(`http://localhost:3001/api/users/login`, user)
+        axios.post(`https://drawmuch.herokuapp.com/api/users/login`, user)
         .then(res => {
           this.props.setToken(res.data.token);
           this.props.setUsername(jwt_decode(res.data.token).username);

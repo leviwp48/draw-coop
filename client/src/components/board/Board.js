@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import socketIOClient from "socket.io-client";
 import './Board.css';
 
-const ENDPOINT = "http://127.0.0.1:3001";
+const ENDPOINT = "https://drawmuch.herokuapp.com/";
 
 export default class Board extends Component {
     constructor(props){

@@ -2,7 +2,7 @@ import React, {Component, Context } from "react";
 import socketIOClient from "socket.io-client";
 import './Chat.css';
 
-const ENDPOINT = "http://127.0.0.1:3001";
+const ENDPOINT = "https://drawmuch.herokuapp.com/";
 var socket;
 export const MyContext = React.createContext();
 
