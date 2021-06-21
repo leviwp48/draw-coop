@@ -52,9 +52,10 @@ require("./config/passport")(passport);
 
 // parse application/json
 app.use(bodyParser.json());
-if(process.env.NODE_ENV === 'production'){
-  app.use(express.static('client/build'))
-}
+
+//if(process.env.NODE_ENV == "production"){
+app.use(express.static('client/build'))
+//}
 // This will allow the CORS to be allowed over Express for using Axios in React.
 // Allows socket.io to work as well 
 app.use(cors());
