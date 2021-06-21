@@ -6,7 +6,7 @@ const formatMessage = require("./utils/message");
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-const PORTNUM = 3001;
+const PORTNUM = process.env.PORT || 3001;
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const users = require("./routes/api/users");
@@ -18,7 +18,7 @@ const board = require("./routes/api/board");
 // well a makeshift version is probs good enough
 
 // DB Config
-const uri = require('./config/keys').mongoURI;
+const uri = process.env.MONGODB_URI || require('./config/keys').mongoURI;
 
 let db;
 // connecting to mongo with mongoose
@@ -51,7 +51,9 @@ require("./config/passport")(passport);
 
 // parse application/json
 app.use(bodyParser.json());
-
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('client/build'))
+}
 // This will allow the CORS to be allowed over Express for using Axios in React.
 // Allows socket.io to work as well 
 app.use(cors());
