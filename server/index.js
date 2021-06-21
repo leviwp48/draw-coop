@@ -18,7 +18,7 @@ const board = require("./routes/api/board");
 // well a makeshift version is probs good enough
 
 // DB Config
-const uri = process.env.MONGODB_URI || require('./config/keys').mongoURI;
+const uri = process.env.MONGO_URI || require('./config/keys').mongoURI;
 
 let db;
 // connecting to mongo with mongoose
