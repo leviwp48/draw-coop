@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const validateRegisterInput = require("../../auth/register");
 const validateLoginInput = require("../../auth/login");
 // Load User model
-const User = require("../../models/User");
+const User = require("./../../models/user");
 const secretOrKey = "secret";
 /*
   * @route   POST api/login
