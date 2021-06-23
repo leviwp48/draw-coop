@@ -80,3 +80,15 @@ body{
 :focus {
   cursor: pointer;
 }
+
+@media all and (max-width: 750px) {
+  /* CSS rules here for screens lower than 750px */
+
+  #user{
+    transition: all 0.3s ease 0s;
+  }
+  #user:active {
+    -webkit-tap-highlight-color: transparent;
+    color: #bf480f;
+  }
+}

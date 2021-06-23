@@ -8,7 +8,7 @@ import Chat from "../chat/Chat"
 import jwt_decode from 'jwt-decode';
 import socketIOClient from "socket.io-client";
 import Modal from "../login/LoginModal.js";
-const ENDPOINT = "https://drawmuch.herokuapp.com/";
+const ENDPOINT = "http://localhost:3001/";
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export default class Dashboard extends Component {
   }
 
   createBoard = () => {
-    axios.post(`https://drawmuch.herokuapp.com/api/board/createBoard`, {userId: this.props.getUsername()})
+    axios.post(`${ENDPOINT}api/board/createBoard`, {userId: this.props.getUsername()})
       .then(res => {
         console.log("creating a new board for user: " + this.props.getUsername())
         })
@@ -71,7 +71,7 @@ export default class Dashboard extends Component {
   }
 
   goBack = (boardId, boardState, boardRef) => {
-     axios.post(`https://drawmuch.herokuapp.com/api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.convertBoardToImage(boardRef)})
+     axios.post(`${ENDPOINT}api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.convertBoardToImage(boardRef)})
     .then(res => {
       console.log("Board was saved")
       this.setState({showBoard: false, display: ""})
@@ -83,7 +83,7 @@ export default class Dashboard extends Component {
   }
 
   save = (boardId, boardState, boardRef) => {
-    axios.post(`https://drawmuch.herokuapp.com/api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.convertBoardToImage(boardRef)})
+    axios.post(`${ENDPOINT}api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.convertBoardToImage(boardRef)})
     .then(res => {
       console.log("Board was saved")
     })
@@ -93,7 +93,7 @@ export default class Dashboard extends Component {
   }
   
   goToBoard = (boardId) => {
-    axios.post(`https://drawmuch.herokuapp.com/api/board/getBoard`, {boardId: boardId, userId: this.props.getUsername()})
+    axios.post(`${ENDPOINT}api/board/getBoard`, {boardId: boardId, userId: this.props.getUsername()})
     .then(res => {
       this.state.socket.emit("joining", boardId, this.props.getUsername());
       this.setState({showBoard: true, display: 
@@ -134,7 +134,7 @@ export default class Dashboard extends Component {
       password: this.state.password,
     };
     
-    axios.post(`https://drawmuch.herokuapp.com/api/users/login`, user)
+    axios.post(`${ENDPOINT}api/users/login`, user)
       .then(res => {
         this.props.setUsername(jwt_decode(res.data.token).username);
         this.props.setToken(res.data.token);
@@ -156,13 +156,12 @@ export default class Dashboard extends Component {
       username: this.state.username,
       password: this.state.password,
     };
-    
 
-    axios.post(`https://drawmuch.herokuapp.com/api/users/register`, user)
+    axios.post(`${ENDPOINT}api/users/register`, user)
       .then(res => {
       
         this.setState({show: false});
-        axios.post(`https://drawmuch.herokuapp.com/api/users/login`, user)
+        axios.post(`${ENDPOINT}api/users/login`, user)
         .then(res => {
           this.props.setToken(res.data.token);
           this.props.setUsername(jwt_decode(res.data.token).username);

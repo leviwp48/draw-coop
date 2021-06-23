@@ -2,6 +2,7 @@ import React ,{useEffect, useRef, useState} from "react";
 import "./BoardList.css" 
 import BoardListItem from "../boardlistitem/BoardListItem";
 import axios from 'axios';
+const ENDPOINT = "http://localhost:3001/";
 
 const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
 
@@ -12,7 +13,7 @@ const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
     useEffect(() => {
         async function getMyBoards() {
             console.log(username)
-            axios.post(`https://drawmuch.herokuapp.com/api/board/getMyBoards`, {userId: username})
+            axios.post(`${ENDPOINT}api/board/getMyBoards`, {userId: username})
             .then(res => {
             setBoardInfo(res.data.boardData)
             setNumOfBoards(res.data.boardData.length)

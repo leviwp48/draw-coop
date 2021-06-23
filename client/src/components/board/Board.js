@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import socketIOClient from "socket.io-client";
 import './Board.css';
 
-const ENDPOINT = "https://drawmuch.herokuapp.com/";
+const ENDPOINT = "http://localhost:3001/";
 
 export default class Board extends Component {
     constructor(props){
@@ -90,21 +90,22 @@ export default class Board extends Component {
         // ---------------- mouse movement --------------------------------------
 
         const onMouseDown = (e) => {
-
             drawing = true;
-            canvas.canvasBounds = canvas.getBoundingClientRect();
-            let offsetX = canvas.canvasBounds.left;
-            let offsetY = canvas.canvasBounds.top;
-            current.x = (e.clientX || e.touches[0].clientX) - canvas.canvasBounds.left;
-            current.y = (e.clientY || e.touches[0].clientY) - canvas.canvasBounds.top;
-            //console.log("x" + current.x)
+            let offset = canvas.getBoundingClientRect();
+            current.x = (e.clientX || e.touches[0].clientX) - offset.left;
+            current.y = (e.clientY || e.touches[0].clientY) - offset.top;
+            console.log(offset)
+            //console.log("e client x: " + e.clientX)
+            //console.log("e touch client x: " + e.touches[0])
+            //console.log("canvas bound left: " + canvas.canvasBounds)
             drawLine(current.x, current.y, current.x, current.y, current.color, true, true, false);
         }
 
         const onMouseMove = (e) => {
             if (!drawing) { return; }
-            let offsetX = canvas.canvasBounds.left;
-            let offsetY = canvas.canvasBounds.top;
+            let offset = canvas.getBoundingClientRect();
+            let offsetX = offset.left;
+            let offsetY = offset.top;
             drawLine(current.x, current.y, (e.clientX || e.touches[0].clientX) - offsetX, (e.clientY || e.touches[0].clientY) - offsetY, current.color, false, true, false);
             current.x = (e.clientX || e.touches[0].clientX) - offsetX;
             current.y = (e.clientY || e.touches[0].clientY) - offsetY;
@@ -113,8 +114,6 @@ export default class Board extends Component {
         const onMouseUp = (e) => {
             if (!drawing) { return; }
             drawing = false;
-            let offsetX = canvas.canvasBounds.left;
-            let offsetY = canvas.canvasBounds.top;
             context.save();
         };
 
@@ -156,9 +155,9 @@ export default class Board extends Component {
             }
             context.fillStyle = 'white';
             context.fillRect(0, 0, canvas.width,canvas.height);
-            console.log('redarwing board')
+            //console.log('redarwing board')
             for (var i = 0;i < this.state.boardState.length; i++) {    
-                console.log(this.state.boardState[i][0])
+                //console.log(this.state.boardState[i][0])
                 drawLine(this.state.boardState[i][0], this.state.boardState[i][1], this.state.boardState[i][2], this.state.boardState[i][3], this.state.boardState[i][4], false, false, true);
             };      
         };
@@ -177,9 +176,9 @@ export default class Board extends Component {
 
         ///this.socketRef.current = this.props.socket;
         this.props.socket.on('drawing',  (data) => {
-            console.log("drawing data: " + JSON.stringify(data))
+            //console.log("drawing data: " + JSON.stringify(data))
             onDrawingEvent(data)
-            console.log(this.props.socket.rooms)
+            //console.log(this.props.socket.rooms)
         });
 
         if(this.state.firstLoad){
