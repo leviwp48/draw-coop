@@ -36,7 +36,6 @@ let BoardSchema = new Schema({
     image: {
         type: String,
     }
-    
 }); 
   
 module.exports  = mongoose.model('board', BoardSchema);

@@ -10,6 +10,7 @@ import socketIOClient from "socket.io-client";
 import Modal from "../login/LoginModal.js";
 const ENDPOINT = "http://localhost:3001/";
 
+// ---------------- Dashboard for all of the componenets ----------------
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -145,13 +146,10 @@ export default class Dashboard extends Component {
       .catch(err => {
         console.log(err.response)
       });
-
-      
   }
 
   handleSubmitRegister = (e) => {
     e.preventDefault();
-
     const user = {
       username: this.state.username,
       password: this.state.password,
@@ -159,7 +157,6 @@ export default class Dashboard extends Component {
 
     axios.post(`${ENDPOINT}api/users/register`, user)
       .then(res => {
-      
         this.setState({show: false});
         axios.post(`${ENDPOINT}api/users/login`, user)
         .then(res => {
@@ -214,7 +211,6 @@ export default class Dashboard extends Component {
           <div className="intro">
             <p> Drawing stuff is better with friends </p>
           </div>
-          
         </div>
         <div className="intro-login">
           <button
@@ -243,7 +239,6 @@ export default class Dashboard extends Component {
 
   
   render() {
-  
     return (
       <div>
         <Modal 
@@ -279,7 +274,6 @@ export default class Dashboard extends Component {
               setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
               deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData}/>
           {this.setDisplay()}
-          
         </div>
         <div className="outro-container">
           <p className="outro-message"> Thanks for coming! </p>

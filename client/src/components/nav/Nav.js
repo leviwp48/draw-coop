@@ -37,7 +37,6 @@ export default class Nav extends Component {
 
   handleSubmitLogin = (e) => {
     e.preventDefault();
-
     const user = {
       username: this.state.username,
       password: this.state.password,
@@ -49,27 +48,21 @@ export default class Nav extends Component {
         this.props.setToken(res.data.token);
         this.setState({show: false});
         sessionStorage.setItem('user', res.data.token)
-        
       })     
       .catch(err => {
         console.log(err.response)
       });
-
-      
   }
 
   handleSubmitRegister = (e) => {
     e.preventDefault();
-
     const user = {
       username: this.state.username,
       password: this.state.password,
     };
-    
 
     axios.post(`${ENDPOINT}api/users/register`, user)
       .then(res => {
-      
         this.setState({show: false});
         axios.post(`${ENDPOINT}api/users/login`, user)
         .then(res => {

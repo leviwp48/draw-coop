@@ -16,17 +16,15 @@ const Board = require("../../models/board");
 app.post('/getMyBoards', (req, res) =>{
     console.log("my user id is: " + req.body.userId)
 
-  Board.find({})
-  .then(myBoards => {
-      var keys = Object.keys(myBoards);
-      res.status(200).json({
-          boardData: myBoards,
-          length: keys
-      })
-      
-      
-  })
-  .catch(err => console.log(err));
+    Board.find({})
+    .then(myBoards => {
+        var keys = Object.keys(myBoards);
+        res.status(200).json({
+            boardData: myBoards,
+            length: keys
+        }) 
+    })
+    .catch(err => console.log(err));
 });
 
 app.post('/getBoard', (req, res) =>{

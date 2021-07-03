@@ -13,7 +13,6 @@ const passport = require("passport");
 const users = require("./routes/api/users");
 const board = require("./routes/api/board");
 
-
 // TODO: need to migrate to Atlas from MLab
 // TODO: create correct user login by authenticating on the back end then storing a token on the front end
 // well a makeshift version is probs good enough

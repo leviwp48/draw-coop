@@ -13,43 +13,44 @@ export default class Board extends Component {
             firstLoad: true,
             boardState: [],
         }
+        // Canvas and color refs
         this.canvasRef = React.createRef();
         this.colorsRef = React.createRef();
-        //this.socketRef = React.createRef();
     }
 
     componentDidMount = () => { 
-        
-        // --------------- getContext() method returns a drawing context on the canvas-----
+
+        // Creating the canvas ref and context
         const canvas = this.canvasRef.current;
-        //const test = this.colorsRef.current;
         const context = canvas.getContext('2d');
 
-        // ----------------------- Colors --------------------------------------------------
-
+        // Colors link to color choices
         const colors = document.getElementsByClassName('color');
-        // set the current color
+        // Setting current color (starts in black)
         const current = {
             color: 'black',
         };
 
-        // helper that will update the current color
+        // Helper to update color choice
         const onColorUpdate = (e) => {
             current.color = e.target.className.split(' ')[1];
         };
 
-        // loop through the color elements and add the click event listeners
+        // Adding color event listeners
         for (let i = 0; i < colors.length; i++) {
             colors[i].addEventListener('click', onColorUpdate, false);
         }
-        let drawing = false;
-        
+       
+        // Drawing var to denote when the user is actively drawing
+        let drawing = false;       
+
+        // drawLine(): x0 & y0 = initial point, x1 & y1 = ending point
         const drawLine = (x0, y0, x1, y1, color, mouseDown, emit, resizing) => {
-    
             if(mouseDown){
                 context.fillStyle = color;
                 context.lineWidth = 3;
-                context.fillRect(x0,y0,3,3); // fill in the pixel at (10,10)
+                context.fillRect(x0,y0,3,3);
+                // Set state with previous boardState and add to it 
                 this.setState({boardState: [...this.state.boardState, [x0, y0, x1, y1, color]]})
             }
             else if(resizing){
@@ -76,7 +77,6 @@ export default class Board extends Component {
             const w = canvas.width;
             const h = canvas.height;
             
-            //this.socketRef.current.emit('drawing', {
             this.props.socket.emit('drawing', {
                 x0: x0,
                 y0: y0,
@@ -87,7 +87,7 @@ export default class Board extends Component {
             });
         };
 
-        // ---------------- mouse movement --------------------------------------
+// ---------------- Mouse movement ----------------
 
         const onMouseDown = (e) => {
             drawing = true;
@@ -95,9 +95,6 @@ export default class Board extends Component {
             current.x = (e.clientX || e.touches[0].clientX) - offset.left;
             current.y = (e.clientY || e.touches[0].clientY) - offset.top;
             console.log(offset)
-            //console.log("e client x: " + e.clientX)
-            //console.log("e touch client x: " + e.touches[0])
-            //console.log("canvas bound left: " + canvas.canvasBounds)
             drawLine(current.x, current.y, current.x, current.y, current.color, true, true, false);
         }
 
@@ -117,7 +114,7 @@ export default class Board extends Component {
             context.save();
         };
 
-        // ----------- limit the number of events per second -----------------------
+// ---------------- Limit the number of events per second ----------------
 
         const throttle = (callback, delay) => {
             let previousCall = new Date().getTime();
@@ -131,7 +128,7 @@ export default class Board extends Component {
             };
         };
 
-        // -----------------add event listeners to our canvas ----------------------
+// ---------------- Add event listeners to our canvas ----------------
 
         canvas.addEventListener('mousedown', onMouseDown, false);
         canvas.addEventListener('mouseup', onMouseUp, false);
@@ -144,7 +141,7 @@ export default class Board extends Component {
         canvas.addEventListener('touchcancel', onMouseUp, false);
         canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
 
-        // -------------- make the canvas fill its parent component -----------------
+// ---------------- Make the canvas fill its parent component ----------------
 
         const onResize = () => {
         
@@ -155,9 +152,7 @@ export default class Board extends Component {
             }
             context.fillStyle = 'white';
             context.fillRect(0, 0, canvas.width,canvas.height);
-            //console.log('redarwing board')
             for (var i = 0;i < this.state.boardState.length; i++) {    
-                //console.log(this.state.boardState[i][0])
                 drawLine(this.state.boardState[i][0], this.state.boardState[i][1], this.state.boardState[i][2], this.state.boardState[i][3], this.state.boardState[i][4], false, false, true);
             };      
         };
@@ -167,19 +162,17 @@ export default class Board extends Component {
         context.fillStyle = 'white';
         context.fillRect(0, 0,canvas.width,canvas.height);
 
-        // ----------------------- socket.io connection ----------------------------
+// ---------------- Socket.io connection ----------------
+
         const onDrawingEvent = (data) => {
-            const w = canvas.width;
-            const h = canvas.height;
             drawLine(data.x0, data.y0, data.x1, data.y1, data.color);
         }
 
-        ///this.socketRef.current = this.props.socket;
         this.props.socket.on('drawing',  (data) => {
-            //console.log("drawing data: " + JSON.stringify(data))
             onDrawingEvent(data)
-            //console.log(this.props.socket.rooms)
         });
+
+// ---------------- Initialize board state ----------------
 
         if(this.state.firstLoad){
             let data = this.props.boardData[0].boardData;     
@@ -187,14 +180,11 @@ export default class Board extends Component {
                 drawLine(data[i][0], data[i][1], data[i][2], data[i][3], data[i][4], false);
             };
             this.setState({boardState: [...this.state.boardState, ...data], false: false})
-            //console.log(...this.props.boardData[0].boardData)
-            //console.log(this.state.boardState)
-            
         }
     }
 
+// ---------------- The Canvas and color elements ----------------
 
-  // ------------- The Canvas and color elements --------------------------
 render() {
   return (
     <div className="drawing-container">

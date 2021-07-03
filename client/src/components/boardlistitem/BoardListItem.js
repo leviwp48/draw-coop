@@ -11,7 +11,6 @@ const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
         }
     }, []);
 
-   
     return (
         <div className="listItem">
             <div className="imgContainer">

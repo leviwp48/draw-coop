@@ -4,11 +4,13 @@ import BoardListItem from "../boardlistitem/BoardListItem";
 import axios from 'axios';
 const ENDPOINT = "http://localhost:3001/";
 
-const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
+const BoardList=({username, goToBoard, createBoard})=>{
 
     const[dataLoaded, setDataLoaded] = useState(false)
     const[boardInfo, setBoardInfo] = useState()
     const[numOfBoards, setNumOfBoards] = useState(0)
+
+// ---------------- Get list of boards ----------------
 
     useEffect(() => {
         async function getMyBoards() {
@@ -23,10 +25,11 @@ const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
                 console.log(err.response)
             });
         }
-
         getMyBoards();
     }, []);
 
+
+// ---------------- Present board list if any ----------------
 
     if(dataLoaded){
         return (
@@ -51,6 +54,9 @@ const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
             
         )
     }
+
+// ---------------- If no boards are found
+
     else{
         return(
             <div className="listWrapper">
@@ -67,7 +73,6 @@ const BoardList=({getTokenStatus, username, goToBoard, createBoard})=>{
         </div>
         )
     }
-    
 }
  
 export default BoardList;
