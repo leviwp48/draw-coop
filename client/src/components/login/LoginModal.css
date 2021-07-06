@@ -16,26 +16,25 @@
   .modal-main {
     position: fixed;
     background: white;
-    width: 30%;
-    height: auto;
+    width: 60%;
+    height: 20%;
     top: 50%;
     left: 50%;
-    border: solid #2d4059;
+    border: solid #ed5a14;
     border-radius: 5px;
-    background-color: #2d4059;
+    background-color: #272c48;
     transform: translate(-50%, -50%);
   }
   
-  .display-block {
-    display: block;
+  .modal-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1vh;
   }
-  
-  .display-none {
-    display: none;
-  }
-  
+
   .input-username {
-    display: block;
+    display: flex;
     margin: 10px auto 5px auto;
     padding: 2px 5px 3px 5px;
     border-radius: 3px;
@@ -45,7 +44,7 @@
     font-family: sans-serif;   
   }
   .input-password {
-    display: block;
+    display: flex;
     margin: 5px auto 5px auto;
     padding: 2px 5px 3px 5px;
     border-radius: 3px;
@@ -57,42 +56,40 @@
   #input:focus{
     outline: none;
     cursor: pointer;
-    border: solid #fd7014;
+    border: solid #ed5a14;
     color:black;
   }
   
   .modal-submit {
-    width: 20%;
+    width: 20vh;
     height: 25px;
     border-radius: 3px;
     font-family: sans-serif;
     color: #eeeeee;   
-    border: solid #fd7014;
-    background-color: #fd7014;
+    border: solid #ed5a14;
+    background-color: #ed5a14;
   }
   
+  .display-none{
+    display: none;
+  }
   /*
     For close button
   */
 
   .close {
+    position: fixed;
+    margin-left: 90%;
+    margin-top: -2vh;
+    opacity: 0.8;
     color: white;
-    float: right;
-    font-size: 32px;
+    font-size: 30px;
   }
-  
   .close:hover,
   :focus {
-    color: #fd7014;
+    color: #ed5a14;
     text-decoration: none;
     cursor: pointer;
-  }
-
-  .close {
-    position: fixed;
-    margin-top: -1.5%;
-    margin-left: 40.9%;
-    opacity: 0.8;
   }
   .close:hover {
     opacity: 1;
@@ -105,9 +102,40 @@
     height: 40px;
     width: 40px;
   }
-  
+
   @media all and (max-width: 750px) {
     /* CSS rules here for screens lower than 750px */
-  
-    
+    .modal-main {
+      position: fixed;
+      background: white;
+      width: 60%;
+      height: 20%;
+      border: solid #ed5a14;
+      border-radius: 5px;
+      background-color: #272c48;
+    }
+    .close {
+      position: fixed;
+      margin-left: 90%;
+      margin-top: -2vh;
+      opacity: 0.8;
+    }
+  }
+  @media all and (max-width: 420px) {
+    /* CSS rules here for screens lower than 750px */
+    .modal-main {
+      position: fixed;
+      background: white;
+      width: 60%;
+      height: 20%;
+      border: solid #ed5a14;
+      border-radius: 5px;
+      background-color: #272c48;
+    }
+    .close {
+      position: fixed;
+      margin-left: 90%;
+      margin-top: -2vh;
+      opacity: 0.8;
+    }
   }

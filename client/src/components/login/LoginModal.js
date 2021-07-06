@@ -9,8 +9,10 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, show, chil
   return (
     <div className={showHideClassName}>
       <section className="modal-main">
-        <h1> {makeTitle} </h1>
-        <span className="close" onClick={handleClose}> &times; </span>
+        <div className="modal-title"> 
+          <h1> {makeTitle} </h1>
+          <span className="close" onClick={handleClose}> &times; </span>
+        </div>
         {children}
         <button className="modal-submit"  onClick={chooseSubmit}>submit</button>
       </section>

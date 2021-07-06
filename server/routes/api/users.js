@@ -33,7 +33,6 @@ app.post('/login', (req, res) =>{
     if (!user) {
       return res.status(404).json({ usernotfound: "Username not found" });
     }
-    console.log(user);
     // * Check password 
     bcrypt.compare(req.body.password, user.password).then(isMatch => {
       if (isMatch) {

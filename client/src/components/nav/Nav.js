@@ -37,12 +37,15 @@ export default class Nav extends Component {
 
   handleSubmitLogin = (e) => {
     e.preventDefault();
-    const user = {
-      username: this.state.username,
-      password: this.state.password,
-    };
     
-    axios.post(`${ENDPOINT}api/users/login`, user)
+    if(this.state.username && this.state.password){
+
+      const user = {
+        username: this.state.username,
+        password: this.state.password,
+      };
+      
+      axios.post(`${ENDPOINT}api/users/login`, user)
       .then(res => {
         this.props.setUsername(jwt_decode(res.data.token).username);
         this.props.setToken(res.data.token);
@@ -52,18 +55,29 @@ export default class Nav extends Component {
       .catch(err => {
         console.log(err.response)
       });
+    }
+    else{
+      if(!this.state.username){
+        console.log("no username")
+      }
+      if(!this.state.password){
+        console.log("no password")
+      }
+    }
   }
 
   handleSubmitRegister = (e) => {
     e.preventDefault();
-    const user = {
-      username: this.state.username,
-      password: this.state.password,
-    };
 
-    axios.post(`${ENDPOINT}api/users/register`, user)
+    if(this.state.username && this.state.password){
+
+      const user = {
+        username: this.state.username,
+        password: this.state.password,
+      };
+
+      axios.post(`${ENDPOINT}api/users/register`, user)
       .then(res => {
-        this.setState({show: false});
         axios.post(`${ENDPOINT}api/users/login`, user)
         .then(res => {
           this.props.setToken(res.data.token);
@@ -77,6 +91,15 @@ export default class Nav extends Component {
       .catch(err => {
         console.log(err.response)
       });
+    }
+    else{
+      if(!this.state.username){
+        console.log("no username")
+      }
+      if(!this.state.password){
+        console.log("no password")
+      }
+    }
   }
 
   onEnter = (e) => {
