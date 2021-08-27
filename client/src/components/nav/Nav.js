@@ -196,7 +196,6 @@ export default class Nav extends Component {
           />
         </Modal>
         <div className="nav-bar" >
-          <h1 className="title">Drawsome</h1>
           {this.showLogin()}  
         </div>          
       </div>

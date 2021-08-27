@@ -112,16 +112,20 @@ export default class Dashboard extends Component {
   showModalLogin = () => {
     this.setState({
       show: true,
-      modalType: true
+      modalType: true,
     });
   };
 
   showModalRegister = () => {
     this.setState({
       show: true,
-      modalType: false
+      modalType: false,
     });
   };
+
+  changeModalType = (modalType) => {
+    modalType = !modalType
+  }
 
   hideModal = () => {
     this.setState({ show: false });
@@ -209,7 +213,8 @@ export default class Dashboard extends Component {
         <>
         <div className="intro-container">   
           <div className="intro">
-            <p> Drawing stuff is better with friends </p>
+            <p className="title"> Drawsome </p>
+            <p className="description-text"> A place to finally draw that perfect picture you've been dreaming of... well unless your friends scribble all over it  </p>
           </div>
         </div>
         <div className="intro-login">
@@ -274,13 +279,27 @@ export default class Dashboard extends Component {
               setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
               deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData}/>
           {this.setDisplay()}
-        </div>
-        <div className="outro-container">
-          <p className="outro-message"> Thanks for coming! </p>
-        </div>
+          <div className="credits">
+            <div className="ending-credits">
+              Built and designed by Levi Pole.
+              All rights reserved. ©
+            </div>
+          </div>
+          <div className="my-info">
+            
+              <a href="https://github.com/leviwp48"><div className="github-image"/></a> 
+              <a href="https://www.linkedin.com/in/polelevi/"> <div className="linkedIn-image"/> </a>
+              <a href="mailto:levi@levipole.com"> <div className="email-image"/> </a>
+            
+          </div>
+        </div>  
       </div>
     );
   }
 }
 
-
+/*
+ <div className="outro-container">
+          <p className="outro-message"> Thanks for coming! </p>
+        </div>
+*/

@@ -14,7 +14,16 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, show, chil
           <span className="close" onClick={handleClose}> &times; </span>
         </div>
         {children}
-        <button className="modal-submit"  onClick={chooseSubmit}>submit</button>
+        <div className="button-submit">
+          <button className="modal-submit"  onClick={chooseSubmit}>submit</button>
+        </div>
+        <div className="register-text">
+          <p> Don't have an account? 
+            <button
+            type="button"
+            onClick={() => this.showModalLogin()}>Register</button>
+          </p>
+        </div>
       </section>
     </div>
   );
