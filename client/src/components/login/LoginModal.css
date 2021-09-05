@@ -120,4 +120,15 @@
     width: 40px;
   }
 
-  
+  .register-text{
+    margin-top: .5em;
+  }
+
+  .register-btn{
+    margin-left: .25em;
+    border: none;
+    background: none; 
+    cursor: pointer;
+    color: #ed5a14;
+    font-size: 1em;
+  }

@@ -20,6 +20,7 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, show, chil
         <div className="register-text">
           <p> Don't have an account? 
             <button
+            className="register-btn"
             type="button"
             onClick={() => this.showModalLogin()}>Register</button>
           </p>
