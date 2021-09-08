@@ -1,10 +1,12 @@
 import React from "react";
 import "./LoginModal.css";
 
-const Modal = ({ handleClose, modalType, submitRegister, submitLogin, show, children }) => {
+const Modal = ({ handleClose, modalType, submitRegister, submitLogin, changeModalType, show, children }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const makeTitle = modalType ? "Login" : "Register";
   const chooseSubmit = modalType ? submitLogin : submitRegister;
+  const makeOption = modalType ? "Register" : "Login";
+  const makeText = modalType ? "Don't have an account?" : "Already have an account?";
 
   return (
     <div className={showHideClassName}>
@@ -15,14 +17,14 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, show, chil
         </div>
         {children}
         <div className="button-submit">
-          <button className="modal-submit"  onClick={chooseSubmit}>submit</button>
+          <button className="modal-submit"  onClick={chooseSubmit}>Submit</button>
         </div>
-        <div className="register-text">
-          <p> Don't have an account? 
+        <div className="option-box">
+          <p> {makeText}
             <button
-            className="register-btn"
+            className="option-btn"
             type="button"
-            onClick={() => this.showModalLogin()}>Register</button>
+            onClick={() => changeModalType()}>{makeOption}</button>
           </p>
         </div>
       </section>

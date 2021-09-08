@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
 
+var{
+  --normal-text: #e6f1ff;
+  --highlight-text:#ed5a14;
+}
+
   .Title {
     padding-top: 10px;
   }
@@ -17,8 +22,7 @@
     position: fixed;
     background: white;
     width: 40%;
-    height: 30%;
-    top: 50%;
+    top: 48%;
     left: 50%;
     border: solid #ed5a14 2px;
     border-radius: .5em;
@@ -90,6 +94,26 @@
   .display-none{
     display: none;
   }
+
+  .option-box{
+    margin-top: .7em;
+    margin-bottom: .7em;
+  }
+
+  .option-btn{
+    margin-left: .25em;
+    border: none;
+    background: none; 
+    cursor: pointer;
+    color: #ed5a14;
+    font-size: 1em;
+  }
+
+  .option-btn:focus{
+    color: #ed5a14;
+    cursor: pointer;
+  }
+ 
   /*
     For close button
   */
@@ -120,15 +144,10 @@
     width: 40px;
   }
 
-  .register-text{
-    margin-top: .5em;
-  }
+ 
 
-  .register-btn{
-    margin-left: .25em;
-    border: none;
-    background: none; 
-    cursor: pointer;
-    color: #ed5a14;
-    font-size: 1em;
+  @media all and (max-width: 1000px) {
+    .modal-main{
+      width: 65%;
+    }
   }

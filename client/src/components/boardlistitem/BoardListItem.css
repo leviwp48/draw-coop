@@ -1,3 +1,5 @@
+
+
 .listItem{
     display: flex;
     flex-flow: wrap;
@@ -5,7 +7,7 @@
     align-content: flex-start;
     height: 15rem;
     width:15rem;
-    background: orange;
+    background: var(--dark-background);
 }
 
 .imgContainer{

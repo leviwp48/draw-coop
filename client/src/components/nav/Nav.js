@@ -35,6 +35,10 @@ export default class Nav extends Component {
     this.setState({ show: false });
   };
 
+  changeModalType = () => {
+    this.setState({modalType: !this.state.modalType})
+  }
+
   handleSubmitLogin = (e) => {
     e.preventDefault();
     
@@ -134,9 +138,21 @@ export default class Nav extends Component {
     if(this.props.getTokenStatus()){
       return( 
       <div>
-        <div className="username">{this.props.getUsername()}</div>
-        <div className="logout" onClick={this.logout}>Logout</div>
-      </div>
+          <button
+          className="username" 
+          id="user"
+          >
+            {this.props.getUsername()}
+          </button>
+                 
+        <button 
+          className="button-logout" 
+          id="user" 
+          onClick={this.logout}
+        >
+          Logout
+        </button>
+        </div>
       );
     }
     else{
@@ -175,12 +191,13 @@ export default class Nav extends Component {
           onEnter={this.onEnter}
           modalType={this.state.modalType}
           handleClose={this.hideModal}
+          changeModalType={this.changeModalType}
         >
           <input
             className="input-username"
             id="input"
             type="text"
-            placeholder="username"
+            placeholder="Username"
             value={this.username}
             onChange={this.handleUsernameChange}
             onKeyPress={this.onEnter}
@@ -189,7 +206,7 @@ export default class Nav extends Component {
             className="input-password"
             id="input"
             type="text"
-            placeholder="password"
+            placeholder="Password"
             value={this.state.password}
             onChange={this.handlePasswordChange}
             onKeyPress={this.onEnter}

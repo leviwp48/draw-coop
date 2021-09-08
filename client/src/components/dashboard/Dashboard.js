@@ -61,10 +61,6 @@ export default class Dashboard extends Component {
     this.setState({ password: e.target.value });
   }; 
 
-  logout = () => {
-    this.props.deleteToken();
-  }
-
   convertBoardToImage = (board) => {
     var image = new Image();
     image.src = board.toDataURL("image/png");
@@ -122,10 +118,6 @@ export default class Dashboard extends Component {
       modalType: false,
     });
   };
-
-  changeModalType = (modalType) => {
-    modalType = !modalType
-  }
 
   hideModal = () => {
     this.setState({ show: false });
