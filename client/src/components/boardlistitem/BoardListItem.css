@@ -7,7 +7,7 @@
     align-content: flex-start;
     height: 15rem;
     width:15rem;
-    background: var(--dark-background);
+    background: orange;
 }
 
 .imgContainer{
