@@ -34,6 +34,7 @@ const BoardList=({username, goToBoard, createBoard})=>{
     if(dataLoaded){
         return (
             <div>
+                <p className="list-title">Board List</p>
                 <div className="listWrapper">
                     <div className="listGrid">
                         {boardInfo.map((board, id) => 
@@ -44,11 +45,11 @@ const BoardList=({username, goToBoard, createBoard})=>{
                 </div>
                 
                 <button
-                className="createBoard"
+                className="create-board"
                 type="button"
                 onClick={() => createBoard()}
                 >
-                    create board
+                    Create board
                 </button>
             </div>
             
@@ -64,11 +65,11 @@ const BoardList=({username, goToBoard, createBoard})=>{
                 No Boards Found
             </div>
             <button
-            className="createBoard"
+            className="create-board"
             type="button"
             onClick={() => createBoard()}
             >
-                create board
+                Create board
             </button>
         </div>
         )

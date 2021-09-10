@@ -19,11 +19,11 @@ const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
             <div className="infoContainer"> 
                 <p id="author"> {author} </p>
                 <p id="lastModified"> {lastModified} </p>
-            <button className="goToBoard"
+            <button className="draw"
             type="button"
             onClick={() => goToBoard(boardData._id)}
             >
-            go to board
+            Draw
             </button> 
             </div>
             

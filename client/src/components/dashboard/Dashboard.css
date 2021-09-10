@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
 
-:root{
-  --normal-text: #e6f1ff;
-  --highlight-text:#ed5a14;
-  --dark-background: darkgrey;
-}
+
 
   .logout{
     position: absolute;
@@ -18,8 +14,8 @@
     font-family: sans-serif;   
     color: #eeeeee;
     border-radius: 3px;
-    border: solid 2px #ed5a14;
-    background: #ed5a14;
+    border: solid 2px var(--highlight-text);
+    background: var(--highlight-text);
   }
   .logout:hover,
   :focus {
@@ -44,21 +40,19 @@
     justify-content: center;
     align-items: center;
     padding-top: 3em;
-    background-color: #272c48;
     font-size: 1.5em;
     color: #FFFFFF;
   }
 
   .title{
     font-size: 5em;
-    color: #ed5a14;
+    color: var(--highlight-text);
   }
 
   .description-text{
     padding-top: 2em;
     font-size: 2em;
     color: #e6f1ff;
-
   }
 
   .dashboard-button-login {
@@ -66,7 +60,7 @@
     background: none;
     margin-right: .25em; 
     cursor: pointer;
-    color: #ed5a14;
+    color: var(--highlight-text);
     font-size: 1em;
    }
   
@@ -76,7 +70,7 @@
     margin-right: .25em; 
     margin-left: .25em; 
     cursor: pointer;
-    color: #ed5a14;
+    color: var(--highlight-text);
     font-size: 1em;
   }
   
@@ -100,7 +94,7 @@
   .ending-credits{ 
     position: absolute;
     bottom: 0;
-    padding-bottom: 3em; 
+    padding-bottom: 1.5em; 
     font-family: "NTR", sans-serif;
     color: var(--slate);
     text-align: center;
@@ -160,7 +154,7 @@
     
     .title{
       font-size: 4em;
-      color: #ed5a14;
+      color: var(--highlight-text);
       
     }
     .description-text{

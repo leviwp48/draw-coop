@@ -35,3 +35,16 @@ img{
 #lastModified{
     padding-right: 1rem;
 }
+
+.draw{
+    width: 40%;
+    height: 2.6em;
+    margin-right: .5em;
+    border-radius: 3px;
+    font-family: sans-serif;
+    color: #eeeeee;   
+    border: solid var(--highlight-text);
+    background-color: var(--highlight-text);
+    font-size: 1em;
+    cursor: pointer;
+}

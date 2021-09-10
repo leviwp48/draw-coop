@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela&display=swap');
 
-var{
-  --normal-text: #e6f1ff;
-  --highlight-text:#ed5a14;
-}
-
   .Title {
     padding-top: 10px;
   }
@@ -21,12 +16,12 @@ var{
   .modal-main {
     position: fixed;
     background: white;
-    width: 40%;
+    width: 30%;
     top: 48%;
     left: 50%;
-    border: solid #ed5a14 2px;
+    border: solid var(--highlight-text) 2px;
     border-radius: .5em;
-    background-color: #272c48;
+    background-color: var(--background);
     transform: translate(-50%, -50%);
   }
   
@@ -64,7 +59,7 @@ var{
   
   #input:focus{
     outline: none;
-    border: solid #ed5a14 2px;
+    border: solid var(--highlight-text) 2px;
     color:black;
   }
   
@@ -82,8 +77,8 @@ var{
     border-radius: 3px;
     font-family: sans-serif;
     color: #eeeeee;   
-    border: solid #ed5a14;
-    background-color: #ed5a14;
+    border: solid var(--highlight-text);
+    background-color: var(--highlight-text);
     font-size: 1em;
   }
   
@@ -105,12 +100,12 @@ var{
     border: none;
     background: none; 
     cursor: pointer;
-    color: #ed5a14;
+    color: var(--highlight-text);
     font-size: 1em;
   }
 
   .option-btn:focus{
-    color: #ed5a14;
+    color: var(--highlight-text);
     cursor: pointer;
   }
  
@@ -128,7 +123,7 @@ var{
   }
   .close:hover,
   :focus {
-    color: #ed5a14;
+    color: var(--highlight-text);
     text-decoration: none;
     cursor: pointer;
   }

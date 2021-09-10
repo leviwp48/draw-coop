@@ -10,3 +10,20 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+.list-title{
+    color: var(--highlight-text);
+    font-size: 2em;
+}
+
+.create-board{
+    width: 15%;
+    height: 2.6em;
+    margin-top: 1em;
+    border-radius: 3px;
+    font-family: sans-serif;
+    color: #eeeeee;   
+    border: solid var(--highlight-text);
+    background-color: var(--highlight-text);
+    font-size: 1em;
+    cursor: pointer;
+}
