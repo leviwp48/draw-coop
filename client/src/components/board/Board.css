@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    width: 75%;
+    width: 80%;
     height: 70vh;
     margin: auto;
     margin-top: 10px;
@@ -36,3 +36,26 @@
   .color.blue { background-color: blue; }
   .color.yellow { background-color: yellow; }
   .color.purple { background-color: purple; }
+
+  .goBack{
+    width: 10%;
+    height: 2.6em;
+    margin: 0 .5em 0 0.5em;
+    border-radius: 3px;
+    font-family: sans-serif;
+    color: #eeeeee;   
+    border: solid var(--highlight-text);
+    background-color: var(--highlight-text);
+    font-size: 1em;
+  }
+
+  .save{
+    width: 10%;
+    height: 2.6em;
+    border-radius: 3px;
+    font-family: sans-serif;
+    color: #eeeeee;   
+    border: solid var(--highlight-text);
+    background-color: var(--highlight-text);
+    font-size: 1em;
+  }

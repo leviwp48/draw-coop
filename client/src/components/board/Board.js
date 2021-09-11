@@ -187,32 +187,37 @@ export default class Board extends Component {
 
 render() {
   return (
-    <div className="drawing-container">
-      <canvas ref={this.canvasRef} className="canvas" />
-      <section ref={this.colorsRef} className="colors">
-        <div className="color black" />
-        <div className="color red" />
-        <div className="color green" />
-        <div className="color blue" />
-        <div className="color yellow" />
-        <div className="color purple"/>
-      </section>
-      <button
-        className="goBack"
-        type="button"
-        onClick={() => {
-            this.props.goBack(this.props.boardId, this.state.boardState, this.canvasRef.current); 
-        }}>
-        back
-      </button>
-      <button
-        className="save"
-        type="button"
-        onClick={() => {
-            this.props.save(this.props.boardId, this.state.boardState, this.canvasRef.current);
-        }}>
-        save
-      </button>
+    <div>
+        <div className="drawing-container">
+        <canvas ref={this.canvasRef} className="canvas" />
+        <section ref={this.colorsRef} className="colors">
+            <div className="color black" />
+            <div className="color red" />
+            <div className="color green" />
+            <div className="color blue" />
+            <div className="color yellow" />
+            <div className="color purple"/>
+        </section>
+        
+        </div>
+        <div className="board-buttons">
+            <button
+                className="goBack"
+                type="button"
+                onClick={() => {
+                    this.props.goBack(this.props.boardId, this.state.boardState, this.canvasRef.current); 
+                }}>
+                back
+            </button>
+            <button
+                className="save"
+                type="button"
+                onClick={() => {
+                    this.props.save(this.props.boardId, this.state.boardState, this.canvasRef.current);
+                }}>
+                save
+            </button>
+        </div>
     </div>
   );
 }
