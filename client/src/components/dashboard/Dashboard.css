@@ -90,9 +90,11 @@
   }
 
   .ending-credits{ 
-    position: absolute;
-    bottom: 0;
-    padding-bottom: .25em; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 0 1em 0;
+    background: #233554;
     font-family: "NTR", sans-serif;
     color: var(--slate);
     text-align: center;
@@ -189,7 +191,7 @@
       display: none;
     }
     .ending-credits{
-      padding-bottom: 0em; 
+      padding-bottom: 1.25em; 
     }
   }
  

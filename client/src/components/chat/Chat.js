@@ -29,13 +29,13 @@ class Chat extends Component {
     }
     socket.on("join server", (msg) => {
       console.log("Connecting...");
-      this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+      this.setState({displayData : [...this.state.displayData, <div className="chat-msg">{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
       localStorage.setItem('messages', this.state.displayData)
       socket.emit("join notification", (this.props.username))
     })
     socket.on("chat message", msg => {    
       console.log("adding message: " + msg);
-      this.setState({displayData : [...this.state.displayData, <div>{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+      this.setState({displayData : [...this.state.displayData, <div className="chat-msg">{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
       localStorage.setItem('messages', this.state.displayData)
     }); 
     socket.on("No login", msg => {    
