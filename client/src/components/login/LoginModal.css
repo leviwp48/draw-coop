@@ -80,9 +80,6 @@
     border: solid var(--highlight-text);
     background-color: var(--highlight-text);
     font-size: 1em;
-  }
-  
-  .modal-submit:hover {
     cursor: pointer;
   }
 

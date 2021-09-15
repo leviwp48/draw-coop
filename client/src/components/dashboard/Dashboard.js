@@ -31,6 +31,7 @@ export default class Dashboard extends Component {
       modalType: true,
       username: "",
       password: "",
+      update: false,
     }
   }
 
@@ -42,16 +43,7 @@ export default class Dashboard extends Component {
     }
   }
 
-  createBoard = () => {
-    axios.post(`${ENDPOINT}api/board/createBoard`, {userId: this.props.getUsername()})
-      .then(res => {
-        console.log("creating a new board for user: " + this.props.getUsername())
-        })
-        .catch(err => {
-          console.log(err.response)
-        });
-        this.forceUpdate({})
-    }
+  
 
   handleUsernameChange = e => {
     this.setState({ username: e.target.value });
@@ -105,6 +97,18 @@ export default class Dashboard extends Component {
       });
   }
   
+  createBoard = () => {
+    axios.post(`${ENDPOINT}api/board/createBoard`, {userId: this.props.getUsername()})
+      .then(res => {
+        console.log("creating a new board for user: " + this.props.getUsername())
+        console.log(res.newBoard.boardId)
+        this.goToBoard(res.newBoard.boardId)
+        })
+        .catch(err => {
+          console.log(err.response)
+        });
+    }
+
   showModalLogin = () => {
     this.setState({
       show: true,

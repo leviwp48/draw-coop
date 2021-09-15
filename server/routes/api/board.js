@@ -52,7 +52,8 @@ app.post('/createBoard', (req, res) =>{
     newBoard.save()
         .then(newBoard => res.json(newBoard))
         .catch(err => console.log(err));
-         
+    
+        console.log(JSONify(res.newBoard))
     console.log("Creating a new board for: " + req.body.userId);
 });
 

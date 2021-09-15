@@ -17,7 +17,7 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, changeModa
         </div>
         {children}
         <div className="button-submit">
-          <button className="modal-submit"  onClick={chooseSubmit}>Submit</button>
+          <button className="modal-submit" id="user" onClick={chooseSubmit}>Submit</button>
         </div>
         <div className="option-box">
           <p> {makeText}

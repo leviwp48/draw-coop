@@ -188,8 +188,13 @@ export default class Board extends Component {
 render() {
   return (
     <div>
+        
         <div className="drawing-container">
-        <canvas ref={this.canvasRef} className="canvas" />
+
+            <canvas ref={this.canvasRef} className="canvas" />      
+        </div>
+
+        <div className="utility-container">
         <section ref={this.colorsRef} className="colors">
             <div className="color black" />
             <div className="color red" />
@@ -198,8 +203,6 @@ render() {
             <div className="color yellow" />
             <div className="color purple"/>
         </section>
-        
-        </div>
         <div className="board-buttons">
             <button
                 className="goBack"
@@ -207,7 +210,7 @@ render() {
                 onClick={() => {
                     this.props.goBack(this.props.boardId, this.state.boardState, this.canvasRef.current); 
                 }}>
-                back
+                Back
             </button>
             <button
                 className="save"
@@ -215,8 +218,9 @@ render() {
                 onClick={() => {
                     this.props.save(this.props.boardId, this.state.boardState, this.canvasRef.current);
                 }}>
-                save
+                Save
             </button>
+        </div>
         </div>
     </div>
   );

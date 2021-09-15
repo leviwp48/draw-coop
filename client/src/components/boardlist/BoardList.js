@@ -60,7 +60,7 @@ const BoardList=({username, goToBoard, createBoard})=>{
 
     else{
         return(
-            <div className="listWrapper">
+        <div className="listWrapper">
             <div className="listGrid">     
                 No Boards Found
             </div>
