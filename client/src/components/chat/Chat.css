@@ -48,12 +48,11 @@ outline: 1px solid slategrey;
     padding: 4px 7px 4px 7px;
     background-color: #2c2f33;
     color: #FFFFFF;
-    width: 95%;
+    width: 97%;
     border: none;
     border-radius: 5px;
     font-size: 20px;
     outline: none;
-    caret-color: #FFFFFF;
 }
 
 .chatInput:hover,

@@ -56,7 +56,7 @@ export default class Dashboard extends Component {
   convertBoardToImage = (board) => {
     var image = new Image();
     image.src = board.toDataURL("image/png");
-    return image.src
+    return image
   }
 
   goBack = (boardId, boardState, boardRef) => {
@@ -65,6 +65,7 @@ export default class Dashboard extends Component {
       console.log("Board was saved")
       this.setState({showBoard: false, display: ""})
       this.state.socket.emit("leaving", boardId)
+      this.save(boardId, boardState, boardRef)
     })
     .catch(err => {
       console.log(err.response)
@@ -82,6 +83,7 @@ export default class Dashboard extends Component {
   }
   
   goToBoard = (boardId) => {
+    console.log(JSON.stringify(boardId))
     axios.post(`${ENDPOINT}api/board/getBoard`, {boardId: boardId, userId: this.props.getUsername()})
     .then(res => {
       this.state.socket.emit("joining", boardId, this.props.getUsername());
@@ -101,8 +103,9 @@ export default class Dashboard extends Component {
     axios.post(`${ENDPOINT}api/board/createBoard`, {userId: this.props.getUsername()})
       .then(res => {
         console.log("creating a new board for user: " + this.props.getUsername())
-        console.log(res.newBoard.boardId)
-        this.goToBoard(res.newBoard.boardId)
+        console.log(JSON.stringify(res))
+        console.log(res.data)
+        this.goToBoard(res.data)
         })
         .catch(err => {
           console.log(err.response)

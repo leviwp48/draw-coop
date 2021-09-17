@@ -81,7 +81,7 @@ class Chat extends Component {
         <input
             className="chatInput"
             type="text"
-            placeholder="Type here" 
+            placeholder="Start Chatting" 
             value={this.state.message}
             onChange={this.handleChange}
             onKeyPress={this.handleKeyPress}
