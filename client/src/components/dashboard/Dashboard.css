@@ -103,6 +103,21 @@
     width: 100%;
     font-size: 13px;
   }
+
+  .ending-credits-modal{ 
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    bottom: 0;
+    padding: 1em 0 1em 0;
+    background: green;
+    font-family: "NTR", sans-serif;
+    color: var(--slate);
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+  }
  
   .my-info{
       display: flex;

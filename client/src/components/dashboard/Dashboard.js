@@ -32,6 +32,7 @@ export default class Dashboard extends Component {
       username: "",
       password: "",
       update: false,
+      endingCredits: "ending-credits",
     }
   }
 
@@ -123,11 +124,15 @@ export default class Dashboard extends Component {
     this.setState({
       show: true,
       modalType: false,
+      endingCredits: "ending-credits-modal",
     });
   };
 
   hideModal = () => {
-    this.setState({ show: false });
+    this.setState({ 
+      show: false,
+      endingCredits: "ending-credits",
+    });
   };
 
   handleSubmitLogin = (e) => {
@@ -241,6 +246,15 @@ export default class Dashboard extends Component {
     }
   }
 
+  setEndingCredits = () => {
+    if(this.state.show==true){
+      this.setState({endingCredits: "ending-credits-modal"}) 
+    }
+    else{
+      this.setState({endingCredits: "ending-credits"}) 
+    }
+  }
+
   
   render() {
     return (
@@ -279,9 +293,9 @@ export default class Dashboard extends Component {
               deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData}/>
           {this.setDisplay()}
           <div className="credits">
-            <div className="ending-credits">
-              Built and designed by Levi Pole.
-              All rights reserved. ©
+            <div className={this.state.endingCredits}>
+                Built and designed by Levi Pole.
+                All rights reserved. ©
             </div>
           </div>
           <div className="my-info">
