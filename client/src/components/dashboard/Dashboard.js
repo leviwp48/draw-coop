@@ -57,7 +57,7 @@ export default class Dashboard extends Component {
   convertBoardToImage = (board) => {
     var image = new Image();
     image.src = board.toDataURL("image/png");
-    return image
+    return image.src
   }
 
   goBack = (boardId, boardState, boardRef) => {
@@ -117,6 +117,7 @@ export default class Dashboard extends Component {
     this.setState({
       show: true,
       modalType: true,
+      endingCredits: "ending-credits-modal",
     });
   };
 
@@ -128,15 +129,21 @@ export default class Dashboard extends Component {
     });
   };
 
-  hideModal = () => {
-    this.setState({ 
-      show: false,
-      endingCredits: "ending-credits",
-    });
+  hideModal = (e) => { 
+    if (e.target.className != "modal-main" && e.target.className != "button-submit" && e.target.className != "input-username" && e.target.className !="input-password" && e.target.className != "modal-submit" && e.target.className != "modal-title" && e.target.className != "modal-text" && e.target.className != "title-text" && e.target.className != "option-btn"){
+      this.setState({ 
+        show: false,
+        endingCredits: "ending-credits",
+      });
+    }
   };
 
   handleSubmitLogin = (e) => {
     e.preventDefault();
+
+    if(this.state.username == ""){
+      alert("Username Required")
+    }
 
     const user = {
       username: this.state.username,
@@ -255,6 +262,9 @@ export default class Dashboard extends Component {
     }
   }
 
+  changeModalType = () => {
+    this.setState({modalType: !this.state.modalType})
+  }
   
   render() {
     return (
@@ -267,6 +277,7 @@ export default class Dashboard extends Component {
           onEnter={this.onEnter}
           modalType={this.state.modalType}
           handleClose={this.hideModal}
+          changeModalType={this.changeModalType}
         >
           <input
             className="input-username"
@@ -290,7 +301,8 @@ export default class Dashboard extends Component {
         <div>        
           <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
               setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
-              deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData}/>
+              deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData} setEndingCredits={this.setEndingCredits} hideModal={this.hideModal}
+              showModalLogin={this.showModalLogin} showModalRegister={this.showModalRegister} show={this.state.show}/>
           {this.setDisplay()}
           <div className="credits">
             <div className={this.state.endingCredits}>

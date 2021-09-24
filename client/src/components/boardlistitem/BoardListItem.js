@@ -1,47 +1,37 @@
-import React, {Component} from "react";
-import "./BoardListItem.css" 
+import React, {useRef, useState, useEffect} from "react";
+import "./BoardListItem.css";
 
-export default class BoardListItem extends Component {
-    constructor(props){
-        super (props)
-        this.state = {
-            boardData: this.props.boardInfo
-        };
-        this.canvasRef = React.createRef();
-    }
+const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
+    const [boardData, setBoardData] = useState(boardInfo);
+    const [boardImage, setBoardImage] = useState(boardInfo.image);
 
-    componentDidMount = () => {
-        for (var i in this.state.boardData){
-            const canvas = this.canvasRef.current;
-            const ctx = canvas.getContext('2d');
-            canvas.width = 222;
-            canvas.height = 222;
-            console.log(JSON.stringify(this.props.boardInfo));
-            ctx.drawImage(this.props.boardInfo.image.src, 200,200);
-            //setBoardImage(canvas.toDataURL())
+    useEffect(() => {
+        boardData.forEach = () => {
+            setBoardImage(boardData.image)           
         }
-    };
+    }, []);
 
-    render() {
+
         return (
             <div className="listItem">
                 <div className="imgContainer">
-                    <canvas ref={this.canvasRef} className="canvas" />      
+                    <img src={boardImage} alt="No Data"/>
                 </div>
                 <div className="infoContainer"> 
-                    <p id="author"> {this.props.author} </p>
-                    <p id="lastModified"> {this.props.lastModified} </p>
+                    <p id="author"> {author} </p>
+                    <p id="lastModified"> {lastModified} </p>
                 <button className="draw"
                 type="button"
-                onClick={() => this.props.goToBoard(this.state.boardData._id)}
+                onClick={() => goToBoard(boardData._id)}
                 >
                 Draw
                 </button> 
                 </div>
-                
             </div>
-        );
-    } 
-}
+        )
+    }
+    
+    export default BoardListItem; 
+
 
 //                <img src={boardImage} alt="No Data"/>

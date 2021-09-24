@@ -17,23 +17,27 @@ export default class Nav extends Component {
     };
   }
 
+  /*
   showModalLogin = () => {
     this.setState({
       show: true,
       modalType: true
     });
+    this.props.setEndingCredits()
   };
 
   showModalRegister = () => {
     this.setState({
       show: true,
       modalType: false
+
     });
   };
 
   hideModal = () => {
     this.setState({ show: false });
   };
+*/
 
   changeModalType = () => {
     this.setState({modalType: !this.state.modalType})
@@ -53,7 +57,7 @@ export default class Nav extends Component {
       .then(res => {
         this.props.setUsername(jwt_decode(res.data.token).username);
         this.props.setToken(res.data.token);
-        this.setState({show: false});
+        this.props.hideModal()
         sessionStorage.setItem('user', res.data.token)
       })     
       .catch(err => {
@@ -86,7 +90,7 @@ export default class Nav extends Component {
         .then(res => {
           this.props.setToken(res.data.token);
           this.props.setUsername(jwt_decode(res.data.token).username);
-          this.setState({show: false});
+          this.props.hideModal();
         })
         .catch(err => {
           console.log(err.response)
@@ -162,7 +166,7 @@ export default class Nav extends Component {
           className="button-login"
           id="user"
           type="button"
-          onClick={() => this.showModalLogin()}
+          onClick={() => this.props.showModalLogin()}
         >
         Login
         </button>
@@ -171,7 +175,7 @@ export default class Nav extends Component {
           className="button-register"
           id="user"
           type="button"
-          onClick={() => this.showModalRegister()}
+          onClick={() => this.props.showModalRegister()}
         >
         Register
         </button>

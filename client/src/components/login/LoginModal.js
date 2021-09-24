@@ -9,10 +9,10 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, changeModa
   const makeText = modalType ? "Don't have an account?" : "Already have an account?";
 
   return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
+    <div className={showHideClassName} onClick={handleClose}>
+      <section className="modal-main" >
         <div className="modal-title"> 
-          <h1> {makeTitle} </h1>
+          <h1 className="title-text"> {makeTitle} </h1>
           <span className="close" onClick={handleClose}> &times; </span>
         </div>
         {children}
@@ -20,7 +20,7 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, changeModa
           <button className="modal-submit" id="user" onClick={chooseSubmit}>Submit</button>
         </div>
         <div className="option-box">
-          <p> {makeText}
+          <p className="modal-text"> {makeText}
             <button
             className="option-btn"
             type="button"

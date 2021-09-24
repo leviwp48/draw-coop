@@ -37,6 +37,10 @@
   transition: all 0.3s ease 0s;
 }
 
+#user:active {
+  border: none;
+}
+
 .username{
   border: none;
   background: none; 

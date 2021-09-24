@@ -96,7 +96,7 @@
     justify-content: center;
     bottom: 0;
     padding: 1em 0 1em 0;
-    background: #233554;
+    background: var(--background);
     font-family: "NTR", sans-serif;
     color: var(--slate);
     text-align: center;
@@ -111,7 +111,7 @@
     justify-content: center;
     bottom: 0;
     padding: 1em 0 1em 0;
-    background: green;
+    background: rgba(35, 53, 85, .0);
     font-family: "NTR", sans-serif;
     color: var(--slate);
     text-align: center;
