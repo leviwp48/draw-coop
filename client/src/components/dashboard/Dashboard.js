@@ -31,6 +31,9 @@ export default class Dashboard extends Component {
       modalType: true,
       username: "",
       password: "",
+      usernameError: "",
+      passwordError: "",
+      formValid: true,
       update: false,
       endingCredits: "ending-credits",
     }
@@ -43,16 +46,6 @@ export default class Dashboard extends Component {
       this.props.setToken(loggedInUser);
     }
   }
-
-  
-
-  handleUsernameChange = e => {
-    this.setState({ username: e.target.value });
-  };
-
-  handlePasswordChange = e => {
-    this.setState({ password: e.target.value });
-  }; 
 
   convertBoardToImage = (board) => {
     var image = new Image();
@@ -130,7 +123,7 @@ export default class Dashboard extends Component {
   };
 
   hideModal = (e) => { 
-    if (e.target.className != "modal-main" && e.target.className != "button-submit" && e.target.className != "input-username" && e.target.className !="input-password" && e.target.className != "modal-submit" && e.target.className != "modal-title" && e.target.className != "modal-text" && e.target.className != "title-text" && e.target.className != "option-btn"){
+    if (e.target.className != "modal-main" && e.target.className != "button-submit" && e.target.className != "input-username" && e.target.className !="input-password" && e.target.className != "modal-submit" && e.target.className != "modal-title" && e.target.className != "modal-text" && e.target.className != "title-text" && e.target.className != "option-btn" && e.target.className != "username-error" && e.target.className != "password-error" && e.target.className != "label-username" && e.target.className != "label-password"){
       this.setState({ 
         show: false,
         endingCredits: "ending-credits",
@@ -142,7 +135,11 @@ export default class Dashboard extends Component {
     e.preventDefault();
 
     if(this.state.username == ""){
-      alert("Username Required")
+      this.setState({usernameError: "Username can't be blank", formValid: false})
+    }
+
+    if(this.state.password == ""){
+      this.setState({passwordError: "Password can't be blank", formValid: false})
     }
 
     const user = {
@@ -150,7 +147,8 @@ export default class Dashboard extends Component {
       password: this.state.password,
     };
     
-    axios.post(`${ENDPOINT}api/users/login`, user)
+    if(this.state.formValid){
+      axios.post(`${ENDPOINT}api/users/login`, user)
       .then(res => {
         this.props.setUsername(jwt_decode(res.data.token).username);
         this.props.setToken(res.data.token);
@@ -159,18 +157,32 @@ export default class Dashboard extends Component {
         
       })     
       .catch(err => {
+        if(err.response.status == 404){
+          alert("No user found")
+        }
         console.log(err.response)
       });
+    }  
   }
 
   handleSubmitRegister = (e) => {
     e.preventDefault();
+
+    if(this.state.password == ""){
+      this.setState({passwordError: "Password can't be blank", formValid: false})
+    }
+
+    if(this.state.username == ""){
+      this.setState({usernameError: "Username can't be blank", formValid: false})
+    }
+
     const user = {
       username: this.state.username,
       password: this.state.password,
     };
 
-    axios.post(`${ENDPOINT}api/users/register`, user)
+    if(this.state.formValid){
+      axios.post(`${ENDPOINT}api/users/register`, user)
       .then(res => {
         this.setState({show: false});
         axios.post(`${ENDPOINT}api/users/login`, user)
@@ -186,6 +198,7 @@ export default class Dashboard extends Component {
       .catch(err => {
         console.log(err.response)
       });
+    }
   }
 
   onEnter = (e) => {
@@ -200,12 +213,12 @@ export default class Dashboard extends Component {
   }
 
   handleUsernameChange = e => {
-    this.setState({ username: e.target.value });
+    this.setState({ username: e.target.value, formValid: true, usernameError: "" });
   };
 
   handlePasswordChange = e => {
-    this.setState({ password: e.target.value });
-  };
+    this.setState({ password: e.target.value, formValid: true, passwordError: "" });
+  }; 
 
   setDisplay = () => {
     if(this.state.showBoard && this.props.getTokenStatus() == true){
@@ -279,24 +292,31 @@ export default class Dashboard extends Component {
           handleClose={this.hideModal}
           changeModalType={this.changeModalType}
         >
+          <label for="input-username" className="label-username">Username</label>
           <input
             className="input-username"
             id="input"
             type="text"
             placeholder="username"
+            maxlength="25"
             value={this.username}
             onChange={this.handleUsernameChange}
             onKeyPress={this.onEnter}
           />
+          <p className="username-error">{this.state.usernameError}</p>
+          <label for="input-password" className="label-password">Password</label>
           <input
             className="input-password"
             id="input"
             type="text"
             placeholder="password"
+            maxlength="25"
             value={this.state.password}
             onChange={this.handlePasswordChange}
             onKeyPress={this.onEnter}
           />
+          <p className="password-error">{this.state.passwordError}</p>
+
         </Modal>
         <div>        
           <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 

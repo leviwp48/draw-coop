@@ -30,27 +30,43 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1em;
+    margin-top: .5em;
     font-size: 1.5em;
   }
 
+  .label-username{
+    display: block;
+    margin: 1em 11.75em .25em 0;
+  }
+  
   .input-username {
     display: flex;
-    margin: 2em auto .75em auto;
-    padding: 2px 5px 3px 5px;
-    width: 40%;
-    height: 8%;
+    margin: 0em auto .5em auto;
+    padding: 5px 5px 5px 5px;
+    width: 55%;
     border-radius: .25em;
     text-decoration-color: black;
     border: solid #eeeeee;
     background-color: #eeeeee;
     font-family: sans-serif;   
   }
+
+  .username-error{
+    display: block;
+    margin: .25em 5.25em .75em auto;
+    color: red;
+  }
+  
+  .label-password{
+    display: block;
+    margin: 1em 11.75em .25em 0;
+  }
+
   .input-password {
     display: flex;
-    margin: 0 auto 0.75em auto;
-    padding: 2px 5px 3px 5px;
-    width: 40%;
+    margin: 0 auto 0em auto;
+    padding: 5px 5px 5px 5px;
+    width: 55%;
     height: 8%;
     border-radius: 3px;
     border: solid #eeeeee;
@@ -58,22 +74,29 @@
     font-family: sans-serif;   
   }
   
+  .password-error{
+    display: block;
+    margin: .25em 5.25em .75em auto;
+    color: red;
+  }
+
   #input:focus{
     outline: none;
     border: solid var(--highlight-text) 2px;
     color:black;
   }
   
+
   .button-submit{
     display: flex;
     justify-content: center;
     align-items: center;  
     width: 100%; 
-    margin-top: 1em;
+    margin-top: 1.5em;
   }
 
   .modal-submit {
-    width: 50%;
+    width: 60%;
     height: 2.6em;
     border-radius: 3px;
     font-family: sans-serif;
