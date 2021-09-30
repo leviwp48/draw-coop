@@ -106,7 +106,7 @@ Socket.io begins
 
 var botName = "Admin Bot";
 var userList = [];
-var messages = [];
+var userMap = new Map();
 let lines = new Map();
 var Board = require("./models/board");
 const { strictEqual } = require("assert");
@@ -152,19 +152,25 @@ io.on("connect", socket => {
   })
   socket.on("joining", (boardId, username) => {
     if(boardId){
+      if(userMap.has(boardId) === false){
+         userMap.set(boardId, [username]);
+      }
+      else{
+        userList.push(username)
+        userMap.set(boardId, userList)
+      }
+      for (let [key, value] of userMap) {
+        console.log(key + " = " + value);
+      }
       socket.join(boardId)
-      socket.emit("joined", boardId)
+      socket.emit("joined", (boardId, userList))
       return io.emit("chat message", formatMessage(`${username} I am joining a room: ${boardId}`))
     }
     else{
       return io.emit("err", "ERROR")
     }
   })
-  socket.on("leaving", boardId =>{
-    socket.leave(boardId)
-    socket.emit("left room")
-  })
-  
+
   socket.on("drawing", async (data) => {
     let boardId = data.boardId;
     lines[boardId] = data;
@@ -177,6 +183,26 @@ io.on("connect", socket => {
       console.log(`have id sending to room: ${boardId} with data: ${data}`)
       socket.to(boardId).emit("drawing", data)
     }
+  });
+
+  /*
+  socket.on("getUsers",  () => {   
+    lines[boardId] = data;
+    console.log(JSON.stringify(lines[boardId]))
+    // check if the boardId is null
+    if(boardId == ""){
+      console.log("failed no board Id")
+    }
+    else{
+      console.log(`have id sending to room: ${boardId} with data: ${data}`)
+      socket.to(boardId).emit("drawing", data)
+    }
+  });
+  */
+
+  socket.on("leaving", boardId =>{
+    socket.leave(boardId)
+    socket.emit("left room")
   });
 
   socket.on("disconnect", () => {

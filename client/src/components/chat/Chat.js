@@ -43,8 +43,9 @@ class Chat extends Component {
       this.setState({displayData : [...this.state.displayData, msg.time + " - " + msg.username + ": " + msg.text + " "]})     
       localStorage.setItem('messages', this.state.displayData)
     }); 
-    socket.on("joined", boardId => {
-      this.setState({boardId: boardId})
+    socket.on("joined", (userList) => {
+      console.log(userList)
+      this.setState({boardId: boardId, userList: userList}) // can't have multiple parameters in emit <=====
     });
     socket.on("left room", res => {
       this.setState({boardId: ""})
@@ -75,7 +76,7 @@ class Chat extends Component {
     return (
     <div className="chatBox-container">
       <div className="chatBox">  
-        {this.state.displayData}        
+        {this.state.displayData}       
       </div>    
       <div className="chatInputBox">
         <input
@@ -87,6 +88,7 @@ class Chat extends Component {
             onKeyPress={this.handleKeyPress}
         />
       </div>  
+      <p> asdfs{this.state.userList}</p> 
     </div>
     )
   }
