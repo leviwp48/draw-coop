@@ -14,7 +14,8 @@ class Chat extends Component {
         message: "",
         id: 0,
         count: 0,
-        boardId: ""
+        boardId: "",
+        userList: ""
     };
     socket = this.props.socket;
   }
@@ -43,9 +44,13 @@ class Chat extends Component {
       this.setState({displayData : [...this.state.displayData, msg.time + " - " + msg.username + ": " + msg.text + " "]})     
       localStorage.setItem('messages', this.state.displayData)
     }); 
-    socket.on("joined", (userList) => {
+    socket.on("joined", (boardId, userList) => {
       console.log(userList)
-      this.setState({boardId: boardId, userList: userList}) // can't have multiple parameters in emit <=====
+      this.setState({boardId: boardId}) // can't have multiple parameters in emit <=====a
+    });
+    socket.on("userList", (userList) => {
+      console.log(JSON.stringify(userList))
+      this.setState({userList: userList})
     });
     socket.on("left room", res => {
       this.setState({boardId: ""})

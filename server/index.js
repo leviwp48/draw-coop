@@ -152,18 +152,24 @@ io.on("connect", socket => {
   })
   socket.on("joining", (boardId, username) => {
     if(boardId){
-      if(userMap.has(boardId) === false){
+      if(userMap.has(boardId) == false){
          userMap.set(boardId, [username]);
       }
       else{
+        // need to check for duplicates. I can't think right now. 
+      
         userList.push(username)
         userMap.set(boardId, userList)
       }
       for (let [key, value] of userMap) {
         console.log(key + " = " + value);
       }
+      console.log(userMap)
+
+      console.log(userMap.get(boardId))
       socket.join(boardId)
-      socket.emit("joined", (boardId, userList))
+      socket.emit("joined", (boardId))
+      socket.to(boardId).emit("userList", userMap[boardId])
       return io.emit("chat message", formatMessage(`${username} I am joining a room: ${boardId}`))
     }
     else{
