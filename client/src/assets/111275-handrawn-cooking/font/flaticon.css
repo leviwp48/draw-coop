@@ -1,0 +1,131 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 22/06/2016 15:12
+  	*/
+
+@font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}
+
+.flaticon-apple-fruit:before { content: "\f100"; }
+.flaticon-bacon-slices:before { content: "\f101"; }
+.flaticon-baguettes-in-shopping-bag-outline:before { content: "\f102"; }
+.flaticon-banana-fruit:before { content: "\f103"; }
+.flaticon-birthday-cake-hand-drawn-celebration-food:before { content: "\f104"; }
+.flaticon-bread-baguette-outline:before { content: "\f105"; }
+.flaticon-bread-hand-drawn-slices:before { content: "\f106"; }
+.flaticon-bread-slice-hand-drawn-food:before { content: "\f107"; }
+.flaticon-burger-and-chips:before { content: "\f108"; }
+.flaticon-cake-hand-drawn-triangular-piece:before { content: "\f109"; }
+.flaticon-carrot-vegetable:before { content: "\f10a"; }
+.flaticon-celebration-cake:before { content: "\f10b"; }
+.flaticon-cheese-portion:before { content: "\f10c"; }
+.flaticon-chef-hat-hand-drawn-tool:before { content: "\f10d"; }
+.flaticon-chicken-bone-with-meat-outlined-hand-drawn-food:before { content: "\f10e"; }
+.flaticon-chicken-hand-drawn:before { content: "\f10f"; }
+.flaticon-chicken-leg-with-chips:before { content: "\f110"; }
+.flaticon-chocolate-chips-cookie:before { content: "\f111"; }
+.flaticon-cocktail-glass:before { content: "\f112"; }
+.flaticon-coffee-cup:before { content: "\f113"; }
+.flaticon-cola-can:before { content: "\f114"; }
+.flaticon-cooking-pot-outline-with-cover:before { content: "\f115"; }
+.flaticon-corn-cob-hand-drawn-vegetable:before { content: "\f116"; }
+.flaticon-covered-plate-hand-drawn-tool:before { content: "\f117"; }
+.flaticon-croissant-outline:before { content: "\f118"; }
+.flaticon-cupcake-with-cream-on-top:before { content: "\f119"; }
+.flaticon-donut-with-sprinkles:before { content: "\f11a"; }
+.flaticon-drink-can:before { content: "\f11b"; }
+.flaticon-drinking-water-jar-hand-drawn-tool:before { content: "\f11c"; }
+.flaticon-egg-and-fries-hand-drawn-food-plate:before { content: "\f11d"; }
+.flaticon-egg-outline:before { content: "\f11e"; }
+.flaticon-eggplant-hand-drawn-vegetable:before { content: "\f11f"; }
+.flaticon-eggs-with-bacon:before { content: "\f120"; }
+.flaticon-fast-food-burger-drink-and-fries:before { content: "\f121"; }
+.flaticon-fish-hand-drawn-animal:before { content: "\f122"; }
+.flaticon-fish-skeleton-hand-drawn-bones:before { content: "\f123"; }
+.flaticon-food-dish:before { content: "\f124"; }
+.flaticon-food-meal-hand-drawn-plate-side-view:before { content: "\f125"; }
+.flaticon-food-plate-hand-drawn-lunch:before { content: "\f126"; }
+.flaticon-fork-hand-drawn-tool:before { content: "\f127"; }
+.flaticon-fried-egg-on-pan:before { content: "\f128"; }
+.flaticon-fries-pack:before { content: "\f129"; }
+.flaticon-frying-pan-cooking:before { content: "\f12a"; }
+.flaticon-grape-bunch:before { content: "\f12b"; }
+.flaticon-half-lemon:before { content: "\f12c"; }
+.flaticon-hand-drawn-burger:before { content: "\f12d"; }
+.flaticon-hand-drawn-drink-glass-with-a-straw-and-lemon-slice:before { content: "\f12e"; }
+.flaticon-hand-drawn-food:before { content: "\f12f"; }
+.flaticon-hot-dish-with-spoon:before { content: "\f130"; }
+.flaticon-hot-dog:before { content: "\f131"; }
+.flaticon-hot-soup-bowl-hand-drawn-food:before { content: "\f132"; }
+.flaticon-ice-cream-ball-in-cup:before { content: "\f133"; }
+.flaticon-ice-cream-hand-drawn-dessert-cup:before { content: "\f134"; }
+.flaticon-italian-food-pizza:before { content: "\f135"; }
+.flaticon-juice-brick:before { content: "\f136"; }
+.flaticon-knife-hand-drawn-tool:before { content: "\f137"; }
+.flaticon-lemon-slice:before { content: "\f138"; }
+.flaticon-lettuce-vegetable:before { content: "\f139"; }
+.flaticon-melting-hand-drawn-ice-cream-cone:before { content: "\f13a"; }
+.flaticon-milk-box-hand-drawn-container:before { content: "\f13b"; }
+.flaticon-mushroom-outline:before { content: "\f13c"; }
+.flaticon-pancakes-with-cream:before { content: "\f13d"; }
+.flaticon-pear-fruit:before { content: "\f13e"; }
+.flaticon-peeled-banana:before { content: "\f13f"; }
+.flaticon-pepper-outlined-vegetable:before { content: "\f140"; }
+.flaticon-pepper-vegetable:before { content: "\f141"; }
+.flaticon-pizza-slice:before { content: "\f142"; }
+.flaticon-plastic-glass-with-straw:before { content: "\f143"; }
+.flaticon-plate-of-fruits:before { content: "\f144"; }
+.flaticon-popcorn-hand-drawn-bowl:before { content: "\f145"; }
+.flaticon-pot-on-stove:before { content: "\f146"; }
+.flaticon-rice-bowl:before { content: "\f147"; }
+.flaticon-salad-bowl-hand-drawn-food:before { content: "\f148"; }
+.flaticon-salt-shaker-hand-drawn-tool:before { content: "\f149"; }
+.flaticon-sandwich-food:before { content: "\f14a"; }
+.flaticon-skewer:before { content: "\f14b"; }
+.flaticon-slotted-turner-hand-drawn-kitchen-utensil:before { content: "\f14c"; }
+.flaticon-soup-hand-drawn-hot-food-bowl:before { content: "\f14d"; }
+.flaticon-soup-ladle-hand-drawn-tool:before { content: "\f14e"; }
+.flaticon-soup-spoon-hand-drawn-tool-with-hot-food:before { content: "\f14f"; }
+.flaticon-spaghetti-dish:before { content: "\f150"; }
+.flaticon-spoon-hand-drawn-tool-with-hot-food:before { content: "\f151"; }
+.flaticon-spoon-outline:before { content: "\f152"; }
+.flaticon-steak-and-chips-dish:before { content: "\f153"; }
+.flaticon-strainer-hand-drawn-kitchen-tool:before { content: "\f154"; }
+.flaticon-strawberry-fruit:before { content: "\f155"; }
+.flaticon-sushi-roll:before { content: "\f156"; }
+.flaticon-sweet-things-tray:before { content: "\f157"; }
+.flaticon-tea-cup-with-muffin-and-cookies:before { content: "\f158"; }
+.flaticon-tea-glass:before { content: "\f159"; }
+.flaticon-thick-sandwich:before { content: "\f15a"; }
+.flaticon-thick-sandwich-1:before { content: "\f15b"; }
+.flaticon-thick-steak:before { content: "\f15c"; }
+.flaticon-toasting-cups:before { content: "\f15d"; }
+.flaticon-tomato-vegetable:before { content: "\f15e"; }
+.flaticon-two-cherries:before { content: "\f15f"; }
+.flaticon-vegetables-hand-drawn-basket:before { content: "\f160"; }
+.flaticon-water-glass:before { content: "\f161"; }
+.flaticon-watermelon-slice:before { content: "\f162"; }
+.flaticon-wine-glass-hand-drawn-drink:before { content: "\f163"; }

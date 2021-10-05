@@ -111,6 +111,18 @@ let lines = new Map();
 var Board = require("./models/board");
 const { strictEqual } = require("assert");
 
+checkDupeUsers = (users, currUsername) => {
+
+  var check = false; 
+
+  for (let name of users){ 
+    if (name == currUsername){
+      check = true;
+    }
+  }
+  return check;
+}
+
 io.on("connect", socket => {    
 
   socket.emit("join server", formatMessage(botName, "Connected!"));
@@ -155,12 +167,14 @@ io.on("connect", socket => {
       if(userMap.has(boardId) == false){
          userMap.set(boardId, [username]);
       }
-      else{
-        // need to check for duplicates. I can't think right now. 
-      
+      else if(!checkDupeUsers(userMap.get(boardId), username))        
         userList.push(username)
         userMap.set(boardId, userList)
       }
+      else{
+        console.log("Can't join, user already exists")
+      }
+      
       for (let [key, value] of userMap) {
         console.log(key + " = " + value);
       }
