@@ -1,13 +1,32 @@
-.userList-container{
+.user-list-container{
     display: flex;
     justify-content: center;  
     align-items: center;
     flex-flow: column;
-    margin-top: 1em;
-    background: #233554;
-    width: 100%;
+    position: fixed;
+    top: 11.7%;
+    left: 11%;
+    transform: translate(-50%, -50%);
+    width: 20%;
+    border: none;
+    border-radius: 5px;
+    background: #23272a;
 }
-  
-.userList{
-   width: 30%;
+
+.user-list-title{
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    width: 100%;
+    padding: .5em 0 .5em 0;
+    background: #23272a;
+}
+
+.user-list{
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    width: 100%;
+    padding: .25em 0 .25em 0;
+    background: #2c2f33;
 }

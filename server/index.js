@@ -133,8 +133,6 @@ io.on("connect", socket => {
       io.emit("chat message", formatMessage(username, msg));
     }
     else{
-      console.log("getting here")
-      console.log(boardId)
       io.to(boardId).emit("chat message", formatMessage(username, msg))
     }
     // if(username == ""){
@@ -164,30 +162,30 @@ io.on("connect", socket => {
   })
   socket.on("joining", (boardId, username) => {
     if(boardId){
-      if(userMap.has(boardId) == false){
-         userMap.set(boardId, [username]);
+      if(userMap.has(boardId) == false){ // board does not exist. add board
+        userList.push(username)
+        userMap.set(boardId, userList);
       }
-      else if(!checkDupeUsers(userMap.get(boardId), username))        
+      else if(!checkDupeUsers(userMap.get(boardId), username)){ // check for dupes. if there are none, add the name
         userList.push(username)
         userMap.set(boardId, userList)
       }
-      else{
+      else{ // if there are dupes, send error
         console.log("Can't join, user already exists")
       }
       
-      for (let [key, value] of userMap) {
+      for (let [key, value] of userMap) { // logging
         console.log(key + " = " + value);
       }
       console.log(userMap)
-
       console.log(userMap.get(boardId))
       socket.join(boardId)
       socket.emit("joined", (boardId))
-      socket.to(boardId).emit("userList", userMap[boardId])
+      io.to(boardId).emit("userList", userMap.get(boardId))
       return io.emit("chat message", formatMessage(`${username} I am joining a room: ${boardId}`))
     }
     else{
-      return io.emit("err", "ERROR")
+      return io.emit("err", "No boardId given.")
     }
   })
 

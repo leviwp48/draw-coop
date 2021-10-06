@@ -1,6 +1,8 @@
 import React, {Component, Context } from "react";
 import socketIOClient from "socket.io-client";
 import './Chat.css';
+import UserList from './../userlist/UserList';
+
 
 const ENDPOINT = "http://localhost:3001/";
 var socket;
@@ -43,14 +45,15 @@ class Chat extends Component {
       console.log("adding message: " + msg);
       this.setState({displayData : [...this.state.displayData, msg.time + " - " + msg.username + ": " + msg.text + " "]})     
       localStorage.setItem('messages', this.state.displayData)
+    });
+    socket.on("userList", (userList) => {
+      console.log("userlist: " )
+      console.log(userList)
+      this.setState({userList: userList})
     }); 
     socket.on("joined", (boardId, userList) => {
       console.log(userList)
       this.setState({boardId: boardId}) // can't have multiple parameters in emit <=====a
-    });
-    socket.on("userList", (userList) => {
-      console.log(JSON.stringify(userList))
-      this.setState({userList: userList})
     });
     socket.on("left room", res => {
       this.setState({boardId: ""})
@@ -77,6 +80,20 @@ class Chat extends Component {
     this.setState({message: ""});
   }
 
+  listUsers = () => {
+    var userList = this.state.userList
+    console.log("here is hte log:" + this.state.userList)
+    if(userList != "")
+    return(
+    
+    )
+    else{
+      return (
+      <p> got nothing </p>
+      )
+    }
+  }
+
   render() {
     return (
     <div className="chatBox-container">
@@ -93,7 +110,7 @@ class Chat extends Component {
             onKeyPress={this.handleKeyPress}
         />
       </div>  
-      <p> asdfs{this.state.userList}</p> 
+        {this.listUsers()}     
     </div>
     )
   }
