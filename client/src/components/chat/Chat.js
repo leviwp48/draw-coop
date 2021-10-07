@@ -85,7 +85,7 @@ class Chat extends Component {
     console.log("here is hte log:" + this.state.userList)
     if(userList != "")
     return(
-    
+      <UserList userList={this.state.userList}/>
     )
     else{
       return (

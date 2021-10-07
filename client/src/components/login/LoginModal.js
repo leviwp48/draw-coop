@@ -11,21 +11,22 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, changeModa
   return (
     <div className={showHideClassName} onClick={handleClose}>
       <section className="modal-main" >
-        <div className="modal-title"> 
-          <h1 className="title-text"> {makeTitle} </h1>
-          <span className="close" onClick={handleClose}> &times; </span>
-        </div>
-        {children}
-        <div className="button-submit">
+        <div className="modal-container">
+          <div className="modal-title-container">         
+            <div className="modal-title"> 
+              <h1 className="title-text"> {makeTitle} </h1>
+            </div>
+          </div>
+          {children}
           <button className="modal-submit" id="user" onClick={chooseSubmit}>Submit</button>
-        </div>
-        <div className="option-box">
-          <p className="modal-text"> {makeText}
-            <button
-            className="option-btn"
-            type="button"
-            onClick={() => changeModalType()}>{makeOption}</button>
-          </p>
+          <div className="option-container">
+            <p className="modal-text"> {makeText}
+              <button
+              className="option-btn"
+              type="button"
+              onClick={() => changeModalType()}>{makeOption}</button>
+            </p>
+          </div>
         </div>
       </section>
     </div>
@@ -33,3 +34,5 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, changeModa
 };
 
 export default Modal;
+
+//<span className="close" onClick={handleClose}> &times; </span>

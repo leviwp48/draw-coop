@@ -1,0 +1,7 @@
+.user-container{
+    display: flex;
+    justify-content: start;  
+    align-items: flex-start; 
+    width: 100%;
+    background: #2c2f33;
+}

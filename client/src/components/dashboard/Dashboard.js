@@ -298,7 +298,7 @@ export default class Dashboard extends Component {
             id="input"
             type="text"
             placeholder="username"
-            maxlength="25"
+            maxlength="40"
             value={this.username}
             onChange={this.handleUsernameChange}
             onKeyPress={this.onEnter}
@@ -310,7 +310,7 @@ export default class Dashboard extends Component {
             id="input"
             type="text"
             placeholder="password"
-            maxlength="25"
+            maxlength="40"
             value={this.state.password}
             onChange={this.handlePasswordChange}
             onKeyPress={this.onEnter}

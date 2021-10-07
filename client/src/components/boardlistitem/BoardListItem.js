@@ -31,7 +31,7 @@ const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
         )
     }
     
-    export default BoardListItem; 
+export default BoardListItem; 
 
 
 //                <img src={boardImage} alt="No Data"/>

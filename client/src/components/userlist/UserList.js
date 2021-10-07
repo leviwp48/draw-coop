@@ -1,5 +1,6 @@
 import React, {Component, Context } from "react";
 import './UserList.css';
+import User from '../user/User'
 
 class UserList extends Component {
     constructor(props) {
@@ -13,9 +14,9 @@ class UserList extends Component {
           <div className="user-list-title">
             Ruffians
           </div>
-          <div className="user-list">  
-                  
-          </div>    
+          {this.props.userList.map((user, id) => 
+                <User user={user} key={id}/>
+          )}  
         </div>
         )
     }
