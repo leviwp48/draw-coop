@@ -208,7 +208,7 @@ render() {
                 className="goBack"
                 type="button"
                 onClick={() => {
-                    this.props.goBack(this.props.boardId, this.state.boardState, this.canvasRef.current); 
+                    this.props.goBack(this.props.boardId, this.state.boardState, this.canvasRef.current, this.props.getUsername); 
                 }}>
                 Back
             </button>

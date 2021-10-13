@@ -1,11 +1,13 @@
 import React, {useRef, useState, useEffect} from "react";
 import "./User.css";
+ 
 
-const User = ({user}) =>{
+const User = ({user, userImage}) =>{
 
         return (
             <div className="user-container">
-               {user}
+                <img className="user-image" src={userImage} alt="no image"/>
+               <div className="user-name"> {user} </div>
             </div>
         )
     }

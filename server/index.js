@@ -218,9 +218,15 @@ io.on("connect", socket => {
   });
   */
 
-  socket.on("leaving", boardId =>{
-    socket.leave(boardId)
-    socket.emit("left room")
+  socket.on("leaving", (boardId, username) =>{
+    socket.leave(boardId.boardId)
+
+    var currUserList = userMap.get(boardId).filter(name => name != username);
+    
+    console.log(currUserList)
+    console.log(userMap.get(boardId));
+
+    socket.emit("left room", username.username)
   });
 
   socket.on("disconnect", () => {

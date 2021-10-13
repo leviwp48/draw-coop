@@ -55,7 +55,7 @@ class Chat extends Component {
       console.log(userList)
       this.setState({boardId: boardId}) // can't have multiple parameters in emit <=====a
     });
-    socket.on("left room", res => {
+    socket.on("left room", (boardId, username) => {
       this.setState({boardId: ""})
     });
   }

@@ -8,28 +8,28 @@
     "body-parser": "^1.19.0",
     "concurrently": "^5.3.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
     "express-pino-logger": "^4.0.0",
-    "heroku": "^7.54.1",
+    "heroku": "^7.59.0",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "moment": "^2.29.1",
-    "mongodb": "^3.6.4",
-    "mongoose": "^5.11.14",
+    "mongodb": "^3.7.2",
+    "mongoose": "^5.13.10",
     "node": "^13.14.0",
     "node-env-run": "^3.0.2",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.13",
     "npm-run-all": "^4.1.5",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "pino-colada": "^1.6.1",
     "socket.io": "^2.4.1",
-    "validator": "^13.5.2"
+    "validator": "^13.6.0"
   },
   "devDependencies": {
-    "gh-pages": "^3.1.0"
+    "gh-pages": "^3.2.3"
   },
   "scripts": {
     "start": "node server",
