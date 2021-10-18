@@ -50,8 +50,8 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // parse application/json
-app.use(bodyParser.json());
-
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 //if(process.env.NODE_ENV == "production"){
 app.use(express.static('client/build'))
 //}
@@ -160,7 +160,8 @@ io.on("connect", socket => {
   socket.on("join notification", username =>{
     socket.broadcast.emit("chat message", formatMessage("Admin", `${ username } has arrived!`))
   })
-  socket.on("joining", (boardId, username) => {
+
+  socket.on("joining", (boardId, username, userListClient) => {
     if(boardId){
       if(userMap.has(boardId) == false){ // board does not exist. add board
         userList.push(username)
@@ -177,8 +178,10 @@ io.on("connect", socket => {
       for (let [key, value] of userMap) { // logging
         console.log(key + " = " + value);
       }
-      console.log(userMap)
-      console.log(userMap.get(boardId))
+      
+      console.log("the current map: " + JSON.stringify(userMap.get(boardId)))
+      console.log("the current map type: " + typeof(userMap.get(boardId)))
+
       socket.join(boardId)
       socket.emit("joined", (boardId))
       io.to(boardId).emit("userList", userMap.get(boardId))
@@ -219,11 +222,15 @@ io.on("connect", socket => {
   */
 
   socket.on("leaving", (boardId, username) =>{
-    socket.leave(boardId.boardId)
+    console.log(userMap.get(boardId))
 
-    var currUserList = userMap.get(boardId).filter(name => name != username);
+    socket.leave(boardId.boardId)
+    console.log(boardId.boardId)
+    //var currMap = 3 
+    //console.log(typeof(userMap.get(boardId)))
+    //var currUserList = currMap.filter(name => name != username);
     
-    console.log(currUserList)
+    //console.log(currUserList)
     console.log(userMap.get(boardId));
 
     socket.emit("left room", username.username)

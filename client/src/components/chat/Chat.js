@@ -17,7 +17,8 @@ class Chat extends Component {
         id: 0,
         count: 0,
         boardId: "",
-        userList: ""
+        userList: "",
+        inBoard: false
     };
     socket = this.props.socket;
   }
@@ -53,10 +54,10 @@ class Chat extends Component {
     }); 
     socket.on("joined", (boardId, userList) => {
       console.log(userList)
-      this.setState({boardId: boardId}) // can't have multiple parameters in emit <=====a
+      this.setState({boardId: boardId, inBoard: true}) // can't have multiple parameters in emit <=====a
     });
     socket.on("left room", (boardId, username) => {
-      this.setState({boardId: ""})
+      this.setState({boardId: "", inBoard: false})
     });
   }
  
@@ -81,16 +82,22 @@ class Chat extends Component {
   }
 
   listUsers = () => {
-    var userList = this.state.userList
-    console.log("here is hte log:" + this.state.userList)
-    if(userList != "")
-    return(
-      <UserList userList={this.state.userList}/>
-    )
+    if(this.state.inBoard){ 
+      var userList = this.state.userList
+      console.log("here is hte log:" + this.state.userList)
+      if(userList != ""){
+        return(
+          <UserList userList={this.state.userList}/>
+        )
+      }
+      else{
+        return (
+        <p> got nothing </p>
+        )
+      }
+    }
     else{
-      return (
-      <p> got nothing </p>
-      )
+      return
     }
   }
 

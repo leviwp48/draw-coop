@@ -123,7 +123,7 @@ export default class Dashboard extends Component {
   };
 
   hideModal = (e) => { 
-    if (e.target.className != "modal-main" && e.target.className != "button-submit" && e.target.className != "input-username" && e.target.className !="input-password" && e.target.className != "modal-submit" && e.target.className != "modal-title" && e.target.className != "modal-text" && e.target.className != "title-text" && e.target.className != "option-btn" && e.target.className != "username-error" && e.target.className != "password-error" && e.target.className != "label-username" && e.target.className != "label-password"){
+    if (e.target.className != "modal-main" && e.target.className != "button-submit" && e.target.className != "input-username" && e.target.className !="input-password" && e.target.className != "modal-submit" && e.target.className != "modal-title" && e.target.className != "modal-text" && e.target.className != "title-text" && e.target.className != "option-btn" && e.target.className != "username-error" && e.target.className != "password-error" && e.target.className != "label-username" && e.target.className != "label-password" && e.target.className != "modal-container"){
       this.setState({ 
         show: false,
         endingCredits: "ending-credits",
