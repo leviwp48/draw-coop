@@ -26,7 +26,7 @@
     "passport-jwt": "^4.0.0",
     "pino-colada": "^1.6.1",
     "socket.io": "^2.4.1",
-    "validator": "^13.6.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "gh-pages": "^3.2.3"
