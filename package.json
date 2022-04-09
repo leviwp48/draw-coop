@@ -15,7 +15,7 @@
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mongodb": "^3.7.2",
     "mongoose": "^5.13.10",
     "node": "^13.14.0",
