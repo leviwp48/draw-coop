@@ -1,15 +1,13 @@
 # Draw Coop
+draw-coop is a coop drawing experience using socket.io and HTML5 canvas that allows you and up to 4 friends create beautiful art or scribble lines together.
+
+## Meta
 Created by: Levi Pole
 
 Built with:  ReactJS (frontend), NodeJS (backend), CSS, and a MongoDB database
 
 (Currently Disabled)
 **You can find the app at: drawcoop.io**
-
-## What is it?                                  
-draw-coop is a coop drawing experience using socket.io and HTML5 canvas that allows you and up to 4 friends create beautiful art or scribble lines together.
-
-//insert gif here
 
 ## Usage
 ### Accounts
