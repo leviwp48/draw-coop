@@ -10,20 +10,15 @@ mongoose.set('debug', true);
     * role -> tells us what role the user has
 */
 
-// Create a Schema
-// This is a Schema to use with Mongoose with mongoDB
 const UserListSchema = new Schema({
-    // The username is type string and is required
     boardId: {
         type: String,
         required: true
     },
-    // The category is type String and the default is "Experimental"
     userList: {
         type: Array,
         required: true
     },
 });
 
-// This exports the module as User, which uses this Schema
-module.exports  = mongoose.model('userList', UserSchema);
+module.exports  = mongoose.model('userList', UserListSchema);

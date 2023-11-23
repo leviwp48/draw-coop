@@ -35,4 +35,3 @@ const Modal = ({ handleClose, modalType, submitRegister, submitLogin, changeModa
 
 export default Modal;
 
-//<span className="close" onClick={handleClose}> &times; </span>

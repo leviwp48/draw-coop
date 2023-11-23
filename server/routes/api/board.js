@@ -14,8 +14,7 @@ const Board = require("../../models/board");
     
 */
 app.post('/getMyBoards', (req, res) =>{
-    console.log("my user id is: " + req.body.userId)
-
+    console.log("my user id is: " + req.body.userId);
     Board.find({})
     .then(myBoards => {
         var keys = Object.keys(myBoards);
@@ -69,7 +68,7 @@ app.post('/saveBoard', async (req, res) =>{
             console.log(err);
         }
         else{
-            //console.log(JSON.stringify(res)) 
+            console.log(JSON.stringify(res)) 
         } 
     });
     res.status(200).send("Updated Board")

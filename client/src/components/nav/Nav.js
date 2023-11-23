@@ -47,12 +47,10 @@ export default class Nav extends Component {
     e.preventDefault();
     
     if(this.state.username && this.state.password){
-
       const user = {
         username: this.state.username,
         password: this.state.password,
       };
-      
       axios.post(`${ENDPOINT}api/users/login`, user)
       .then(res => {
         this.props.setUsername(jwt_decode(res.data.token).username);

@@ -11,7 +11,6 @@ const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
         }
     }, []);
 
-
         return (
             <div className="listItem">
                 <div className="imgContainer">
@@ -32,6 +31,3 @@ const BoardListItem = ({boardInfo, author, lastModified, goToBoard}) =>{
     }
     
 export default BoardListItem; 
-
-
-//                <img src={boardImage} alt="No Data"/>

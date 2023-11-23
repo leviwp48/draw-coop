@@ -14,12 +14,12 @@ draw-coop is a coop drawing experience using socket.io and HTML5 canvas that all
 ## Usage
 ### Accounts
 The site offers account registration and log in features. Simply click the needed button in the top right of the page
-![alt text](acct-btns.png "acct-btns")
 
-// insert image here
+![alt text](acct-btns.png "acct-btns")
 
 ### Create a Board 
 If you don't have any boards, simply click "Create Board" 
+
 ![alt text](create-board.png "create-board")
 
 ### Drawing 

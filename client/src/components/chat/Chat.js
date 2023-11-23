@@ -3,9 +3,7 @@ import socketIOClient from "socket.io-client";
 import './Chat.css';
 import UserList from './../userlist/UserList';
 
-
 const ENDPOINT = "http://localhost:3001/";
-var socket;
 export const MyContext = React.createContext();
 
 class Chat extends Component {
@@ -24,7 +22,6 @@ class Chat extends Component {
   }
 
   componentWillMount = () => {
-    // workingon saving messages to server
     let messages = localStorage.getItem('messages')
     if (messages){
       for(var i in messages){

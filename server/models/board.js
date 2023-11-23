@@ -10,8 +10,6 @@ const Schema = mongoose.Schema;
     * contributors -> holds the Id's of users that drew on the board
 */
 
-
-
 let BoardSchema = new Schema({ 
     boardData: {
         type: Array,

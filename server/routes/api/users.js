@@ -1,3 +1,4 @@
+// TODO: add checks for duplicate accounts when registering
 
 // User route file
 const express = require("express");
@@ -10,7 +11,8 @@ const validateRegisterInput = require("../../auth/register");
 const validateLoginInput = require("../../auth/login");
 // Load User model
 const User = require("./../../models/user");
-const secretOrKey = "secret";
+// const secretOrKey = "secret";
+
 /*
   * @route   POST api/login
   * @desc    Get User
@@ -19,14 +21,11 @@ const secretOrKey = "secret";
 */
 app.post('/login', (req, res) =>{
   console.log("Logging in");
-
   // * Form validation
   const { errors, isValid } = validateLoginInput(req.body);
-  // * Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
-
   // * Find user by email
   User.findOne({ username: req.body.username }).then(user => {
     // * Check if user exists
@@ -36,8 +35,8 @@ app.post('/login', (req, res) =>{
     // * Check password 
     bcrypt.compare(req.body.password, user.password).then(isMatch => {
       if (isMatch) {
-        // * User matched
-        // * Create JWT Payload
+        // User matched
+        // Create JWT Payload
         const payload = {
           id: user.id,
           username: user.username
@@ -71,7 +70,7 @@ app.post('/login', (req, res) =>{
 // @access  Public
 // Will create new users using the requests body name 
 app.post('/register', (req, res) =>{
-
+  console.log("here!")
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);  
   // Check validation
@@ -90,7 +89,6 @@ app.post('/register', (req, res) =>{
         role: "user" 
       });
     
-
     // Hash password before saving in database
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
