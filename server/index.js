@@ -20,16 +20,11 @@ const board = require("./routes/api/board");
 // DB Config
 const uri = process.env.MONGO_URI || require('./config/keys').mongoURI;
 
-let db;
-// connecting to mongo with mongoose
-//const MongoClient = require('mongodb').MongoClient;
-//const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
 mongoose
 .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true})
 .then(() => {
     db = mongoose.connection;
-    console.log('MDB connected...')
+    console.log('Connected to draw-coop databse...')
   })
   .catch(err => console.log(err));
 
@@ -52,7 +47,6 @@ require("./config/passport")(passport);
 // parse application/json
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
-//if(process.env.NODE_ENV == "production"){
 app.use(express.static('client/build'))
 //}
 // This will allow the CORS to be allowed over Express for using Axios in React.
