@@ -26,7 +26,7 @@
     align-items: center;
     flex-direction: column;
     width: 100%;
-    padding-top: 4em;
+    padding-top: 1em;
   }
 
   .intro{
@@ -37,7 +37,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 3em;
+    padding-top: 2em;
     font-size: 1.5em;
     color: #FFFFFF;
   }
@@ -91,7 +91,6 @@
 
   .ending-credits{ 
     display: flex;
-    position: fixed;
     align-items: center;
     justify-content: center;
     bottom: 0;
@@ -106,10 +105,9 @@
 
   .ending-credits-modal{ 
     display: flex;
-    position: fixed;
     align-items: center;
     justify-content: center;
-    bottom: 0;
+    /* bottom: -5px; */
     padding: 1em 0 1em 0;
     background: rgba(35, 53, 85, .0);
     font-family: "NTR", sans-serif;

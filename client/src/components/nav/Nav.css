@@ -8,7 +8,7 @@
 .nav-bar{
   display: flex;
   justify-content: flex-end;
-  padding: 2em 1.5em;
+  padding: 1em 1.5em;
 }
 
 .button-login {

@@ -7,6 +7,7 @@ const passport = require("passport");
 
 const usersRoutes = require("./routes/api/users");
 const boardRoutes = require("./routes/api/board");
+const defaultRoutes = require("./routes/index")
 const formatMessage = require("./utils/message");
 
 const server = http.createServer(app);
@@ -32,7 +33,7 @@ mongoose
 // To avoid the error msg here: https://mongoosejs.com/docs/deprecations.html#findandmodify
 mongoose.set("useFindAndModify", false);
 
-console.log(mongoose)
+// console.log(mongoose)
 
 // ROUTING BEGINS
 
@@ -62,12 +63,9 @@ app.use(cors());
 // });
 
 // Defined routes 
+app.use("/", defaultRoutes);
 app.use("/api/users", usersRoutes);
 app.use("/api/board", boardRoutes);
-
-routes.get('/', (req, res) => {
-  res.status(200).json({ message: 'Connected!' });
-});
 
 
 // SOCKET.IO 

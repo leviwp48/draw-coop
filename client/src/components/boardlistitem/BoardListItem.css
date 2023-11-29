@@ -5,8 +5,8 @@
     flex-flow: wrap;
     justify-content:center;
     align-content: flex-start;
-    height: 15rem;
-    width:15rem;
+    height: 10rem;
+    width: 13rem;
     box-shadow: 5px 5px 10px 0px #1c2a43;
     background-color: white;
     border: none;
@@ -46,7 +46,7 @@ img{
     width: 40%;
     height: 2.3em;
     margin-right: .25em;
-    margin-bottom: -.9em;
+    margin-bottom: .3em; 
     border-radius: 3px;
     font-family: sans-serif;
     color: #eeeeee;   

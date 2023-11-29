@@ -33,26 +33,19 @@ const BoardList=({username, goToBoard, createBoard})=>{
 
     if(dataLoaded){
         return (
-            <div>
+            <div className="board-container">
                 <p className="list-title">Board List</p>
+                <button className="create-board-btn" type="button" onClick={() => createBoard()}>
+                    Create board
+                </button>
                 <div className="listWrapper">
                     <div className="listGrid">
                         {boardInfo.map((board, id) => 
                             <BoardListItem boardInfo={board} key={id} goToBoard={goToBoard}/>
                         )}  
                     </div>
-                    
                 </div>
-                
-                <button
-                className="create-board"
-                type="button"
-                onClick={() => createBoard()}
-                >
-                    Create board
-                </button>
             </div>
-            
         )
     }
 

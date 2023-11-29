@@ -11,7 +11,7 @@ const validateRegisterInput = require("../../auth/register");
 const validateLoginInput = require("../../auth/login");
 // Load User model
 const User = require("./../../models/user");
-// const secretOrKey = "secret";
+const secretOrKey = "secret";
 
 /*
   * @route   POST api/login
@@ -20,47 +20,46 @@ const User = require("./../../models/user");
   * Will grab user on login
 */
 app.post('/login', (req, res) =>{
-  console.log("Logging in");
   // * Form validation
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  // * Find user by email
+  // * Find user by username
   User.findOne({ username: req.body.username }).then(user => {
     // * Check if user exists
-    if (!user) {
+    if (user) {
+      // * Check password 
+      bcrypt.compare(req.body.password, user.password).then(isMatch => {
+        if (isMatch) {
+          // User matched
+          // Create JWT Payload
+          const payload = {
+            id: user.id,
+            username: user.username
+          };
+          // Sign token
+          jwt.sign( 
+                    payload,
+                    secretOrKey,
+                    {
+                      expiresIn: 31556926 // 1 year in seconds
+                    },
+                    (err, token) => {
+                      res.json({
+                        success: true,
+                        token: token
+                      });
+                    }
+                  );
+        } else {
+          return res.status(400).json({ passwordincorrect: "Password incorrect" });      
+        }
+      });
+    }
+    else {
       return res.status(404).json({ usernotfound: "Username not found" });
     }
-    // * Check password 
-    bcrypt.compare(req.body.password, user.password).then(isMatch => {
-      if (isMatch) {
-        // User matched
-        // Create JWT Payload
-        const payload = {
-          id: user.id,
-          username: user.username
-        };
-        // Sign token
-        jwt.sign(
-          payload,
-          keys.secretOrKey,
-          {
-            expiresIn: 31556926 // 1 year in seconds
-          },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: token
-            });
-          }
-        );
-      } else {
-        return res
-          .status(400)
-          .json({ passwordincorrect: "Password incorrect" });      
-      }
-    });
   });
 });
 

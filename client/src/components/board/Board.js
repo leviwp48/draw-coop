@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import io from 'socket.io-client';
-import socketIOClient from "socket.io-client";
-import './Board.css';
 
-const ENDPOINT = "http://localhost:3001/";
+// TODO: get socket from the socket service, NOT from state 
+import React, { Component } from 'react';
+import './Board.css';
+import { socket, joinServer, chatMessage, noLogin, userList, joined, leftRoom} from "../services/socket";
+
 
 export default class Board extends Component {
     constructor(props){
@@ -144,7 +144,6 @@ export default class Board extends Component {
 // ---------------- Make the canvas fill its parent component ----------------
 
         const onResize = () => {
-        
             let {width, height} = canvas.getBoundingClientRect();
             if(canvas.width !== width || canvas.height !== height){
                 canvas.width = width;
@@ -187,13 +186,10 @@ export default class Board extends Component {
 
 render() {
   return (
-    <div>
-        
+    <div className="canvas-container">
         <div className="drawing-container">
-
             <canvas ref={this.canvasRef} className="canvas" />      
         </div>
-
         <div className="utility-container">
         <section ref={this.colorsRef} className="colors">
             <div className="color black" />

@@ -148,6 +148,7 @@ export default class Dashboard extends Component {
     };
     
     if(this.state.formValid){
+      console.log("user I am passing: " + user.username + " and " + user.password)
       axios.post(`${ENDPOINT}api/users/login`, user)
       .then(res => {
         this.props.setUsername(jwt_decode(res.data.token).username);
@@ -281,6 +282,7 @@ export default class Dashboard extends Component {
   
   render() {
     return (
+      // Modal Setup
       <div>
         <Modal 
           ref={node => this.node = node}
@@ -316,8 +318,8 @@ export default class Dashboard extends Component {
             onKeyPress={this.onEnter}
           />
           <p className="password-error">{this.state.passwordError}</p>
-
         </Modal>
+
         <div>        
           <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
               setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
@@ -331,11 +333,9 @@ export default class Dashboard extends Component {
             </div>
           </div>
           <div className="my-info">
-            
               <a href="https://github.com/leviwp48"><div className="github-image"/></a> 
               <a href="https://www.linkedin.com/in/polelevi/"> <div className="linkedIn-image"/> </a>
-              <a href="mailto:levi@levipole.com"> <div className="email-image"/> </a>
-            
+              <a href="mailto:levi@levipole.com"> <div className="email-image"/> </a>  
           </div>
         </div>  
       </div>

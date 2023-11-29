@@ -1,3 +1,8 @@
+
+/* .board-container{
+    padding-top
+} */
+
 .listWrapper{
     display: flex;
     justify-content: center;
@@ -8,10 +13,9 @@
     display: grid;
     grid-gap: 1em;
     grid-template-columns: 1fr 1fr 1fr;
-    padding-right: 1em;
+    width: 70%;
     height: 53vh;
     overflow-y: scroll;
-
 }
 
 .listGrid::-webkit-scrollbar {
@@ -28,7 +32,7 @@
     font-size: 2em;
 }
 
-.create-board{
+.create-board-btn{
     width: 15%;
     height: 2.6em;
     margin-top: 1em;

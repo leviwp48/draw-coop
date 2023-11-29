@@ -1,7 +1,7 @@
 {
-  "name": "coop-game",
+  "name": "drawsome",
   "version": "1.0.0",
-  "description": "socket.io coop game",
+  "description": "socket.io coop drawing game",
   "main": "index.js",
   "dependencies": {
     "bcryptjs": "^2.4.3",

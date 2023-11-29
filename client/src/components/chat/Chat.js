@@ -1,9 +1,8 @@
 import React, {Component, Context } from "react";
-import socketIOClient from "socket.io-client";
 import './Chat.css';
 import UserList from './../userlist/UserList';
+import { socket, joinServer, chatMessage, noLogin, userList, joined, leftRoom} from "../services/socket";
 
-const ENDPOINT = "http://localhost:3001/";
 export const MyContext = React.createContext();
 
 class Chat extends Component {
@@ -18,46 +17,66 @@ class Chat extends Component {
         userList: "",
         inBoard: false
     };
-    socket = this.props.socket;
+    // socket = this.props.socket; will have to see what the repercussions of this are 
+    this.chatMessagesRef = React.createRef();
+
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     let messages = localStorage.getItem('messages')
     if (messages){
       for(var i in messages){
         console.log(JSON.stringify(messages))
       }    
     }
-    socket.on("join server", (msg) => {
-      console.log("Connecting...");
-      this.setState({displayData : [...this.state.displayData, <div className="chat-msg">{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+    joinServer((msg) => {
+      this.addMessageToState(msg)
       localStorage.setItem('messages', this.state.displayData)
       socket.emit("join notification", (this.props.username))
     })
-    socket.on("chat message", msg => {    
+    chatMessage((msg) => {
       console.log("adding message: " + msg);
-      this.setState({displayData : [...this.state.displayData, <div className="chat-msg">{msg.time + " - " + msg.username + ": " + msg.text + " "}</div>]})
+      this.addMessageToState(msg)
       localStorage.setItem('messages', this.state.displayData)
+      this.scrollToBottom();
     }); 
-    socket.on("No login", msg => {    
-      console.log("adding message: " + msg);
-      this.setState({displayData : [...this.state.displayData, msg.time + " - " + msg.username + ": " + msg.text + " "]})     
+    noLogin((msg) => {    
+      this.addMessageToState(msg)
       localStorage.setItem('messages', this.state.displayData)
     });
-    socket.on("userList", (userList) => {
-      console.log("userlist: " )
-      console.log(userList)
+    userList((userList) => {
       this.setState({userList: userList})
     }); 
-    socket.on("joined", (boardId, userList) => {
-      console.log(userList)
+    joined((boardId, userList) => {
       this.setState({boardId: boardId, inBoard: true}) // can't have multiple parameters in emit <=====a
     });
-    socket.on("left room", (boardId, username) => {
+    leftRoom((boardId, username) => {
       this.setState({boardId: "", inBoard: false})
     });
   }
- 
+
+  addMessageToState = (msg) => {
+    this.setState(prevState => ({
+      displayData: [...prevState.displayData, 
+        <div className="chat-msg">
+          <div className="user-text-box">
+            <div className="msg-user">{msg.username}: </div>
+            <div className="msg-text">{msg.text}</div>
+          </div>
+          <div className="msg-time">{msg.time}</div>
+        </div>
+    ]}));
+  }
+
+  scrollToBottom = () => {
+    if (this.chatMessagesRef.current) {
+      const scrollHeight = this.chatMessagesRef.current.scrollHeight;
+      const height = this.chatMessagesRef.current.clientHeight;
+      const maxScrollTop = scrollHeight - height;
+      this.chatMessagesRef.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+    }
+  };
+
   giveId = (pre) => {
     return `${ pre }_${ new Date().getTime() }`;
   }
@@ -68,20 +87,29 @@ class Chat extends Component {
 
   handleKeyPress = e => {
     if (e.key === "Enter") {
+      if (this.state.message == "") {
+        ;
+      }
+      else{
+        socket.emit("chat message", this.state.message, this.props.username, this.state.boardId);
+        this.setState({message: ""});
+      }
+    }
+  }
+
+  handleClick = e => {   
+    if (this.state.message == "") {
+      ;
+    }
+    else{
       socket.emit("chat message", this.state.message, this.props.username, this.state.boardId);
       this.setState({message: ""});
     }
   }
 
-  handleClick = e => {   
-    socket.emit("chat message", this.state.message, this.props.username, this.state.boardId);
-    this.setState({message: ""});
-  }
-
   listUsers = () => {
     if(this.state.inBoard){ 
       var userList = this.state.userList
-      console.log("here is hte log:" + this.state.userList)
       if(userList != ""){
         return(
           <UserList userList={this.state.userList}/>
@@ -101,20 +129,22 @@ class Chat extends Component {
   render() {
     return (
     <div className="chatBox-container">
-      <div className="chatBox">  
-        {this.state.displayData}       
-      </div>    
-      <div className="chatInputBox">
-        <input
-            className="chatInput"
-            type="text"
-            placeholder="Start Chatting" 
-            value={this.state.message}
-            onChange={this.handleChange}
-            onKeyPress={this.handleKeyPress}
-        />
-      </div>  
-        {this.listUsers()}     
+      <div className="chatBox">
+        <div className="chatMessages" ref={this.chatMessagesRef}>  
+          {this.state.displayData}       
+        </div>    
+        <div className="chatInputBox">
+          <input
+              className="chatInput"
+              type="text"
+              placeholder="Start Chatting" 
+              value={this.state.message}
+              onChange={this.handleChange}
+              onKeyPress={this.handleKeyPress}
+          />
+        </div>  
+      </div>
+        {this.listUsers()}   
     </div>
     )
   }
