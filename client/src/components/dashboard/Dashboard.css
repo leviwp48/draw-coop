@@ -89,7 +89,7 @@
     align-items: center;
   }
 
-  .ending-credits{ 
+  /* .ending-credits{ 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -101,7 +101,24 @@
     text-align: center;
     width: 100%;
     font-size: 13px;
+  } */
+
+  .ending-credits {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 0;
+    background: var(--background);
+    font-family: "NTR", sans-serif;
+    color: var(--slate);
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
   }
+  
 
   .ending-credits-modal{ 
     display: flex;
