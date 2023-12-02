@@ -57,6 +57,7 @@ export default class Dashboard extends Component {
      axios.post(`${ENDPOINT}api/board/saveBoard`, {boardId: boardId, boardState: boardState, image: this.convertBoardToImage(boardRef)})
     .then(res => {
       console.log("Board was saved")
+      console.log(username)
       this.setState({showBoard: false, display: ""})
       this.state.socket.emit("leaving", {boardId: boardId, username: username})
       this.save(boardId, boardState, boardRef)

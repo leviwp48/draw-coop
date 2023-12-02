@@ -197,7 +197,7 @@ io.on("connect", socket => {
     //console.log(currUserList)
     console.log(userMap.get(boardId));
 
-    socket.emit("left room", username.username)
+    socket.emit("left room", username)
   });
 
   socket.on("disconnect", () => {

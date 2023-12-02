@@ -117,8 +117,8 @@
     text-align: center;
     width: 100%;
     font-size: 13px;
-  }
-  
+    padding-bottom: 4px;
+  }  
 
   .ending-credits-modal{ 
     display: flex;
