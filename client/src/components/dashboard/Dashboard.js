@@ -14,7 +14,6 @@ const ENDPOINT = "http://localhost:3001/";
 export default class Dashboard extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       userId: "",
       image: "",
@@ -50,7 +49,7 @@ export default class Dashboard extends Component {
   convertBoardToImage = (board) => {
     var image = new Image();
     image.src = board.toDataURL("image/png");
-    return image.src
+    return image.src;
   }
 
   goBack = (boardId, boardState, boardRef, username) => {
@@ -221,48 +220,53 @@ export default class Dashboard extends Component {
   handlePasswordChange = e => {
     this.setState({ password: e.target.value, formValid: true, passwordError: "" });
   }; 
-
+   
   setDisplay = () => {
-    if(this.state.showBoard && this.props.getTokenStatus() == true){
-      return this.state.display
-    }
-    else if(this.props.getTokenStatus() == true){
-      return (
-      <>
-        <BoardList getTokenStatus={this.props.getTokenStatus} username={this.props.getUsername()} goToBoard={this.goToBoard} createBoard={this.createBoard}/>
-        <Chat username={this.props.getUsername()} socket={this.state.socket} />
-      </>
-      );
-    }
-    else{
+    const { showBoard, display, dataLoaded } = this.state;
+
+    if (showBoard && this.props.getTokenStatus()) {
+      return display;
+    } else if (this.props.getTokenStatus() && dataLoaded) {
       return (
         <>
-        <div className="intro-container">   
-          <div className="intro">
-            <p className="title"> Drawsome </p>
-            <p className="description-text"> A place to finally draw that perfect picture you've been dreaming of... well unless your friends scribble all over it  </p>
+          <BoardList
+            getTokenStatus={this.props.getTokenStatus}
+            username={this.props.getUsername()}
+            goToBoard={this.goToBoard}
+            createBoard={this.createBoard}
+          />
+          <Chat username={this.props.getUsername()} socket={this.state.socket} />
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div className="intro-container">
+            <div className="intro">
+              <p className="title"> Drawsome </p>
+              <p className="description-text"> A place to finally draw that perfect picture you've been dreaming of... well unless your friends scribble all over it  </p>
+            </div>
           </div>
-        </div>
-        <div className="intro-login">
-          <button
-            className="dashboard-button-login"
-            id="dashboard-user"
-            type="button"
-            onClick={() => this.showModalLogin()}
-          >
-          Login
-          </button>
-          or
-          <button
-            className="dashboard-button-register"
-            id="dashboard-user"
-            type="button"
-            onClick={() => this.showModalRegister()}
-          >
-          Register
-          </button>
-          to start drawing
-        </div>
+          <div className="intro-login">
+            <button
+              className="dashboard-button-login"
+              id="dashboard-user"
+              type="button"
+              onClick={() => this.showModalLogin()}
+            >
+            Login
+            </button>
+            or
+            <button
+              className="dashboard-button-register"
+              id="dashboard-user"
+              type="button"
+              onClick={() => this.showModalRegister()}
+            >
+            Register
+            </button>
+            to start drawing
+          </div>
         </>
       );
     }

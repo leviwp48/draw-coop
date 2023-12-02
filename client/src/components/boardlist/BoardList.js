@@ -53,18 +53,17 @@ const BoardList=({username, goToBoard, createBoard})=>{
 
     else{
         return(
-        <div className="listWrapper">
-            <div className="listGrid">     
-                No Boards Found
+            <div className="board-container">
+                <p className="list-title">Board List</p>
+                <button className="create-board-btn" type="button" onClick={() => createBoard()}>
+                    Create board
+                </button>
+                <div className="listWrapper">
+                    <p className="listGrid">     
+                        No Boards Found
+                    </p>
+                </div>
             </div>
-            <button
-            className="create-board"
-            type="button"
-            onClick={() => createBoard()}
-            >
-                Create board
-            </button>
-        </div>
         )
     }
 }
