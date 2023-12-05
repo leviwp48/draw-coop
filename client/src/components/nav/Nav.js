@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Modal from "../login/LoginModal.js";
+import Modal from "../modal/Modal.js";
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import './Nav.css';
@@ -16,28 +16,6 @@ export default class Nav extends Component {
       password: "",
     };
   }
-
-  /*
-  showModalLogin = () => {
-    this.setState({
-      show: true,
-      modalType: true
-    });
-    this.props.setEndingCredits()
-  };
-
-  showModalRegister = () => {
-    this.setState({
-      show: true,
-      modalType: false
-
-    });
-  };
-
-  hideModal = () => {
-    this.setState({ show: false });
-  };
-*/
 
   changeModalType = () => {
     this.setState({modalType: !this.state.modalType})

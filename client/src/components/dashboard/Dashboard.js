@@ -7,8 +7,9 @@ import Board from "../board/Board";
 import Chat from "../chat/Chat"
 import jwt_decode from 'jwt-decode';
 import socketIOClient from "socket.io-client";
-import Modal from "../login/LoginModal.js";
+import Modal from "../modal/Modal.js";
 const ENDPOINT = "http://localhost:3001/";
+
 
 // ---------------- Dashboard for all of the componenets ----------------
 export default class Dashboard extends Component {
@@ -158,6 +159,7 @@ export default class Dashboard extends Component {
         
       })     
       .catch(err => {
+        console.log("erroring!")
         if(err.response.status == 404){
           alert("No user found")
         }
@@ -220,13 +222,27 @@ export default class Dashboard extends Component {
   handlePasswordChange = e => {
     this.setState({ password: e.target.value, formValid: true, passwordError: "" });
   }; 
+
+  setEndingCredits = () => {
+    if(this.state.show==true){
+      this.setState({endingCredits: "ending-credits-modal"}) 
+    }
+    else{
+      this.setState({endingCredits: "ending-credits"}) 
+    }
+  }
+
+  changeModalType = () => {
+    this.setState({modalType: !this.state.modalType})
+  }
    
   setDisplay = () => {
-    const { showBoard, display, dataLoaded } = this.state;
+    const { showBoard, display } = this.state;
 
     if (showBoard && this.props.getTokenStatus()) {
       return display;
-    } else if (this.props.getTokenStatus() && dataLoaded) {
+    } else if (this.props.getTokenStatus()) {
+      console.log('showing boardlist')
       return (
         <>
           <BoardList
@@ -272,19 +288,6 @@ export default class Dashboard extends Component {
     }
   }
 
-  setEndingCredits = () => {
-    if(this.state.show==true){
-      this.setState({endingCredits: "ending-credits-modal"}) 
-    }
-    else{
-      this.setState({endingCredits: "ending-credits"}) 
-    }
-  }
-
-  changeModalType = () => {
-    this.setState({modalType: !this.state.modalType})
-  }
-  
   render() {
     return (
       // Modal Setup
@@ -326,10 +329,13 @@ export default class Dashboard extends Component {
         </Modal>
 
         <div>        
-          <Nav setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
-              setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
-              deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData} setEndingCredits={this.setEndingCredits} hideModal={this.hideModal}
-              showModalLogin={this.showModalLogin} showModalRegister={this.showModalRegister} show={this.state.show}/>
+          <Nav 
+            setUsername={this.props.setUsername} getUsername={this.props.getUsername} 
+            setToken={this.props.setToken} getToken={this.props.getToken} getTokenStatus={this.props.getTokenStatus}
+            deleteToken={this.props.deleteToken} setUserId={this.setUserId} setBoardData={this.setBoardData} 
+            setEndingCredits={this.setEndingCredits} hideModal={this.hideModal} showModalLogin={this.showModalLogin}
+            showModalRegister={this.showModalRegister} show={this.state.show}
+          />
           {this.setDisplay()}
           <div className="credits">
             <div className={this.state.endingCredits}>
@@ -347,9 +353,3 @@ export default class Dashboard extends Component {
     );
   }
 }
-
-/*
- <div className="outro-container">
-          <p className="outro-message"> Thanks for coming! </p>
-        </div>
-*/

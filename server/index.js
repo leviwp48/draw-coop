@@ -149,7 +149,7 @@ io.on("connect", socket => {
       socket.join(boardId);
       socket.emit("joined", (boardId));
       io.to(boardId).emit("userList", userMap.get(boardId));
-      return io.emit("chat message", formatMessage(`${username} I am joining a room: ${boardId}`));
+      return socket.emit("chat message", formatMessage(`${username} I am joining a room: ${boardId}`));
     }
     else{
       return io.emit("err", "No boardId given.");
@@ -186,16 +186,14 @@ io.on("connect", socket => {
   */
 
   socket.on("leaving", (boardId, username) =>{
-    console.log(userMap.get(boardId))
 
+    
     socket.leave(boardId.boardId)
-    console.log(boardId.boardId)
     //let currMap = 3 
     //console.log(typeof(userMap.get(boardId)))
     //let currUserList = currMap.filter(name => name != username);
     
     //console.log(currUserList)
-    console.log(userMap.get(boardId));
 
     socket.emit("left room", username)
   });

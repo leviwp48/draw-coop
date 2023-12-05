@@ -1,7 +1,16 @@
 import React from "react";
-import "./LoginModal.css";
+import "./Modal.css";
 
-const Modal = ({ handleClose, modalType, submitRegister, submitLogin, changeModalType, show, children }) => {
+const Modal = ({ 
+  handleClose, 
+  modalType, 
+  submitRegister,
+  submitLogin,
+  changeModalType,
+  show,
+  children 
+  }) => {
+
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const makeTitle = modalType ? "Login" : "Register";
   const chooseSubmit = modalType ? submitLogin : submitRegister;

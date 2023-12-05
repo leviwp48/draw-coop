@@ -48,7 +48,7 @@ class Chat extends Component {
       this.setState({userList: userList})
     }); 
     joined((boardId, userList) => {
-      this.setState({boardId: boardId, inBoard: true}) // can't have multiple parameters in emit <=====a
+      this.setState({boardId: boardId, inBoard: true}) // can't have multiple parameters in emit <=====
     });
     leftRoom((boardId, username) => {
       this.setState({boardId: "", inBoard: false})
