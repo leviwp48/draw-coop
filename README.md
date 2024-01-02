@@ -26,11 +26,11 @@ After creating a board or selecting one from the board list, you can now draw on
 
 You can create an account now and start drawing on your very own canvas. Friends can hop in through the canvas list and start drawing at the SAME TIME. At the moment only drawing is available and I hope to add other tools in the future.
 
-![alt text](media/chatting.mov "chatting")
+![alt text](media/chatting.mp4 "chatting")
 
-![alt text](media/drawing-together.mov "drawing-together")
+![alt text](media/drawing-together.mp4 "drawing-together")
 
-![alt text](media/drawing.mov "drawing")
+![alt text](media/drawing.mp4 "drawing")
 
 ## Feedback
 If you have any feedback or suggestions, feel free to send them to my email that you can find on the bottom right of the website :) (leviwp48@gmail.com)
