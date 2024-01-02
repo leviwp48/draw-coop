@@ -260,7 +260,7 @@ export default class Dashboard extends Component {
           <div className="intro-container">
             <div className="intro">
               <p className="title"> Drawsome </p>
-              <p className="description-text"> A place to finally draw that perfect picture you've been dreaming of... well unless your friends scribble all over it  </p>
+              <p className="description-text"> Draw somethine nice and your friends can scribble all over it </p>
             </div>
           </div>
           <div className="intro-login">

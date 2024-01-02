@@ -87,6 +87,8 @@
   .credits {
     display: flex;
     align-items: center;
+    margin-top: auto;
+
   }
 
   /* .ending-credits{ 
@@ -110,7 +112,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1em 0;
     background: var(--background);
     font-family: "NTR", sans-serif;
     color: var(--slate);
@@ -125,7 +126,6 @@
     align-items: center;
     justify-content: center;
     /* bottom: -5px; */
-    padding: 1em 0 1em 0;
     background: rgba(35, 53, 85, .0);
     font-family: "NTR", sans-serif;
     color: var(--slate);

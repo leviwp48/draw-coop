@@ -16,11 +16,10 @@ const PORTNUM = process.env.PORT || 3001;
 require('dotenv').config();
 
 
-
 // TODO: create correct user login by authenticating on the back end then storing a token on the front end
 
 // DB Config
-const uri = process.env.MONGO_URI || require('./config/keys').mongoURI;
+const uri = process.env.MONGO_URI;
 
 mongoose
 .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true})
@@ -48,19 +47,6 @@ app.use(express.static('client/build'));
 
 // This will allow the CORS to be allowed over Express for using Axios in React & allows socket.io to work as well 
 app.use(cors());
-// app.options('*', cors());
-// app.options('/api/register', function (req, res) {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader('Access-Control-Allow-Methods', '*');
-//   res.setHeader("Access-Control-Allow-Headers", "*");
-//   res.end();
-// });
-// app.options('/api/users', function (req, res) {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   res.setHeader('Access-Control-Allow-Methods', '*');
-//   res.setHeader("Access-Control-Allow-Headers", "*");
-//   res.end();
-// });
 
 // Defined routes 
 app.use("/", defaultRoutes);
