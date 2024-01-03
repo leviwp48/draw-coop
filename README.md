@@ -9,28 +9,31 @@ Built with:  ReactJS (frontend), NodeJS (backend), CSS, and a MongoDB database
 (Currently Disabled)
 **You can find the app at: drawcoop.io**
 
-## Usage
+## Features
 ### Accounts
-The site offers account registration and log in features. Simply click the needed button in the top right of the page
+- The site offers account registration and log in features
+- User data is saved in a MongoDB backend.
 
-![alt text](media/acct-btns.png "acct-btns")
-
-### Create a Board 
-If you don't have any boards, simply click "Create Board" 
-
-![alt text](media/create-board.png "create-board")
+### Boards
+- "Boards" is the name for HTML canvas objects that the user can interact with to draw. 
+- Boards are stored with their drawing data in MongoDB
 
 ### Drawing 
-After creating a board or selecting one from the board list, you can now draw on the board. If anyone else has joined your board, they can draw together with you
-// insert image here 
+- Drawing is synced between users with Socket.io 
+- There are 6 color options
+- The save button saves the state of the board
+- The back button returns to the board list and saves the state of the board 
 
-You can create an account now and start drawing on your very own canvas. Friends can hop in through the canvas list and start drawing at the SAME TIME. At the moment only drawing is available and I hope to add other tools in the future.
+## Examples
+### Sign in and Drawing
+![alt text](media/drawing.gif "drawing")
 
-![alt text](media/chatting.gif "chatting")
-
+### Drawing Together
 ![alt text](media/drawing-together.gif "drawing-together")
 
-![alt text](media/drawing.gif "drawing")
+### Chatting 
+![alt text](media/chatting.gif "chatting")
+
 
 ## Feedback
 If you have any feedback or suggestions, feel free to send them to my email that you can find on the bottom right of the website :) (leviwp48@gmail.com)
