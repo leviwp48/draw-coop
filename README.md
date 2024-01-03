@@ -29,7 +29,7 @@ Built with:  ReactJS (frontend), NodeJS (backend), CSS, and a MongoDB database
 ![alt text](media/drawing.gif "drawing")
 
 ### Drawing Together
-![alt text](media/drawing-together.gif "drawing-together")
+![alt text](media/draw-together.gif "draw-together")
 
 ### Chatting 
 ![alt text](media/chatting.gif "chatting")
