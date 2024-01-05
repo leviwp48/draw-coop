@@ -14,6 +14,16 @@
 .chatBox {
   width: 70%;
   background-color: #23272a;
+  border-radius: 4px;
+}
+
+.chatBox::-webkit-scrollbar {
+  width: 1em;
+}
+
+.chatBox::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
 
 .chatMessages {
@@ -24,23 +34,14 @@
   height: 7em;
   padding-top: 1px;
   background-color: #23272a;
+  border-radius: 4px;
   color: #B9BBBE;
-  border-radius: 2%;
   text-align: left;
   font-size: 15px;
 }
 
 .chat-msg {
   padding: 6px 4px 0 10px;
-}
-
-.chatBox::-webkit-scrollbar {
-  width: 1em;
-}
-
-.chatBox::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
 }
 
 .chatInputBox {
@@ -60,7 +61,7 @@
   color: #B9BBBE;
   width: 98%;
   border: none;
-  border-radius: 2px;
+  border-radius: 3px;
   font-size: 15px;
   outline: none;
 }

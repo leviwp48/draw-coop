@@ -17,9 +17,7 @@ class Chat extends Component {
         userList: "",
         inBoard: false
     };
-    // socket = this.props.socket; will have to see what the repercussions of this are 
     this.chatMessagesRef = React.createRef();
-
   }
 
   componentDidMount = () => {
@@ -31,7 +29,9 @@ class Chat extends Component {
     }
     joinServer((msg) => {
       this.addMessageToState(msg)
+      console.log("adding the message to state for chat ")
       localStorage.setItem('messages', this.state.displayData)
+      console.log("emitting join notification")
       socket.emit("join notification", (this.props.username))
     })
     chatMessage((msg) => {
