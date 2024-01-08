@@ -1,4 +1,4 @@
-<span align="center" style="font-size: 2em;">✏️</span>
+### ✏️
 <h1 align="center">Drawsome</h1>
 <p align="center">Drawsome is a coop drawing experience using socket.io and HTML5 canvas that allows you and up to 4 friends create beautiful art or scribble lines together.</p>
 
