@@ -9,6 +9,13 @@ Built with:  ReactJS (frontend), NodeJS (backend), CSS, and a MongoDB database
 (Currently Disabled)
 **You can find the app at: drawcoop.io**
 
+## 🛠 Set-up and running
+Install the dependencies for both the backend and frontend
+`npm run install`
+
+Start the development server and client
+`npm run start`
+
 ## Features
 ### Accounts
 - The site offers account registration and log in features
