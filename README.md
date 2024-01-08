@@ -1,10 +1,15 @@
 <h1 align="center">Drawsome</h1>
 <p align="center">Drawsome is a coop drawing experience using socket.io and HTML5 canvas that allows you and up to 4 friends create beautiful art or scribble lines together.</p>
 
-## Meta
-Created by: Levi Pole
+## Examples
+### Sign in and Drawing
+![alt text](media/drawing.gif "drawing")
 
-Built with:  ReactJS (frontend), NodeJS (backend), CSS, and a MongoDB database
+### Drawing Together
+![alt text](media/draw-together.gif "draw-together")
+
+### Chatting 
+![alt text](media/chatting.gif "chatting")
 
 (Currently Disabled)
 **You can find the app at: drawcoop.io**
@@ -33,16 +38,10 @@ Start the development server and client
 - The save button saves the state of the board
 - The back button returns to the board list and saves the state of the board 
 
-## Examples
-### Sign in and Drawing
-![alt text](media/drawing.gif "drawing")
+## Meta
+Created by: Levi Pole
 
-### Drawing Together
-![alt text](media/draw-together.gif "draw-together")
-
-### Chatting 
-![alt text](media/chatting.gif "chatting")
-
+Built with:  ReactJS (frontend), NodeJS (backend), CSS, and a MongoDB database
 
 ## Feedback
 If you have any feedback or suggestions, feel free to send them to my email that you can find on the bottom right of the website :) (leviwp48@gmail.com)
