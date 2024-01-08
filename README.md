@@ -11,9 +11,11 @@ Built with:  ReactJS (frontend), NodeJS (backend), CSS, and a MongoDB database
 
 ## 🛠 Set-up and running
 Install the dependencies for both the backend and frontend
+
 `npm run install`
 
 Start the development server and client
+
 `npm run start`
 
 ## Features
