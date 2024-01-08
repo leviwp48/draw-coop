@@ -36,13 +36,12 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "start": "node server",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "cd client && npm run build",
     "server": "nodemon server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
-    "install-client": "cd client && npm install",
+    "install": "npm install && cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build"
   },
   "repository": {
